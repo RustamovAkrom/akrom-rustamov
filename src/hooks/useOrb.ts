@@ -8,8 +8,8 @@ export function useOrb() {
 
         if (!orbs.length) return;
 
-        let mouse = { x: 0, y: 0 };
-        let pos = { x: 0, y: 0 };
+        const mouse = { x: 0, y: 0 };
+        const pos = { x: 0, y: 0 };
 
         const speed = 0.08;
 

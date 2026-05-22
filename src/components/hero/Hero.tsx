@@ -8,23 +8,24 @@ export default function Hero() {
                 <div className="orb-wrap" id="heroOrb">
                     <div className="orb">
                         <div className="orb__core">
-                            {/* <!-- Put your avatar image path here. Example: src="assets/avatar.jpg" --> */}
-                            <img className="orb__img" src="./images/avatar.png" />
+                            <img className="orb__img" src="./images/avatar.png" alt="Akrom Rustamov avatar" />
                         </div>
-                        <div className="orb__halo h1"></div>
-                        <div className="orb__halo h2"></div>
-                        <div className="orb__halo h3"></div>
-                        <div className="orb__shine"></div>
+                        <div className="orb__halo h1" />
+                        <div className="orb__halo h2" />
+                        <div className="orb__halo h3" />
+                        <div className="orb__shine" />
                     </div>
                     <div className="orb__badge">
-                        <span className="orb__badge-dot"></span>
+                        <span className="orb__badge-dot" />
                         <span className="mono">available · Tashkent</span>
                     </div>
                 </div>
 
                 <div className="hero__copy">
                     <p className="hero__eyebrow reveal" style={{ '--d': '0s' } as React.CSSProperties}>
-                        <span className="mono dim">&lt;</span>Backend Engineer · Python<span className="mono dim">/&gt;</span>
+                        <span className="mono dim">&lt;</span>
+                        <span className="typing">Backend Engineer · Python</span>
+                        <span className="mono dim">/&gt;</span>
                     </p>
                     <h1 className="hero__name">
                         <span className="hn-line reveal" style={{ '--d': '.06s' } as React.CSSProperties}>Akrom</span>

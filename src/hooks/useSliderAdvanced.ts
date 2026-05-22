@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef } from "react";
 
@@ -30,41 +30,45 @@ export function useSliderAdvanced(total: number, onChange: (i: number) => void) 
         const track = document.querySelector(".sl-track");
         if (!track) return;
 
-        // touch
-        track.addEventListener("touchstart", (e: any) => {
-            startX.current = e.touches[0].clientX;
+        const onTouchStart = (e: Event) => {
+            const te = e as TouchEvent;
+            startX.current = te.touches[0].clientX;
             drag.current = true;
-        }, { passive: true });
+        };
 
-        track.addEventListener("touchend", (e: any) => {
+        const onTouchEnd = (e: Event) => {
             if (!drag.current) return;
-
-            const dx = e.changedTouches[0].clientX - startX.current;
+            const te = e as TouchEvent;
+            const dx = te.changedTouches[0].clientX - startX.current;
             if (Math.abs(dx) > 52) {
                 go(dx < 0 ? cur.current + 1 : cur.current - 1);
                 reset();
             }
             drag.current = false;
-        });
+        };
 
-        // mouse
-        track.addEventListener("mousedown", (e: any) => {
-            startX.current = e.clientX;
+        const onMouseDown = (e: Event) => {
+            const me = e as MouseEvent;
+            startX.current = me.clientX;
             drag.current = true;
-        });
+        };
 
-        window.addEventListener("mouseup", (e: any) => {
+        const onMouseUp = (e: Event) => {
             if (!drag.current) return;
-
-            const dx = e.clientX - startX.current;
+            const me = e as MouseEvent;
+            const dx = me.clientX - startX.current;
             if (Math.abs(dx) > 60) {
                 go(dx < 0 ? cur.current + 1 : cur.current - 1);
                 reset();
             }
             drag.current = false;
-        });
+        };
 
-        // keyboard
+        track.addEventListener("touchstart", onTouchStart, { passive: true });
+        track.addEventListener("touchend", onTouchEnd);
+        track.addEventListener("mousedown", onMouseDown);
+        window.addEventListener("mouseup", onMouseUp);
+
         const keyHandler = (e: KeyboardEvent) => {
             const pf = document.getElementById("portfolio");
             if (!pf) return;
@@ -87,8 +91,13 @@ export function useSliderAdvanced(total: number, onChange: (i: number) => void) 
 
         return () => {
             if (autoT.current) clearInterval(autoT.current);
+            track.removeEventListener("touchstart", onTouchStart);
+            track.removeEventListener("touchend", onTouchEnd);
+            track.removeEventListener("mousedown", onMouseDown);
+            window.removeEventListener("mouseup", onMouseUp);
             document.removeEventListener("keydown", keyHandler);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [total]);
 
     return { go };

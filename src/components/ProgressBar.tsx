@@ -1,21 +1,16 @@
-"use client";
+﻿"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 export default function ProgressBar() {
     const ref = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
-
-    const [loading, setLoading] = useState(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        let timeout: NodeJS.Timeout;
+        if (!ref.current) return;
 
-        // старт загрузки
-        setLoading(true);
-
-        // фейковый прогресс (визуально приятный)
         let progress = 0;
 
         const tick = () => {
@@ -31,24 +26,22 @@ export default function ProgressBar() {
 
         tick();
 
-        // завершение загрузки
-        timeout = setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
             if (!ref.current) return;
 
             ref.current.style.transform = "scaleX(1)";
 
             setTimeout(() => {
-                setLoading(false);
                 if (ref.current) {
                     ref.current.style.transform = "scaleX(0)";
                 }
             }, 200);
         }, 300);
 
-        return () => clearTimeout(timeout);
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
     }, [pathname]);
-
-    if (!loading) return null;
 
     return (
         <div className="progress">

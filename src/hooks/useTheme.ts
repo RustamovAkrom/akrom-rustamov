@@ -1,37 +1,26 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 
 type Theme = "dark" | "light";
 
+function getInitialTheme(): Theme {
+    if (typeof window === "undefined") return "dark";
+    const saved = localStorage.getItem("theme") as Theme | null;
+    if (saved) return saved;
+    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
 export function useTheme() {
-    const [theme, setTheme] = useState<Theme>("dark");
+    const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
-    // init theme
     useEffect(() => {
-        const saved = localStorage.getItem("theme") as Theme | null;
-
-        if (saved) {
-            setTheme(saved);
-            document.documentElement.dataset.theme = saved;
-            return;
-        }
-
-        // fallback → system theme
-        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-
-        const initial: Theme = prefersLight ? "light" : "dark";
-
-        setTheme(initial);
-        document.documentElement.dataset.theme = initial;
-    }, []);
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem("theme", theme);
+    }, [theme]);
 
     const toggle = () => {
-        const next: Theme = theme === "dark" ? "light" : "dark";
-
-        setTheme(next);
-        document.documentElement.dataset.theme = next;
-        localStorage.setItem("theme", next);
+        setTheme((t) => (t === "dark" ? "light" : "dark"));
     };
 
     return { theme, toggle };

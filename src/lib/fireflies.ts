@@ -1,0 +1,17 @@
+export const fireflyPositions = [
+    { left: '12%', top: '34%', delay: '1.2s', duration: '6.1s' },
+    { left: '67%', top: '12%', delay: '3.4s', duration: '7.2s' },
+    { left: '45%', top: '78%', delay: '0.8s', duration: '5.5s' },
+    { left: '89%', top: '56%', delay: '2.1s', duration: '8.3s' },
+    { left: '23%', top: '89%', delay: '4.5s', duration: '6.7s' },
+    { left: '78%', top: '23%', delay: '1.9s', duration: '5.9s' },
+    { left: '56%', top: '45%', delay: '3.7s', duration: '7.8s' },
+    { left: '34%', top: '67%', delay: '0.3s', duration: '6.4s' },
+    { left: '91%', top: '91%', delay: '5.2s', duration: '8.1s' },
+    { left: '5%', top: '50%', delay: '2.8s', duration: '5.3s' },
+    { left: '50%', top: '5%', delay: '4.1s', duration: '7.5s' },
+    { left: '82%', top: '72%', delay: '1.5s', duration: '6.8s' },
+    { left: '15%', top: '15%', delay: '3.9s', duration: '8.6s' },
+    { left: '62%', top: '38%', delay: '0.6s', duration: '5.7s' },
+    { left: '38%', top: '62%', delay: '2.4s', duration: '7.1s' },
+];

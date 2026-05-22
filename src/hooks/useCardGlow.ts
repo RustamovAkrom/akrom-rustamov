@@ -2,6 +2,10 @@
 
 import { useEffect } from "react";
 
+interface GlowEl extends HTMLElement {
+    _glow?: { move: (e: MouseEvent) => void; leave: () => void };
+}
+
 export function useCardGlow() {
     useEffect(() => {
         if (window.matchMedia("(hover: none)").matches) return;
@@ -30,11 +34,11 @@ export function useCardGlow() {
             el.addEventListener("mousemove", move);
             el.addEventListener("mouseleave", leave);
 
-            (el as any)._glow = { move, leave };
+            (el as GlowEl)._glow = { move, leave };
         });
 
         return () => {
-            elements.forEach((el: any) => {
+            elements.forEach((el: GlowEl) => {
                 if (el._glow) {
                     el.removeEventListener("mousemove", el._glow.move);
                     el.removeEventListener("mouseleave", el._glow.leave);

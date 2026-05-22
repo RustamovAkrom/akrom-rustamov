@@ -1,10 +1,11 @@
-"use client";
+﻿"use client";
 
 import { useEffect } from "react";
 
 export function useCursor(
-    dotRef: React.RefObject<HTMLDivElement>,
-    ringRef: React.RefObject<HTMLDivElement>
+    dotRef: React.RefObject<HTMLDivElement | null>,
+    ringRef: React.RefObject<HTMLDivElement | null>,
+    trailRefs?: React.RefObject<HTMLDivElement | null>[]
 ) {
     useEffect(() => {
         const dot = dotRef.current;
@@ -14,29 +15,28 @@ export function useCursor(
 
         const pos = { x: 0, y: 0 };
         const rp = { x: 0, y: 0 };
+        const trailPos = trailRefs?.map(() => ({ x: 0, y: 0 })) || [];
 
         const applyTheme = () => {
             const theme = document.documentElement.dataset.theme;
 
             if (theme === "light") {
-                dot.style.background = "#111"; // тёмный
+                dot.style.background = "#111";
                 ring.style.borderColor = "rgba(0,0,0,0.4)";
             } else {
-                dot.style.background = "#fff"; // светлый
+                dot.style.background = "#fff";
                 ring.style.borderColor = "rgba(255,255,255,0.4)";
             }
         };
 
         applyTheme();
 
-        // следим за сменой темы
         const observer = new MutationObserver(applyTheme);
         observer.observe(document.documentElement, {
             attributes: true,
             attributeFilter: ["data-theme"],
         });
 
-        // 🔹 mouse move
         const onMove = (e: MouseEvent) => {
             pos.x = e.clientX;
             pos.y = e.clientY;
@@ -52,10 +52,19 @@ export function useCursor(
 
             ring.style.transform = `translate(${rp.x - 17}px, ${rp.y - 17}px)`;
 
+            trailRefs?.forEach((ref, i) => {
+                const el = ref.current;
+                if (!el) return;
+                const t = trailPos[i];
+                const speed = 0.08 + i * 0.04;
+                t.x += (pos.x - t.x) * speed;
+                t.y += (pos.y - t.y) * speed;
+                el.style.transform = `translate(${t.x - 3}px, ${t.y - 3}px)`;
+            });
+
             raf = requestAnimationFrame(animate);
         };
 
-        // 🔹 hover targets
         const targets = document.querySelectorAll(
             "a,button,.sk,.cert,.svc,.slide__vis,.cform-i"
         );
@@ -88,5 +97,5 @@ export function useCursor(
                 el.removeEventListener("mouseleave", leave);
             });
         };
-    }, [dotRef, ringRef]);
+    }, [dotRef, ringRef, trailRefs]);
 }

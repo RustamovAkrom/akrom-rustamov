@@ -3,7 +3,6 @@ import { Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 
-
 const syne = Syne({
     variable: "--font-syne",
     subsets: ["latin"],
@@ -28,6 +27,23 @@ export const metadata: Metadata = {
     },
 };
 
+const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Akrom Rustamov',
+    jobTitle: 'Backend Engineer',
+    url: 'https://akrom-omega.vercel.app',
+    sameAs: [
+        'https://github.com/RustamovAkrom',
+    ],
+    knowsAbout: ['Python', 'FastAPI', 'Django', 'PostgreSQL', 'REST API', 'System Design'],
+    address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Tashkent',
+        addressCountry: 'UZ',
+    },
+};
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -37,6 +53,10 @@ export default function RootLayout({
         <html lang="en" className={`${syne.variable} ${jetbrainsMono.variable}`}>
             <head>
                 <link rel="icon" href="/favicon.ico" />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+                />
             </head>
             <body>
                 <Providers>

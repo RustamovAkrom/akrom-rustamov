@@ -2,6 +2,10 @@
 
 import { useEffect } from "react";
 
+interface TiltEl extends HTMLElement {
+    _tilt?: { move: (e: MouseEvent) => void; leave: () => void };
+}
+
 export function useTilt() {
     useEffect(() => {
         if (window.matchMedia("(hover: none)").matches) return;
@@ -29,11 +33,11 @@ export function useTilt() {
             card.addEventListener("mousemove", move);
             card.addEventListener("mouseleave", leave);
 
-            (card as any)._tilt = { move, leave };
+            (card as TiltEl)._tilt = { move, leave };
         });
 
         return () => {
-            cards.forEach((card: any) => {
+            cards.forEach((card: TiltEl) => {
                 if (card._tilt) {
                     card.removeEventListener("mousemove", card._tilt.move);
                     card.removeEventListener("mouseleave", card._tilt.leave);

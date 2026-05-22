@@ -12,7 +12,6 @@ export function useNavbarBehavior() {
 
         if (!nav) return;
 
-        let lastY = 0;
         let ticking = false;
         let open = false;
 
@@ -21,19 +20,13 @@ export function useNavbarBehavior() {
                 requestAnimationFrame(() => {
                     const y = window.scrollY;
 
-                    // 🔥 КЛЮЧЕВОЙ МОМЕНТ
-                    if (y < 80) {
-                        nav.classList.remove("vis");
-                    } else {
-                        nav.classList.add("vis");
-                    }
-
-                    lastY = y;
+                    // glassmorphism kicks in after scrolling past hero
+                    nav.classList.toggle("vis", y > 60);
 
                     // active link
                     let cur = "";
                     sections.forEach((s) => {
-                        if (y >= s.offsetTop - 130) {
+                        if (y >= s.offsetTop - 140) {
                             cur = s.id;
                         }
                     });
@@ -58,21 +51,13 @@ export function useNavbarBehavior() {
 
         burger?.addEventListener("click", () => {
             open = !open;
-
             burger.classList.toggle("open", open);
             list?.classList.toggle("open", open);
-
-            document.body.style.overflow = open ? "hidden" : "";
-
-            // 🔥 важно
-            if (open) nav.classList.add("vis");
         });
 
         links.forEach((l) => l.addEventListener("click", closeMenu));
 
         window.addEventListener("scroll", onScroll, { passive: true });
-
-        // 🔥 КРИТИЧНО: initial state
         onScroll();
 
         return () => {

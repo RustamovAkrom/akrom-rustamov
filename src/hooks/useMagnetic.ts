@@ -2,6 +2,10 @@
 
 import { useEffect } from "react";
 
+interface MagEl extends HTMLElement {
+    _magnetic?: { move: (e: MouseEvent) => void; leave: () => void };
+}
+
 export function useMagnetic() {
     useEffect(() => {
         if (window.matchMedia("(hover: none)").matches) return;
@@ -30,12 +34,11 @@ export function useMagnetic() {
             btn.addEventListener("mousemove", move);
             btn.addEventListener("mouseleave", leave);
 
-            // cleanup
-            (btn as any)._magnetic = { move, leave };
+            (btn as MagEl)._magnetic = { move, leave };
         });
 
         return () => {
-            buttons.forEach((btn: any) => {
+            buttons.forEach((btn: MagEl) => {
                 if (btn._magnetic) {
                     btn.removeEventListener("mousemove", btn._magnetic.move);
                     btn.removeEventListener("mouseleave", btn._magnetic.leave);
