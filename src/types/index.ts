@@ -67,6 +67,7 @@ export interface ContactData {
   social: {
     github: SocialLink;
     linkedin: SocialLink;
+    telegram: SocialLink;
   };
   phone: string;
 }

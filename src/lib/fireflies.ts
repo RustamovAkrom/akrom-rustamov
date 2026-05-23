@@ -15,3 +15,24 @@ export const fireflyPositions = [
     { left: '62%', top: '38%', delay: '0.6s', duration: '5.7s' },
     { left: '38%', top: '62%', delay: '2.4s', duration: '7.1s' },
 ];
+
+export const sporePositions = [
+    { left: '8%', top: '85%', duration: '8.5s', delay: '0.5s' },
+    { left: '18%', top: '90%', duration: '9.2s', delay: '1.2s' },
+    { left: '28%', top: '82%', duration: '7.8s', delay: '2.1s' },
+    { left: '38%', top: '88%', duration: '10.1s', delay: '0.8s' },
+    { left: '48%', top: '92%', duration: '8.9s', delay: '1.5s' },
+    { left: '58%', top: '86%', duration: '9.5s', delay: '2.8s' },
+    { left: '68%', top: '91%', duration: '8.2s', delay: '0.3s' },
+    { left: '78%', top: '84%', duration: '10.3s', delay: '1.8s' },
+    { left: '88%', top: '89%', duration: '9.0s', delay: '2.5s' },
+    { left: '13%', top: '95%', duration: '8.7s', delay: '1.0s' },
+    { left: '33%', top: '96%', duration: '9.8s', delay: '0.6s' },
+    { left: '53%', top: '94%', duration: '8.4s', delay: '2.2s' },
+    { left: '73%', top: '97%', duration: '10.0s', delay: '1.3s' },
+    { left: '93%', top: '93%', duration: '8.6s', delay: '0.9s' },
+    { left: '43%', top: '87%', duration: '9.3s', delay: '1.7s' },
+    { left: '63%', top: '90%', duration: '8.1s', delay: '2.4s' },
+    { left: '23%', top: '93%', duration: '9.6s', delay: '0.4s' },
+    { left: '83%', top: '92%', duration: '8.8s', delay: '1.6s' },
+];

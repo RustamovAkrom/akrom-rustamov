@@ -2,7 +2,7 @@
 
 import { useData } from '@/hooks/useData';
 import { contactData } from '@/lib/data';
-import { fireflyPositions } from '@/lib/fireflies';
+import { fireflyPositions, sporePositions } from '@/lib/fireflies';
 import type { ContactData } from '@/types';
 
 export default function Contact() {
@@ -51,6 +51,20 @@ export default function Contact() {
                     />
                 ))}
             </div>
+            <div className="spores" aria-hidden="true">
+                {sporePositions.map((sp, i) => (
+                    <div
+                        key={i}
+                        className="spore"
+                        style={{
+                            left: sp.left,
+                            top: sp.top,
+                            animationDelay: sp.delay,
+                            animationDuration: sp.duration,
+                        }}
+                    />
+                ))}
+            </div>
             <div className="container">
         <div className="contact-grid">
           <div className="contact-left">
@@ -73,6 +87,12 @@ export default function Contact() {
                   <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9H7.12v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
                 </svg>
                 <span className="mono">{data.social.linkedin.username}</span>
+              </a>
+              <a href={data.social.telegram.url} target="_blank" rel="noopener noreferrer" className="c-link">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                <span className="mono">{data.social.telegram.username}</span>
               </a>
               <a href={`tel:${data.phone.replace(/\s/g, '')}`} className="c-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="16">

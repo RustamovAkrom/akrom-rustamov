@@ -1975,22 +1975,142 @@ RESPONSIVE — TABLET
     z-index: 0;
 }
 
+/* Enhanced fireflies with more variation */
 .firefly {
     position: absolute;
-    width: 3px;
-    height: 3px;
     border-radius: 50%;
     background: #a3e635;
-    box-shadow: 0 0 6px #a3e635, 0 0 12px rgba(163, 230, 53, 0.4);
+    box-shadow:
+        0 0 8px #a3e635,
+        0 0 16px rgba(163, 230, 53, 0.5),
+        0 0 24px rgba(163, 230, 53, 0.2);
     opacity: 0;
-    animation: firefly-float 6s ease-in-out infinite;
+    animation: firefly-float var(--duration, 6s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+/* Firefly size variation */
+.firefly:nth-child(1),
+.firefly:nth-child(4),
+.firefly:nth-child(7) {
+    width: 4px;
+    height: 4px;
+}
+
+.firefly:nth-child(2),
+.firefly:nth-child(5),
+.firefly:nth-child(8) {
+    width: 2px;
+    height: 2px;
+    background: #67e8f9;
+    box-shadow:
+        0 0 6px #67e8f9,
+        0 0 12px rgba(103, 232, 249, 0.5);
+}
+
+.firefly:nth-child(3),
+.firefly:nth-child(6),
+.firefly:nth-child(9) {
+    width: 3px;
+    height: 3px;
+    background: #c4b5fd;
+    box-shadow:
+        0 0 6px #c4b5fd,
+        0 0 12px rgba(196, 181, 253, 0.4);
 }
 
 @keyframes firefly-float {
-    0%, 100% { opacity: 0; transform: translateY(0) scale(0.5); }
-    20% { opacity: 0.8; }
-    50% { opacity: 0.4; transform: translateY(-30px) scale(1); }
-    80% { opacity: 0.6; }
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+    }
+    10% {
+        opacity: 0.3;
+    }
+    20% {
+        opacity: 0.9;
+        transform: translateY(-20px) scale(1);
+    }
+    30% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-40px) scale(0.9);
+    }
+    70% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.5;
+        transform: translateY(-50px) scale(0.8);
+    }
+}
+
+/* ═══════════════════════════════════════════════════
+   FOREST SPORES (NEW)
+═══════════════════════════════════════════════════ */
+.spores {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.spore {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(103, 232, 249, 0.6);
+    box-shadow:
+        0 0 4px rgba(103, 232, 249, 0.4),
+        0 0 8px rgba(103, 232, 249, 0.2);
+    opacity: 0;
+    animation: spore-drift var(--spore-duration, 8s) ease-in-out infinite;
+    animation-delay: var(--spore-delay, 0s);
+}
+
+/* Spore color variation */
+.spore:nth-child(3n+1) {
+    background: rgba(103, 232, 249, 0.7);
+    box-shadow: 0 0 6px rgba(103, 232, 249, 0.5);
+}
+
+.spore:nth-child(3n+2) {
+    background: rgba(167, 243, 208, 0.6);
+    box-shadow: 0 0 6px rgba(167, 243, 208, 0.4);
+}
+
+.spore:nth-child(3n+3) {
+    background: rgba(196, 181, 253, 0.5);
+    box-shadow: 0 0 6px rgba(196, 181, 253, 0.3);
+}
+
+@keyframes spore-drift {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(0) translateX(0);
+    }
+    15% {
+        opacity: 0.5;
+    }
+    30% {
+        opacity: 0.8;
+        transform: translateY(-30px) translateX(5px);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translateY(-60px) translateX(-3px);
+    }
+    70% {
+        opacity: 0.4;
+        transform: translateY(-90px) translateX(4px);
+    }
+    85% {
+        opacity: 0.2;
+    }
 }
 
 /* ═══════════════════════════════════════════════════

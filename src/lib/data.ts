@@ -197,6 +197,10 @@ export const contactData: ContactData = {
       url: 'https://linkedin.com',
       username: 'LinkedIn',
     },
+    telegram: {
+      url: 'https://t.me/Akrom_Rustamov',
+      username: '@Akrom_Rustamov',
+    },
   },
   phone: '+998 95 878 62 77',
 };
