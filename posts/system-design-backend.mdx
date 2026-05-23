@@ -1,0 +1,40 @@
+---
+title: "System Design for Backend Developers"
+date: 2024-11-28
+description: "A practical guide to designing distributed systems and choosing the right architecture."
+tags: ["System Design", "Architecture"]
+readingTime: "8 min read"
+slug: "system-design-backend"
+---
+
+When building backend systems that need to scale, the decisions you make early matter. This guide covers the essential patterns every backend developer should know.
+
+## Monolith vs Microservices
+
+Start with a monolith. Seriously. The overhead of microservices — inter-service communication, deployment complexity, distributed tracing — is only worth it when you have multiple teams and clear service boundaries.
+
+## Database Scaling
+
+- **Vertical scaling** — bigger server, easiest first step
+- **Read replicas** — offload read traffic, great for read-heavy workloads
+- **Sharding** — split data across databases, necessary at massive scale
+- **Caching** — Redis as a caching layer can reduce DB load by 80%+
+
+## Message Queues
+
+Use RabbitMQ or Redis Streams for:
+- Background job processing
+- Decoupling services
+- Handling traffic spikes gracefully
+
+## Load Balancing & Health Checks
+
+NGINX or HAProxy in front of your application servers. Implement proper health check endpoints so unhealthy instances get removed from the pool automatically.
+
+## Monitoring
+
+You can't improve what you don't measure. Set up:
+- Application metrics (Prometheus)
+- Distributed tracing (Jaeger)
+- Structured logging (JSON format)
+- Alerting for critical errors

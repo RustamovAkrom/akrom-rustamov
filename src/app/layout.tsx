@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import Galaxy from "@/components/galaxy/Galaxy";
+import Cursor from "@/components/cursor/Cursor";
 
 const syne = Syne({
     variable: "--font-syne",
@@ -50,7 +54,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${syne.variable} ${jetbrainsMono.variable}`}>
+        <html lang="en" className={`${syne.variable} ${jetbrainsMono.variable}`} data-theme="dark" data-scroll-behavior="smooth">
             <head>
                 <link rel="icon" href="/favicon.ico" />
                 <script
@@ -60,7 +64,12 @@ export default function RootLayout({
             </head>
             <body>
                 <Providers>
+                    <Navbar />
+                    <Galaxy />
+                    <Cursor />
+                    <div className="grain" />
                     {children}
+                    <Footer />
                 </Providers>
             </body>
         </html>

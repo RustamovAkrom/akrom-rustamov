@@ -1,23 +1,50 @@
 ﻿"use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useNavbarBehavior } from "@/hooks/useNavbarBehavior";
 import { useTheme } from "@/hooks/useTheme";
+
+const navLinks = [
+    { label: "About", href: "/#about", dataS: "about" },
+    { label: "Skills", href: "/#skills", dataS: "skills" },
+    { label: "Work", href: "/#portfolio", dataS: "portfolio" },
+    { label: "Services", href: "/#services", dataS: "services" },
+    { label: "Certs", href: "/#certificates", dataS: "certificates" },
+    { label: "Blog", href: "/blog", dataS: null },
+    { label: "Contact", href: "/#contact", dataS: "contact", isCta: true },
+];
 
 export default function Navbar() {
     useNavbarBehavior();
     const { toggle } = useTheme();
+    const pathname = usePathname();
+    const isHome = pathname === "/";
 
     return (
         <nav className="nav" id="nav">
             <div className="nav__wrap">
-                <a href="#home" className="nav__brand">AR<span className="nav__dot">.</span></a>
+                <Link href="/" className="nav__brand">AR<span className="nav__dot">.</span></Link>
                 <ul className="nav__list" id="navList">
-                    <li><a href="#about" className="nav__a" data-s="about">About</a></li>
-                    <li><a href="#skills" className="nav__a" data-s="skills">Skills</a></li>
-                    <li><a href="#portfolio" className="nav__a" data-s="portfolio">Work</a></li>
-                    <li><a href="#services" className="nav__a" data-s="services">Services</a></li>
-                    <li><a href="#certificates" className="nav__a" data-s="certificates">Certs</a></li>
-                    <li><a href="#contact" className="nav__a nav__a--cta" data-s="contact">Contact</a></li>
+                    {navLinks.map((link) => (
+                        <li key={link.label}>
+                            <Link
+                                href={isHome && link.href.startsWith("/#") ? link.href.slice(1) : link.href}
+                                className={`nav__a ${link.isCta ? "nav__a--cta" : ""}`}
+                                data-s={link.dataS ?? undefined}
+                                onClick={() => {
+                                    const navList = document.getElementById("navList");
+                                    const burger = document.getElementById("navBurger");
+                                    if (navList?.classList.contains("open")) {
+                                        navList.classList.remove("open");
+                                        burger?.classList.remove("open");
+                                    }
+                                }}
+                            >
+                                {link.label}
+                            </Link>
+                        </li>
+                    ))}
                     <li className="nav__theme-li">
                         <button
                             className="nav__theme"

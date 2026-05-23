@@ -78,16 +78,6 @@ export interface FunFact {
   icon: string;
 }
 
-export interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  tags: string[];
-  image?: string;
-  slug: string;
-}
-
 export interface GitHubStats {
   publicRepos: number;
   followers: number;

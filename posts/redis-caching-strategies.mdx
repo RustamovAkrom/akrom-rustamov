@@ -1,0 +1,47 @@
+---
+title: "Redis Caching Strategies"
+date: 2024-07-30
+description: "Cache-aside, write-through, and practical patterns for reducing database load with Redis."
+tags: ["Redis", "Caching", "Performance"]
+readingTime: "5 min read"
+slug: "redis-caching-strategies"
+---
+
+Caching is one of the highest-impact optimizations you can make. Redis is my go-to tool for this.
+
+## Cache-Aside Pattern
+
+The most common approach. Your application checks the cache first, falls back to the database, and populates the cache.
+
+```python
+async def get_user(user_id: int):
+    cached = await redis.get(f"user:{user_id}")
+    if cached:
+        return json.loads(cached)
+    user = await db.fetch_one("SELECT * FROM users WHERE id = $1", user_id)
+    await redis.setex(f"user:{user_id}", 300, json.dumps(user))
+    return user
+```
+
+## Cache Invalidation
+
+The hardest problem in computer science. Strategies:
+
+- **TTL** — simple, but stale data possible
+- **Write-through** — update cache on every write, always consistent
+- **Event-driven** — invalidate via message queue on data change
+
+## What to Cache
+
+- User sessions — short TTL, high read rate
+- Configuration data — long TTL, rarely changes
+- Aggregated metrics — medium TTL, expensive to compute
+- API responses — only if idempotent and cache-friendly
+
+## Redis Data Structures
+
+Use the right structure for the job:
+- **Strings** — simple key-value, sessions, counters
+- **Hashes** — objects with multiple fields
+- **Sorted Sets** — leaderboards, time-series data
+- **Streams** — event sourcing, message queues

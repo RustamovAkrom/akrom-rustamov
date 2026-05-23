@@ -1,0 +1,40 @@
+---
+title: "Building Scalable APIs with FastAPI"
+date: 2024-12-15
+description: "Lessons learned from building production-grade REST APIs with Python and FastAPI."
+tags: ["FastAPI", "Python", "Backend"]
+readingTime: "6 min read"
+slug: "building-scalable-apis-fastapi"
+---
+
+FastAPI has become my go-to framework for building high-performance backend services. In this post, I want to share the patterns and practices that have worked for me in production.
+
+## Why FastAPI?
+
+FastAPI combines the best of both worlds: the performance of Node.js and the developer experience of frameworks like Flask. Built on Starlette and Pydantic, it gives you automatic API documentation, data validation, and async support out of the box.
+
+## Project Structure
+
+A well-organized project is half the battle. I follow a modular structure:
+
+- `app/` — main application package
+- `app/api/` — route handlers
+- `app/core/` — config, security, logging
+- `app/models/` — database models
+- `app/schemas/` — Pydantic models
+- `app/services/` — business logic
+
+## Dependency Injection
+
+FastAPI's dependency injection system is incredibly powerful. Use it for database sessions, authentication, and reusable logic. It keeps your route handlers clean and testable.
+
+## Async Database Layer
+
+For production APIs, use async database drivers like `asyncpg` with SQLAlchemy 2.0. The performance gains are significant when handling hundreds of concurrent connections.
+
+## Key Takeaways
+
+- Always use Pydantic models for request/response validation
+- Leverage dependency injection for clean architecture
+- Use async database drivers for I/O-bound operations
+- Write tests with `pytest` and `httpx.AsyncClient`

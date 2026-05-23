@@ -6,7 +6,6 @@ import {
   Certificate,
   ContactData,
   FunFact,
-  BlogPost,
 } from '@/types';
 
 export const aboutData: AboutData = {
@@ -207,33 +206,6 @@ export const funFactsData: FunFact[] = [
   { label: 'Lines of Code', value: 50, suffix: 'k+', icon: 'code' },
   { label: 'Git Commits', value: 500, suffix: '+', icon: 'git' },
   { label: 'Bugs Squashed', value: 0, suffix: '', icon: 'bug' },
-];
-
-export const blogPostsData: BlogPost[] = [
-  {
-    id: 1,
-    title: 'Building Scalable APIs with FastAPI',
-    excerpt: 'Lessons learned from building production-grade REST APIs with Python and FastAPI.',
-    date: '2024-12-15',
-    tags: ['FastAPI', 'Python', 'Backend'],
-    slug: 'building-scalable-apis-fastapi',
-  },
-  {
-    id: 2,
-    title: 'System Design for Backend Developers',
-    excerpt: 'A practical guide to designing distributed systems and choosing the right architecture.',
-    date: '2024-11-28',
-    tags: ['System Design', 'Architecture'],
-    slug: 'system-design-backend',
-  },
-  {
-    id: 3,
-    title: 'Async Python: Beyond the Basics',
-    excerpt: 'Deep dive into asyncio, aiohttp, and building high-performance async services.',
-    date: '2024-10-10',
-    tags: ['Python', 'Async', 'Performance'],
-    slug: 'async-python-beyond-basics',
-  },
 ];
 
 export const quoteData = {
