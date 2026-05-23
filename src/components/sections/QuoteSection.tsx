@@ -1,6 +1,7 @@
-﻿'use client';
+﻿/* eslint-disable react-hooks/set-state-in-effect */
+'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const quotes = [
     { text: 'First, solve the problem. Then, write the code.', author: 'John Johnson' },
@@ -25,8 +26,12 @@ function getRandomIndex(length: number): number {
 }
 
 export default function QuoteSection() {
-    const [quoteIndex, setQuoteIndex] = useState(() => getRandomIndex(quotes.length));
+    const [quoteIndex, setQuoteIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+
+    useEffect(() => {
+        setQuoteIndex(getRandomIndex(quotes.length));
+    }, []);
 
     const changeQuote = () => {
         setIsAnimating(true);
@@ -40,6 +45,7 @@ export default function QuoteSection() {
         }, 300);
     };
 
+    // Show first quote while hydrating, then random quote after mount
     const quote = quotes[quoteIndex];
 
     return (
