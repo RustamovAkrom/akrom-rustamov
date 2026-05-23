@@ -20,13 +20,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Akrom Rustamov - Backend Engineer",
-    description: "Python Backend Engineer specializing in FastAPI and Django. Building scalable, high-performance backend systems.",
-    keywords: ["Backend Developer", "Python", "FastAPI", "Django", "REST API", "Akrom Rustamov"],
+    title: "Akrom Rustamov - Software Engineer",
+    description: "Python Software Engineer specializing in FastAPI and Django. Building scalable, high-performance backend systems.",
+    keywords: ["Software Developer", "Python", "FastAPI", "Django", "REST API", "Akrom Rustamov"],
     authors: [{ name: "Akrom Rustamov" }],
     openGraph: {
-        title: "Akrom Rustamov - Backend Engineer",
-        description: "Python Backend Engineer specializing in FastAPI and Django",
+        title: "Akrom Rustamov - Software Engineer",
+        description: "Python Software Engineer specializing in FastAPI and Django",
         type: "website",
     },
 };
@@ -35,7 +35,7 @@ const personJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Akrom Rustamov',
-    jobTitle: 'Backend Engineer',
+    jobTitle: 'Software Engineer',
     url: 'https://akrom-omega.vercel.app',
     sameAs: [
         'https://github.com/RustamovAkrom',

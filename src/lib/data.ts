@@ -9,7 +9,7 @@ import {
 } from '@/types';
 
 export const aboutData: AboutData = {
-  lead: 'Backend Engineer specializing in <strong>FastAPI</strong> and <strong>Django</strong>. Experienced in REST APIs, JWT/RBAC auth, and async services.',
+  lead: 'Software Engineer specializing in <strong>FastAPI</strong> and <strong>Django</strong>. Experienced in REST APIs, JWT/RBAC auth, and async services.',
   body: 'Focused on clean architecture, performance optimization, and secure backend design. Pursuing BSc in IT (Cybersecurity) at IDU, Tashkent.',
   stats: [
     { value: 3, label: 'Projects', isNumber: true, suffix: '+' },

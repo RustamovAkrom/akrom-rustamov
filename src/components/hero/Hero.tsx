@@ -43,7 +43,7 @@ export default function Hero() {
                 <div className="hero__copy">
                     <p className="hero__eyebrow reveal in" style={{ '--d': '0s' } as React.CSSProperties}>
                         <span className="mono dim">&lt;</span>
-                        <span className="typing">Backend Engineer · Python</span>
+                        <span className="typing">Software Engineer · Python</span>
                         <span className="mono dim">/&gt;</span>
                     </p>
                     <h1 className="hero__name">

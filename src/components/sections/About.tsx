@@ -38,6 +38,9 @@ export default function About() {
                                 </div>
                             ))}
                         </div>
+                        <a href="/cv.pdf" target="_blank" rel="noopener" className="btn solid">
+                            View CV
+                        </a>
                     </div>
                     <div className="about__right reveal" style={{ '--d': '.1s' } as React.CSSProperties}>
                         <div className="tl">
