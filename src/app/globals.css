@@ -2046,6 +2046,17 @@ RESPONSIVE — TABLET
     color: var(--text);
     font-style: italic;
     margin-bottom: 24px;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.quote-text.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.quote-text.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .quote-author {
@@ -2053,6 +2064,42 @@ RESPONSIVE — TABLET
     color: var(--dim);
     letter-spacing: 0.15em;
     text-transform: uppercase;
+}
+
+.quote-refresh {
+    position: absolute;
+    top: 50%;
+    right: -60px;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--bd);
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+}
+
+.quote-refresh:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-50%) rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .quote-refresh {
+        position: static;
+        transform: none;
+        margin: 16px auto 0;
+    }
+
+    .quote-refresh:hover {
+        transform: rotate(180deg);
+    }
 }
 
 /* ═══════════════════════════════════════════════════
