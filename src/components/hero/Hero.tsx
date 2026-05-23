@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Hero() {
     return (
         <>
@@ -8,7 +10,7 @@ export default function Hero() {
                 <div className="orb-wrap" id="heroOrb">
                     <div className="orb">
                         <div className="orb__core">
-                            <img className="orb__img" src="./images/avatar.png" alt="Akrom Rustamov avatar" />
+                            <Image className="orb__img" src="/images/avatar.png" alt="Akrom Rustamov avatar" width={200} height={200} priority quality={85} />
                         </div>
                         <div className="orb__halo h1" />
                         <div className="orb__halo h2" />

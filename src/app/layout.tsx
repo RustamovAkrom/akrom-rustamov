@@ -56,6 +56,8 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${syne.variable} ${jetbrainsMono.variable}`} data-theme="dark" data-scroll-behavior="smooth">
             <head>
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
                 <link rel="icon" href="/favicon.ico" />
                 <script
                     type="application/ld+json"

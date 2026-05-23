@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 type Slide = {
     id: number;
@@ -35,7 +36,7 @@ export default function Slider() {
             >
                 {slides.map((slide) => (
                     <div key={slide.id} className="slider__slide">
-                        <img src={slide.image} alt={slide.title} />
+                        <Image src={slide.image} alt={slide.title} width={800} height={500} loading="lazy" />
                         <h3>{slide.title}</h3>
                     </div>
                 ))}

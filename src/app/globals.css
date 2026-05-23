@@ -1,6 +1,18 @@
 /* ═══════════════════════════════════════════════════
-RESET
+   BASE + RESET
 ═══════════════════════════════════════════════════ */
+
+/* Smooth scroll + overscroll */
+html {
+    scroll-behavior: smooth;
+    overscroll-behavior-y: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
 *,
 *::before,
 *::after {
@@ -1939,6 +1951,16 @@ RESPONSIVE — TABLET
     .hero__scroll-hint {
         display: none;
     }
+
+    /* Touch-optimized buttons (WCAG 44x44px) */
+    .btn,
+    .blog-tag,
+    .nav__a,
+    .theme-btn,
+    .quote-refresh {
+        min-height: 44px;
+        min-width: 44px;
+    }
 }
 
 
@@ -2910,4 +2932,18 @@ SCROLLBAR + MISC
         0 0 20px rgba(6, 182, 212, 0.5);
 
     transition: transform 0.2s ease;
+}
+
+/* ═══════════════════════════════════════════════════
+   PREFERRED REDUCED MOTION
+═══════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
