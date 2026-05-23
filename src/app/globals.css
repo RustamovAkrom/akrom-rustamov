@@ -2240,9 +2240,14 @@ RESPONSIVE — TABLET
 
 .blog-filters__inner {
     display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blog-filters__row {
+    display: flex;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .blog-search {
@@ -2270,10 +2275,82 @@ RESPONSIVE — TABLET
     box-shadow: 0 0 0 3px var(--glow);
 }
 
+.blog-filters__toggle {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    background: var(--bg3);
+    font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .3s;
+    white-space: nowrap;
+}
+
+.blog-filters__toggle:hover {
+    border-color: var(--bd-hi);
+    color: var(--text);
+}
+
+.blog-filters__toggle.open {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+}
+
+.blog-filters__toggle.has-active:not(.open) {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.blog-filters__toggle-text {
+    font-weight: 600;
+}
+
+.blog-filters__toggle-icon {
+    transition: transform .3s;
+}
+
+.blog-filters__toggle.open .blog-filters__toggle-icon {
+    transform: rotate(180deg);
+}
+
+.blog-filters__panel {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height .35s ease, opacity .25s, visibility .25s;
+}
+
+.blog-filters__panel.open {
+    max-height: 200px;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Desktop: show tags always */
+@media (min-width: 641px) {
+    .blog-filters__panel {
+        max-height: none;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .blog-filters__toggle {
+        display: none;
+    }
+}
+
 .blog-tags {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    padding-bottom: 4px;
 }
 
 .blog-tag {
@@ -2585,15 +2662,27 @@ RESPONSIVE — TABLET
 
     .blog-filters {
         top: 56px;
+        padding: 12px 0;
     }
 
-    .blog-filters__inner {
-        flex-direction: column;
-        align-items: stretch;
+    .blog-filters__toggle {
+        display: flex;
     }
 
     .blog-search {
         max-width: 100%;
+        padding: 8px 12px;
+        font-size: .82rem;
+    }
+
+    .blog-tags {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .blog-tag {
+        padding: 5px 12px;
+        font-size: 10px;
     }
 
     .blog-post-card {
