@@ -15,7 +15,7 @@ export default function HomePage() {
     return (
         <>
             <AppInit />
-            <main style={{ position: "relative", zIndex: 1 }}>
+            <main className="flex flex-col justify-center items-center">
                 <Hero />
                 <GitHubActivity />
                 <About />

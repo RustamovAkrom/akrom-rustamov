@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Galaxy from "@/components/galaxy/Galaxy";
 import Cursor from "@/components/cursor/Cursor";
+import LoadingBar from "@/components/LoadingBar";
 
 const syne = Syne({
     variable: "--font-syne",
@@ -66,6 +67,7 @@ export default function RootLayout({
             </head>
             <body>
                 <Providers>
+                    <LoadingBar />
                     <Navbar />
                     <Galaxy />
                     <Cursor />
