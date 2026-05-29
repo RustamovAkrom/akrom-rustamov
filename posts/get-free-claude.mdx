@@ -1,0 +1,56 @@
+---
+title: "How to Get Claude for Free — Full Setup Guide"
+date: "2025-05-29"
+description: "A step-by-step guide to installing and running Claude AI locally for free using freemodel.dev"
+tags: ["Claude", "AI", "Free Tools", "Developer Setup"]
+readingTime: "3 min read"
+slug: "get-free-claude"  # NET probela posle dvuh tochek!
+---
+
+Want to use Claude AI without paying? Here's a clean, working guide to set it up for free on your machine — whether you're on Windows, macOS, or Linux.
+
+## 1. Install Claude Console
+
+Open your terminal:
+
+- **Windows**: press `Win + R`, type `powershell`, press Enter
+- **macOS / Linux / WSL**: open your default terminal
+
+Then run the appropriate command:
+
+**macOS, Linux, WSL:**
+```sh
+curl -fsSL https://claude.ai/install.sh | bash
+claude --version
+```
+
+**Windows (PowerShell):**
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+## 2. Create an Account and Get Your API Key
+
+Go to [https://freemodel.dev/dashboard](https://freemodel.dev/dashboard) and sign up.
+
+Once logged in, navigate to the **API Keys** section and create a new API key. **Save it immediately** — you'll need it in the next step.
+
+## 3. Run Claude with Your Free API Key
+
+Open **PowerShell** again (`Win + R` → `powershell`) and use the commands below.
+
+⚠️ **Important:** Before pressing Enter, replace `freemodel_api_key` with the actual API key you saved from freemodel.dev.
+
+**For macOS, Linux, or WSL:**
+```sh
+ANTHROPIC_API_KEY="freemodel_api_key" ANTHROPIC_BASE_URL="https://cc.freemodel.dev" claude
+```
+
+**For Windows (PowerShell):**
+```powershell
+$env:ANTHROPIC_API_KEY="freemodel_api_key"
+$env:ANTHROPIC_BASE_URL="https://cc.freemodel.dev"
+claude
+```
+
+After that, Claude will start running locally — for free.
