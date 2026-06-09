@@ -8,6 +8,8 @@ export default function BlogPage() {
   const [activeTag, setActiveTag] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [hoveredPost, setHoveredPost] = useState<string | null>(null);
+  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   const allTags = useMemo(() => {
@@ -26,6 +28,36 @@ export default function BlogPage() {
       return matchesTag && matchesSearch;
     });
   }, [activeTag, search]);
+
+  const handleShare = async (e: React.MouseEvent, post: typeof allPosts[0]) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const articleUrl = window.location.origin + post.url;
+    const shareData = {
+      title: post.title,
+      text: `${post.description} - ${articleUrl}`,
+      url: articleUrl,
+    };
+
+    // Native share API (mobile)
+    if (navigator.share && navigator.canShare?.(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.log("Share cancelled");
+      }
+      return;
+    }
+
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(articleUrl);
+      setCopiedSlug(post.slug);
+      setTimeout(() => setCopiedSlug(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   // Reveal animation for dynamically filtered posts
   useEffect(() => {
@@ -55,6 +87,11 @@ export default function BlogPage() {
 
   return (
     <main className="blog-page">
+      {/* Reading Progress */}
+      <div className="blog-progress">
+        <div className="blog-progress__bar" style={{ width: "0%" }} />
+      </div>
+
       {/* Blog Hero */}
       <section className="blog-hero">
         <div className="container">
@@ -125,23 +162,48 @@ export default function BlogPage() {
                   key={post.slug}
                   className="blog-post-card reveal"
                   style={{ "--d": `${idx * 0.08}s` } as React.CSSProperties}
+                  onMouseEnter={() => setHoveredPost(post.slug)}
+                  onMouseLeave={() => setHoveredPost(null)}
                 >
                   <div className="blog-post-card__meta">
                     <span className="blog-post-card__date mono">{post.formattedDate}</span>
                     <span className="blog-post-card__rt mono">{post.readingTime}</span>
                   </div>
-                  <div className="blog-post-card__tags">
-                    {post.tags.map((tag) => (
-                      <span key={tag} className="pill sm">{tag}</span>
-                    ))}
+                  <div className="blog-post-card__content">
+                    <div className="blog-post-card__tags">
+                      {post.tags.map((tag) => (
+                        <span key={tag} className="pill sm">{tag}</span>
+                      ))}
+                    </div>
+                    <h2 className="blog-post-card__title">
+                      <Link href={post.url}>{post.title}</Link>
+                    </h2>
+                    <p className="blog-post-card__excerpt">{post.description}</p>
+                    <div className="blog-post-card__actions">
+                      <Link href={post.url} className="blog-post-card__link mono">
+                        Read article →
+                      </Link>
+                      <button
+                        className={`blog-post-card__action-btn ${copiedSlug === post.slug ? "copied" : ""}`}
+                        onClick={(e) => handleShare(e, post)}
+                        title="Share article"
+                      >
+                        {copiedSlug === post.slug ? (
+                          <span className="mono" style={{ fontSize: "10px", fontWeight: 600 }}>
+                            Copied
+                          </span>
+                        ) : (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                            <circle cx="18" cy="5" r="3" />
+                            <circle cx="6" cy="12" r="3" />
+                            <circle cx="18" cy="19" r="3" />
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
                   </div>
-                  <h2 className="blog-post-card__title">
-                    <Link href={post.url}>{post.title}</Link>
-                  </h2>
-                  <p className="blog-post-card__excerpt">{post.description}</p>
-                  <Link href={post.url} className="blog-post-card__link mono">
-                    Read article →
-                  </Link>
                 </article>
               ))}
             </div>

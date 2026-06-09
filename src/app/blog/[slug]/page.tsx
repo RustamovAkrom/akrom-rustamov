@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { allPosts } from "contentlayer/generated";
 import MDXContent from "@/components/mdx/MDXContent";
+import ViewCounter from "@/components/ViewCounter";
 
 export function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post.slug }));
@@ -27,6 +28,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <span className="blog-article__date mono">{post.formattedDate}</span>
               <span className="blog-article__dot">·</span>
               <span className="blog-article__rt mono">{post.readingTime}</span>
+              <span className="blog-article__dot">·</span>
+              <ViewCounter slug={slug} />
             </div>
             <h1 className="blog-article__title">{post.title}</h1>
             <div className="blog-article__tags">

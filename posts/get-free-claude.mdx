@@ -1,56 +1,64 @@
 ---
-title: "How to Get Claude for Free — Full Setup Guide"
-date: "2025-05-29"
-description: "A step-by-step guide to installing and running Claude AI locally for free using freemodel.dev"
-tags: ["Claude", "AI", "Free Tools", "Developer Setup"]
+title: "Claude AI dan bepul foydalanish — To‘liq o‘rnatish bo‘yicha qo‘llanma"
+date: "2026-06-10"
+description: "Claude AI ni freemodel.dev yordamida kompyuteringizga bepul o‘rnatish va ishga tushirish bo‘yicha bosqichma-bosqich qo‘llanma."
+tags: ["Claude", "AI", "Bepul vositalar", "Dasturchi uchun sozlamalar"]
 readingTime: "3 min read"
-slug: "get-free-claude"  # NET probela posle dvuh tochek!
+slug: "get-free-claude" #
 ---
 
-Want to use Claude AI without paying? Here's a clean, working guide to set it up for free on your machine — whether you're on Windows, macOS, or Linux.
+Claude AI dan pul to‘lamasdan foydalanmoqchimisiz? Quyida uni kompyuteringizda (Windows, macOS yoki Linux) bepul ishga tushirish bo‘yicha to‘liq va ishchi qo‘llanma keltirilgan.
 
-## 1. Install Claude Console
+## 1. Claude konsolini o‘rnatish
 
-Open your terminal:
+Terminalni oching:
 
-- **Windows**: press `Win + R`, type `powershell`, press Enter
-- **macOS / Linux / WSL**: open your default terminal
+* **Windows**: `Win + R` tugmalarini bosing, `powershell` deb yozing va Enter tugmasini bosing.
+* **macOS / Linux / WSL**: standart terminalingizni oching.
 
-Then run the appropriate command:
+Keyin o‘zingizning operatsion tizimingizga mos buyruqni ishga tushiring:
 
-**macOS, Linux, WSL:**
+**macOS, Linux, WSL uchun:**
+
 ```sh
 curl -fsSL https://claude.ai/install.sh | bash
 claude --version
+
 ```
 
-**Windows (PowerShell):**
+**Windows (PowerShell) uchun:**
+
 ```powershell
 irm https://claude.ai/install.ps1 | iex
+
 ```
 
-## 2. Create an Account and Get Your API Key
+## 2. Akkaunt yaratish va API kalitini olish
 
-Go to [https://freemodel.dev/dashboard](https://freemodel.dev/dashboard) and sign up.
+[https://freemodel.dev/dashboard](https://freemodel.dev/dashboard) saytiga o‘ting va ro‘yxatdan o‘ting.
 
-Once logged in, navigate to the **API Keys** section and create a new API key. **Save it immediately** — you'll need it in the next step.
+Tizimga kirganingizdan so‘ng, **API Keys** bo‘limiga o‘ting va yangi API kalitini yarating. **Uni darhol saqlab qo‘ying** — u keyingi qadamda sizga kerak bo‘ladi.
 
-## 3. Run Claude with Your Free API Key
+## 3. Claude ni bepul API kalitingiz bilan ishga tushirish
 
-Open **PowerShell** again (`Win + R` → `powershell`) and use the commands below.
+**PowerShell** ni qayta oching (`Win + R` → `powershell`) va quyidagi buyruqlardan foydalaning.
 
-⚠️ **Important:** Before pressing Enter, replace `freemodel_api_key` with the actual API key you saved from freemodel.dev.
+⚠️ **Muhim:** Enter tugmasini bosishdan oldin, `freemodel_api_key` yozuvini freemodel.dev dan olgan haqiqiy API kalitingiz bilan almashtiring.
 
-**For macOS, Linux, or WSL:**
+**macOS, Linux yoki WSL uchun:**
+
 ```sh
 ANTHROPIC_API_KEY="freemodel_api_key" ANTHROPIC_BASE_URL="https://cc.freemodel.dev" claude
+
 ```
 
-**For Windows (PowerShell):**
+**Windows (PowerShell) uchun:**
+
 ```powershell
 $env:ANTHROPIC_API_KEY="freemodel_api_key"
 $env:ANTHROPIC_BASE_URL="https://cc.freemodel.dev"
 claude
+
 ```
 
-After that, Claude will start running locally — for free.
+Shundan so‘ng, Claude kompyuteringizda lokal ravishda bepul ishga tushadi.

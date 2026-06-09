@@ -1,0 +1,58 @@
+---
+title: "PostgreSQL masshtabini kengaytirish: PgBouncer nima uchun muhim"
+date: "2026-06-10"
+description: "Resurslarni boshqarishga vaqt sarflashni to‘xtating. PgBouncer yuqori yuklamali PostgreSQL muhitlarida ulanishlar oqimini qanday hal qilishini va nima uchun bu kengaytiriladigan backend tizimlar uchun zarurligini bilib oling. 🐘"
+tags: ["PostgreSQL", "PgBouncer", "Database", "Backend", "Performance"]
+readingTime: "3 min read"
+slug: "scaling-postgresql-with-pgbouncer" #
+---
+
+# PostgreSQL masshtabini kengaytirish: PgBouncer nima uchun muhim
+
+Yuqori yuklamali tizimlarda ilovangizning ma’lumotlar bazasiga bo‘lgan ulanishlarni qanday boshqarishi ko‘pincha yashirin "tormoz" vazifasini o‘taydi. PostgreSQL har bir ulanish uchun alohida jarayon (process-per-connection) modelidan foydalanadi. Bu ishonchli, lekin resurs talab qiladigan yondashuv. Agar backend-ingiz tez-tez ulanishlarni yaratsa va o‘chirsa, yoki yuzlab parallel ishchi jarayonlarga ega bo‘lsangiz, tizim unumdorligi sezilarli darajada pasayadi.
+
+Bu yerda **PgBouncer** — yengil vaznli ulanishlar puleri (connection pooler) — infratuzilmangizning muhim tarkibiy qismiga aylanadi.
+
+---
+
+## Hal qilinadigan asosiy muammolar
+
+### 1. Ulanish resurslari (Connection Overhead)
+
+Har bir PostgreSQL jarayoni katta hajmdagi operativ xotirani (RAM) egallaydi. Ilovangiz yuzlab ulanishlarni ochganda, **OOM (Out of Memory) kills** xavfi va CPU-ning kontekst almashinuvi (context switching) ko‘payadi. PgBouncer ma’lumotlar bazasiga o‘rnatilgan ulanishlar "hovuzini" saqlaydi, bu esa ilovangizga har safar yangi qimmat jarayonni ishga tushirish o‘rniga, mavjud ulanishdan "qarz olish" imkonini beradi.
+
+### 2. Ulanishlarning tugashi (Connection Exhaustion)
+
+Trafik keskin ko‘payganda, Postgres-dagi standart ulanishlar chegarasiga tezda yetib boriladi. PgBouncer minglab kiruvchi ulanishlarni bazadagi kamroq, sobit sonli haqiqiy ulanishlarga yo‘naltirish orqali tizimingiz yuklama ostida ham barqaror ishlashini ta’minlaydi.
+
+### 3. Ulanish o‘rnatishdagi kechikishlar (Latency)
+
+TCP va Postgres autentifikatsiya handshaklari har bir so‘rovga millisekundlar qo‘shadi. PgBouncer bu ulanishlarni "issiq" va foydalanishga tayyor holda saqlaydi, bu esa mikroservislar uchun kechikishni sezilarli darajada kamaytiradi.
+
+---
+
+## Strategik tatbiq etish
+
+PgBouncer-ni samarali integratsiya qilish uchun quyidagi uchta puling rejimlaridan foydalanib, konfiguratsiyani o‘z arxitekturangizga moslang:
+
+| Rejim | Ishlash tartibi | Qachon ishlatiladi |
+| --- | --- | --- |
+| **Session** | Mijoz uzilguniga qadar ulanish band qilinadi. | Standart ilovalar. |
+| **Transaction** | Har bir transaksiyadan keyin ulanish bo‘shatiladi. | Yuqori konkurensiyali, qisqa so‘rovlar. |
+| **Statement** | Har bir so‘rovdan keyin ulanish bo‘shatiladi. | Maxsus sozlashlar yoki nosozliklarni izlashda. |
+
+### "Senior" darajadagi tavsiyalar:
+
+* **Har doim Transaction rejimini ishlating:** Agar ilova logikasi ruxsat bersa, bu eng yuqori konkurensiyani ta’minlaydi.
+* **Pulingdan foydalanishni nazorat qiling:** `cl_active` va `sv_active` ko‘rsatkichlarini kuzating. Agar mijoz tomonidagi kutish vaqti ortsa, `pool_size` yoki `max_db_connections` parametrlarini sozlash kerak.
+* **Xavfsizlik:** PgBouncer-ni har doim alohida konteynerda yoki sidecar sifatida ishga tushiring va ilova bilan pooler o‘rtasidagi trafikni himoyalash uchun TLS-ni qo‘llang.
+
+---
+
+## Xulosa
+
+PgBouncer — bu shunchaki optimallashtirish emas, balki ma’lumotlar bazangiz uchun himoya qatlami. Ulanishlar hayotiy siklini abstraksiya qilish orqali siz ilovangizning masshtablash imkoniyatlarini ma’lumotlar bazasining jarayonlarni boshqarish cheklovlaridan ajratasiz.
+
+---
+
+Yuqori unumdorlikka ega Django yoki FastAPI servislar uchun optimallashtirilgan `pgbouncer.ini` konfiguratsiya namunasini ko‘rib chiqishni xohlaysizmi?
