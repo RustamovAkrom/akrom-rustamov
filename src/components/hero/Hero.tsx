@@ -43,7 +43,7 @@ export default function Hero() {
                 <div className="hero__copy">
                     <p className="hero__eyebrow reveal in" style={{ '--d': '0s' } as React.CSSProperties}>
                         <span className="mono dim">&lt;</span>
-                        <span className="typing">Software Engineer · Python</span>
+                        <span className="typing">Python Backend Developer</span>
                         <span className="mono dim">/&gt;</span>
                     </p>
                     <h1 className="hero__name">
@@ -51,12 +51,14 @@ export default function Hero() {
                         <span className="hn-line hn-stroke reveal in" style={{ '--d': '.12s' } as React.CSSProperties}>Rustamov</span>
                     </h1>
                     <p className="hero__tag reveal in" style={{ '--d': '.18s' } as React.CSSProperties}>
-                        I build scalable,<br />high-performance<br />
-                        <em className="hero__tag-em">backend systems.</em>
+                        FastAPI va Django yordamida kengaytiriladigan, xavfsiz va production muhitga tayyor backend tizimlar yarataman.
+                        <br />
+                        REST API, database architecture, asynchronous processing va deployment jarayonlari bilan ishlayman.
                     </p>
                     <div className="hero__btns reveal in" style={{ '--d': '.24s' } as React.CSSProperties}>
-                        <a href="#portfolio" className="btn solid">View Work</a>
-                        <a href="#contact" className="btn ghost">Contact</a>
+                        <a href="#portfolio" className="btn solid">Loyihalarni ko‘rish</a>
+                        <a href="#contact" className="btn ghost">Bog‘lanish</a>
+                        <a href="/cv.pdf" target="_blank" rel="noopener" className="btn ghost">CV yuklash</a>
                     </div>
                     <div className="hero__socs reveal in" style={{ '--d': '.30s' } as React.CSSProperties}>
                         <a href="https://github.com/RustamovAkrom" target="_blank" rel="noopener" className="hero__soc">

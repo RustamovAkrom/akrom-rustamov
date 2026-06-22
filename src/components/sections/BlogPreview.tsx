@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { allPosts } from 'contentlayer/generated';
 
-export default function BlogPreview() {
+export default function BlogPreview({ className = "" }: { className?: string }) {
     const previewPosts = allPosts.slice(0, 3);
 
     return (
-        <section className="section blog" id="blog">
+        <section className={`section blog ${className}`.trim()} id="blog">
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">04.5 — writing</span>

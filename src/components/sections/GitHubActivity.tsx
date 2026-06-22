@@ -9,7 +9,7 @@ interface GitHubUser {
   following: number;
 }
 
-export default function GitHubActivity() {
+export default function GitHubActivity({ className = "" }: { className?: string }) {
   const [stats, setStats] = useState<GitHubUser | null>(null);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export default function GitHubActivity() {
     { label: 'Following', value: stats?.following ?? 15, fallback: '15+' },
   ];
 
-  return (
-    <section className="section github" id="github">
+    return (
+    <section className={`section github ${className}`.trim()} id="github">
       <div className="container">
         <div className="github-bar reveal">
           {items.map((item, idx) => (

@@ -27,17 +27,52 @@ const iconMap: Record<string, React.ReactNode> = {
             <line x1="12" y1="22.08" x2="12" y2="12" />
         </svg>
     ),
+    bot: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <rect x="3" y="11" width="18" height="10" rx="2" />
+            <circle cx="12" cy="16" r="2" />
+            <path d="M12 11V7a4 4 0 0 0-4-4h8a4 4 0 0 0-4 4v4" />
+            <line x1="1" y1="16" x2="5" y2="16" />
+            <line x1="19" y1="16" x2="23" y2="16" />
+        </svg>
+    ),
+    zap: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </svg>
+    ),
+    server: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <rect x="2" y="2" width="20" height="8" rx="2" />
+            <rect x="2" y="14" width="20" height="8" rx="2" />
+            <line x1="6" y1="6" x2="6.01" y2="6" />
+            <line x1="6" y1="18" x2="6.01" y2="18" />
+        </svg>
+    ),
+    radio: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0" />
+            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0" />
+            <path d="M12 12m-7 0a7 7 0 1 0 14 0a7 7 0 1 0-14 0" />
+        </svg>
+    ),
+    link: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </svg>
+    ),
 };
 
-export default function Services() {
+export default function Services({ className = "" }: { className?: string }) {
     const { data } = useData<Service[]>('/api/services', servicesData);
 
     return (
-        <section className="section services" id="services">
+        <section className={`section services ${className}`.trim()} id="services">
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">04 — services</span>
-                    <h2 className="s-title">What I Offer</h2>
+                    <h2 className="s-title">Xizmatlar</h2>
                 </div>
                 <div className="svc-list">
                     {data.map((service, idx) => (

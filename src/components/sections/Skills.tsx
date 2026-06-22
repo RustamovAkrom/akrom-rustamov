@@ -4,15 +4,15 @@ import { useData } from '@/hooks/useData';
 import { skillsData } from '@/lib/data';
 import type { SkillCategory } from '@/types';
 
-export default function Skills() {
+export default function Skills({ className = "" }: { className?: string }) {
     const { data } = useData<SkillCategory[]>('/api/skills', skillsData);
 
     return (
-        <section className="section skills" id="skills">
+        <section className={`section skills ${className}`.trim()} id="skills">
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">02 — skills</span>
-                    <h2 className="s-title">Stack &amp; Expertise</h2>
+                    <h2 className="s-title">Texnologiyalar</h2>
                 </div>
                 <div className="sk-grid">
                     {data.map((category, idx) => (

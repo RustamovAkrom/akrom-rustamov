@@ -5,7 +5,7 @@ import { contactData } from '@/lib/data';
 import { fireflyPositions, sporePositions } from '@/lib/fireflies';
 import type { ContactData } from '@/types';
 
-export default function Contact() {
+export default function Contact({ className = "" }: { className?: string }) {
     const { data } = useData<ContactData>('/api/contact', contactData);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,7 +36,7 @@ export default function Contact() {
   };
 
     return (
-        <section className="section contact" id="contact">
+        <section className={`section contact ${className}`.trim()} id="contact">
             <div className="fireflies" aria-hidden="true">
                 {fireflyPositions.map((ff, i) => (
                     <div
@@ -70,10 +70,10 @@ export default function Contact() {
           <div className="contact-left">
             <div className="s-head reveal">
               <span className="s-label mono">06 — contact</span>
-              <h2 className="s-title">Let&apos;s build<br /><em>something.</em></h2>
+              <h2 className="s-title">Keling bog‘lanamiz</h2>
             </div>
             <p className="contact-sub reveal" style={{ '--d': '.08s' } as React.CSSProperties}>
-              {data.description}
+              Backend tizimlar, API xizmatlar yoki yangi imkoniyatlar bo‘yicha hamkorlik uchun bog‘lanishingiz mumkin.
             </p>
             <div className="contact-links reveal" style={{ '--d': '.15s' } as React.CSSProperties}>
               <a href={data.social.github.url} target="_blank" rel="noopener noreferrer" className="c-link">
@@ -107,21 +107,21 @@ export default function Contact() {
             <form className="cform" onSubmit={handleSubmit} noValidate>
               <div className="cform-row">
                 <div className="cform-g">
-                  <label className="cform-l mono" htmlFor="name">Name</label>
-                  <input className="cform-i" type="text" id="name" name="name" placeholder="Your name" required />
+                  <label className="cform-l mono" htmlFor="name">Ismingiz</label>
+                  <input className="cform-i" type="text" id="name" name="name" placeholder="Ismingiz" required />
                 </div>
                 <div className="cform-g">
                   <label className="cform-l mono" htmlFor="email">Email</label>
-                  <input className="cform-i" type="email" id="email" name="email" placeholder="your@email.com" required />
+                  <input className="cform-i" type="email" id="email" name="email" placeholder="sizning@email.com" required />
                 </div>
               </div>
               <div className="cform-g">
-                <label className="cform-l mono" htmlFor="message">Message</label>
+                <label className="cform-l mono" htmlFor="message">Xabar</label>
                 <textarea className="cform-i cform-ta" id="message" name="message" rows={5}
-                  placeholder="Tell me about your project..." required />
+                  placeholder="Loyihangiz haqida gapirib bering..." required />
               </div>
               <button type="submit" className="btn solid full">
-                <span className="btn-lbl">Send Message</span>
+                <span className="btn-lbl">Yuborish</span>
                 <span className="btn-arr">→</span>
               </button>
             </form>

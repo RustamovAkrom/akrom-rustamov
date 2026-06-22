@@ -4,15 +4,15 @@ import { useData } from '@/hooks/useData';
 import { aboutData } from '@/lib/data';
 import type { AboutData } from '@/types';
 
-export default function About() {
+export default function About({ className = "" }: { className?: string }) {
     const { data } = useData<AboutData>('/api/about', aboutData);
 
     return (
-        <section className="section about" id="about">
+        <section className={`section about ${className}`.trim()} id="about">
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">01 — about</span>
-                    <h2 className="s-title">Building systems<br /><em>that scale.</em></h2>
+                    <h2 className="s-title">Men haqimda</h2>
                 </div>
                 <div className="about__grid">
                     <div className="about__left">
@@ -38,9 +38,6 @@ export default function About() {
                                 </div>
                             ))}
                         </div>
-                        <a href="/cv.pdf" target="_blank" rel="noopener" className="btn solid">
-                            View CV
-                        </a>
                     </div>
                     <div className="about__right reveal" style={{ '--d': '.1s' } as React.CSSProperties}>
                         <div className="tl">

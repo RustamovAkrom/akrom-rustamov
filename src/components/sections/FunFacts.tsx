@@ -60,13 +60,13 @@ function FactCard({ fact, idx }: { fact: typeof funFactsData[0]; idx: number }) 
     );
 }
 
-export default function FunFacts() {
+export default function FunFacts({ className = "" }: { className?: string }) {
     return (
-        <section className="section funfacts" id="funfacts">
+        <section className={`section funfacts ${className}`.trim()} id="funfacts">
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">05.5 — stats</span>
-                    <h2 className="s-title">By the <em>numbers.</em></h2>
+                    <h2 className="s-title">Raqamlarda <em>nejlar.</em></h2>
                 </div>
                 <div className="funfacts-grid">
                     {funFactsData.map((fact, idx) => (

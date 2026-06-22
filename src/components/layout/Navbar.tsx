@@ -6,13 +6,13 @@ import { useNavbarBehavior } from "@/hooks/useNavbarBehavior";
 import { useTheme } from "@/hooks/useTheme";
 
 const navLinks = [
-    { label: "About", href: "/#about", dataS: "about" },
-    { label: "Skills", href: "/#skills", dataS: "skills" },
-    { label: "Work", href: "/#portfolio", dataS: "portfolio" },
-    { label: "Services", href: "/#services", dataS: "services" },
-    { label: "Certs", href: "/#certificates", dataS: "certificates" },
+    { label: "Men haqimda", href: "/#about", dataS: "about" },
+    { label: "Texnologiyalar", href: "/#skills", dataS: "skills" },
+    { label: "Loyihalar", href: "/#portfolio", dataS: "portfolio" },
+    { label: "Xizmatlar", href: "/#services", dataS: "services" },
+    { label: "Sertifikatlar", href: "/#certificates", dataS: "certificates" },
     { label: "Blog", href: "/blog", dataS: null },
-    { label: "Contact", href: "/#contact", dataS: "contact", isCta: true },
+    { label: "Bog‘lanish", href: "/#contact", dataS: "contact", isCta: true },
 ];
 
 export default function Navbar() {

@@ -168,21 +168,80 @@ CSS VARIABLES
 }
 
 /* ═══════════════════════════════════════════════════
-GALAXY CANVAS
+GALAXY BACKGROUND (GLOBAL)
 ═══════════════════════════════════════════════════ */
-#galaxyCanvas {
+.galaxy-canvas {
     position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    opacity: .75;
-    transition: opacity .5s;
+    opacity: 0.45;
+    transition: opacity 0.6s ease;
 }
 
-[data-theme="light"] #galaxyCanvas {
-    opacity: .3;
+[data-theme="light"] .galaxy-canvas {
+    opacity: 0.18;
+}
+
+/* ═══════════════════════════════════════════════════
+SECTION SCROLL ANIMATIONS
+═══════════════════════════════════════════════════ */
+.section-anim {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(.16, 1, .3, 1),
+                transform 0.7s cubic-bezier(.16, 1, .3, 1);
+}
+
+.section-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════
+BACKGROUND DEPTH ELEMENTS
+═══════════════════════════════════════════════════ */
+.bg-depth {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.bg-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.04;
+    pointer-events: none;
+}
+
+[data-theme="dark"] .bg-glow {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="light"] .bg-glow {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+[data-theme="light"] .bg-grid {
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1003,8 +1062,12 @@ HERO
    ABOUT
 ═══════════════════════════════════════════════════ */
 .about {
-    background: var(--bg2);
+    background: rgba(8, 8, 15, 0.85);
     border-top: 1px solid var(--bd);
+}
+
+[data-theme="light"] .about {
+    background: rgba(222, 222, 228, 0.85);
 }
 
 .about__grid {
@@ -1133,8 +1196,12 @@ HERO
    SKILLS
 ═══════════════════════════════════════════════════ */
 .skills {
-    background: var(--bg);
+    background: rgba(4, 4, 10, 0.85);
     border-top: 1px solid var(--bd);
+}
+
+[data-theme="light"] .skills {
+    background: rgba(232, 232, 237, 0.85);
 }
 
 .sk-grid {
@@ -1216,8 +1283,12 @@ HERO
    PORTFOLIO SLIDER
 ═══════════════════════════════════════════════════ */
 .portfolio {
-    background: var(--bg2);
+    background: rgba(8, 8, 15, 0.85);
     border-top: 1px solid var(--bd);
+}
+
+[data-theme="light"] .portfolio {
+    background: rgba(222, 222, 228, 0.85);
 }
 
 .pf-head {
@@ -1339,6 +1410,37 @@ HERO
     color: rgba(0, 0, 0, .07);
 }
 
+.slide__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.slide__badge {
+  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.slide__badge--public {
+  background: rgba(16, 185, 129, .12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, .25);
+}
+
+.slide__badge--private {
+  background: rgba(245, 158, 11, .12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, .25);
+}
+
 .slide__pills {
     display: flex;
     flex-wrap: wrap;
@@ -1395,8 +1497,12 @@ HERO
 SERVICES
 ═══════════════════════════════════════════════════ */
 .services {
-    background: var(--bg);
+    background: rgba(4, 4, 10, 0.85);
     border-top: 1px solid var(--bd);
+}
+
+[data-theme="light"] .services {
+    background: rgba(232, 232, 237, 0.85);
 }
 
 .svc-list {

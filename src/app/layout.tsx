@@ -21,13 +21,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Akrom Rustamov - Software Engineer",
-    description: "Python Software Engineer specializing in FastAPI and Django. Building scalable, high-performance backend systems.",
-    keywords: ["Software Developer", "Python", "FastAPI", "Django", "REST API", "Akrom Rustamov"],
+    title: "Akrom Rustamov - Python Backend Developer",
+    description: "Python Backend Developer specializing in FastAPI and Django. Building scalable, high-performance backend systems.",
+    keywords: ["Backend Developer", "Python", "FastAPI", "Django", "REST API", "Akrom Rustamov"],
     authors: [{ name: "Akrom Rustamov" }],
     openGraph: {
-        title: "Akrom Rustamov - Software Engineer",
-        description: "Python Software Engineer specializing in FastAPI and Django",
+        title: "Akrom Rustamov - Python Backend Developer",
+        description: "Python Backend Developer specializing in FastAPI and Django",
         type: "website",
     },
 };
@@ -36,7 +36,7 @@ const personJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Akrom Rustamov',
-    jobTitle: 'Software Engineer',
+    jobTitle: 'Python Backend Developer',
     url: 'https://akrom-omega.vercel.app',
     sameAs: [
         'https://github.com/RustamovAkrom',
@@ -67,13 +67,12 @@ export default function RootLayout({
             </head>
             <body>
                 <Providers>
-                    <LoadingBar />
-                    <Navbar />
                     <Galaxy />
-                    <Cursor />
                     <div className="grain" />
+                    <Navbar />
                     {children}
                     <Footer />
+                    <Cursor />
                 </Providers>
             </body>
         </html>

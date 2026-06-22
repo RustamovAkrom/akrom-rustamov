@@ -5,18 +5,18 @@ import { useSlider } from "@/hooks/useSlider";
 import { projectsData } from "@/lib/data";
 import type { Project } from "@/types";
 
-export default function Portfolio() {
+export default function Portfolio({ className = "" }: { className?: string }) {
   const { data } = useData<Project[]>('/api/projects', projectsData);
   const total = data.length;
   const { index, next, prev, goTo } = useSlider(total);
 
   return (
-    <section className="section portfolio" id="portfolio">
+    <section className={`section portfolio ${className}`.trim()} id="portfolio">
       <div className="container">
         <div className="pf-head">
           <div className="s-head reveal">
             <span className="s-label mono">03 — work</span>
-            <h2 className="s-title">Projects</h2>
+            <h2 className="s-title">Loyihalar</h2>
           </div>
 
           <div
@@ -55,17 +55,24 @@ export default function Portfolio() {
                   <span className="slide__vis-n mono">{String(idx + 1).padStart(2, '0')}</span>
                 </div>
                 <div className="slide__body">
-                  <div className="slide__pills">
-                    {project.pills.map((pill, i) => (
-                      <span key={i} className="pill sm">{pill}</span>
-                    ))}
+                  <div className="slide__header">
+                    <span className={`slide__badge ${project.isPublic ? 'slide__badge--public' : 'slide__badge--private'}`}>
+                      {project.isPublic ? 'Public' : 'Private'}
+                    </span>
+                    <div className="slide__pills">
+                      {project.pills.map((pill, i) => (
+                        <span key={i} className="pill sm">{pill}</span>
+                      ))}
+                    </div>
                   </div>
                   <h3 className="slide__title">{project.title}</h3>
                   <p className="slide__sub mono">{project.subtitle}</p>
                   <p className="slide__desc">{project.description}</p>
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn ghost sm">
-                    View on GitHub →
-                  </a>
+                  {project.github ? (
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn ghost sm">
+                      GitHub'da ko'rish →
+                    </a>
+                  ) : null}
                 </div>
               </div>
             </div>

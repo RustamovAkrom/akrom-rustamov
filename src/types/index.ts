@@ -36,7 +36,8 @@ export interface Project {
   description: string;
   pills: string[];
   hue: number;
-  github: string;
+  github: string | null;
+  isPublic: boolean;
 }
 
 export interface Service {

@@ -25,7 +25,7 @@ function getRandomIndex(length: number): number {
     return Math.floor(Math.random() * length);
 }
 
-export default function QuoteSection() {
+export default function QuoteSection({ className = "" }: { className?: string }) {
     const [quoteIndex, setQuoteIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
 
@@ -49,7 +49,7 @@ export default function QuoteSection() {
     const quote = quotes[quoteIndex];
 
     return (
-        <section className="section quote-section" id="quote">
+        <section className={`section quote-section ${className}`.trim()} id="quote">
             <div className="container">
                 <div className="quote-wrap reveal">
                     <blockquote className={`quote-text ${isAnimating ? 'fade-out' : 'fade-in'}`}>

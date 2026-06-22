@@ -4,15 +4,15 @@ import { useData } from '@/hooks/useData';
 import { certificatesData } from '@/lib/data';
 import type { Certificate } from '@/types';
 
-export default function Certificates() {
+export default function Certificates({ className = "" }: { className?: string }) {
   const { data } = useData<Certificate[]>('/api/certificates', certificatesData);
 
   return (
-    <section className="section certs" id="certificates">
+    <section className={`section certs ${className}`.trim()} id="certificates">
       <div className="container">
         <div className="s-head reveal">
           <span className="s-label mono">05 — credentials</span>
-          <h2 className="s-title">Certificates</h2>
+          <h2 className="s-title">Sertifikatlar</h2>
         </div>
         <div className="certs-grid">
           {data.map((cert, idx) => (
@@ -36,14 +36,14 @@ export default function Certificates() {
               <h3 className="cert__title">{cert.title}</h3>
               <p className="cert__org">{cert.organization}</p>
               <p className="cert__yr mono">{cert.year}</p>
-              <span className="cert__link mono">{cert.inProgress ? 'View All ↗' : 'View ↗'}</span>
+              <span className="cert__link mono">{cert.inProgress ? 'Barchasini ko‘rish →' : 'Ko‘rish →'}</span>
               <div className="cert__shine" />
             </a>
           ))}
         </div>
         <div className="certs-foot reveal">
           <a href="https://akrom-omega.vercel.app/certificates" target="_blank" rel="noopener noreferrer" className="btn ghost">
-            View All Certificates ↗
+            Barcha Sertifikatlar →
           </a>
         </div>
       </div>

@@ -9,18 +9,18 @@ import {
 } from '@/types';
 
 export const aboutData: AboutData = {
-  lead: 'Software Engineer specializing in <strong>FastAPI</strong> and <strong>Django</strong>. Experienced in REST APIs, JWT/RBAC auth, and async services.',
-  body: 'Focused on clean architecture, performance optimization, and secure backend design. Pursuing BSc in IT (Cybersecurity) at IDU, Tashkent.',
+  lead: 'Salom, men Akrom Rustamov — <strong>Python Backend Developer</strong>.',
+  body: 'Backend tizimlarni loyihalash, REST API xizmatlarini ishlab chiqish va ilovalarni development bosqichidan production muhitigacha olib chiqishga ixtisoslashganman.\n\nFastAPI va Django frameworklari yordamida kengaytiriladigan, xavfsiz va barqaror backend servislar yarataman. Ma\'lumotlar bazasi arxitekturasi, authentication tizimlari, async processing, background tasks va real-time kommunikatsiyalar bilan ishlash tajribasiga egaman.\n\nBackend servislarni Docker orqali containerization qilish, CI/CD pipeline sozlash, monitoring va logging tizimlarini ulash bo\'yicha amaliy tajribaga egaman.\n\nAsosiy maqsadim — toza arxitektura, sifatli kod va uzoq muddat qo\'llab-quvvatlanadigan backend yechimlar yaratish.',
   stats: [
-    { value: 3, label: 'Projects', isNumber: true, suffix: '+' },
-    { value: 'B2', label: 'English', isNumber: false },
-    { value: 2, label: 'Yrs Coding', isNumber: true, suffix: '+' },
+    { value: 3, label: 'Loyihalar', isNumber: true, suffix: '+' },
+    { value: 'B2', label: 'Ingliz tili', isNumber: false },
+    { value: 2, label: 'Yil Tajriba', isNumber: true, suffix: '+' },
   ],
   timeline: [
     {
       role: 'Freelance Backend Developer',
       year: '2024 – 2025',
-      description: 'REST APIs, JWT/RBAC, DB optimization. FastAPI & Django for clients. Production-ready.',
+      description: 'REST APIs, JWT/RBAC, DB optimization. FastAPI & Django uchun production-ready backendlar.',
     },
     {
       role: "Najot Ta'lim — Backend Course",
@@ -38,59 +38,59 @@ export const aboutData: AboutData = {
 
 export const skillsData: SkillCategory[] = [
   {
-    title: 'Backend & Core',
+    title: 'Backend',
     pills: [
       { name: 'Python', highlight: true },
       { name: 'FastAPI', highlight: true },
       { name: 'Django', highlight: true },
+      { name: 'Django REST Framework' },
       { name: 'SQLAlchemy' },
-      { name: 'Pydantic' },
-      { name: 'Aiogram 3' },
+      { name: 'Alembic' },
+      { name: 'Pydantic v2' },
+      { name: 'Celery' },
+      { name: 'Aiogram3' },
+      { name: 'REST API' },
+      { name: 'WebSocket' },
+      { name: 'WebRTC' },
     ],
   },
   {
-    title: 'Architecture',
-    pills: [
-      { name: 'REST API Design', highlight: true },
-      { name: 'Clean Arch.', highlight: true },
-      { name: 'JWT Auth' },
-      { name: 'RBAC' },
-      { name: 'Async Programming' },
-    ],
-  },
-  {
-    title: 'DB & Messaging',
+    title: 'Database',
     pills: [
       { name: 'PostgreSQL', highlight: true },
       { name: 'Redis', highlight: true },
       { name: 'RabbitMQ' },
-      { name: 'Celery' },
+      { name: 'MinIO' },
+    ],
+  },
+  {
+    title: 'Authentication',
+    pills: [
+      { name: 'JWT', highlight: true },
+      { name: 'OAuth2' },
+      { name: 'RBAC' },
     ],
   },
   {
     title: 'DevOps',
     pills: [
       { name: 'Docker', highlight: true },
-      { name: 'Linux', highlight: true },
+      { name: 'Docker Compose' },
       { name: 'NGINX' },
-      { name: 'Git / GitHub' },
+      { name: 'GitHub Actions' },
+      { name: 'Prometheus' },
+      { name: 'Grafana' },
+      { name: 'Loki' },
+      { name: 'Sentry' },
     ],
   },
   {
-    title: 'Frontend (Basic)',
+    title: 'Frontend',
     pills: [
-      { name: 'HTML / CSS' },
-      { name: 'JavaScript' },
       { name: 'React' },
       { name: 'Next.js' },
-    ],
-  },
-  {
-    title: 'Languages',
-    pills: [
-      { name: 'Uzbek (Native)', highlight: true },
-      { name: 'Russian (B2)' },
-      { name: 'English (B2)' },
+      { name: 'TypeScript' },
+      { name: 'Tailwind CSS' },
     ],
   },
 ];
@@ -98,30 +98,83 @@ export const skillsData: SkillCategory[] = [
 export const projectsData: Project[] = [
   {
     id: 1,
-    title: 'Marketplace',
-    subtitle: 'E-commerce Backend Platform',
-    description: 'Scalable REST API with JWT auth, RBAC, modular architecture.',
-    pills: ['FastAPI', 'PostgreSQL', 'SQLAlchemy', 'JWT', 'RBAC'],
+    title: 'E-Commerce Platform',
+    subtitle: 'Full Stack Marketplace Platform',
+    description: 'FastAPI, Next.js va Aiogram3 asosida ishlab chiqilgan zamonaviy e-commerce platforma. Loyiha alohida backend, frontend va Telegram bot servislariga ajratilgan. Backend qismida async API architecture, authentication, product management, file storage va database layer ishlab chiqilgan. Docker Compose yordamida barcha servislar yagona muhitda boshqariladi.',
+    pills: ['FastAPI', 'SQLAlchemy', 'PostgreSQL', 'Redis', 'MinIO', 'Next.js', 'Aiogram3', 'Docker', 'NGINX'],
     hue: 210,
-    github: 'https://github.com/RustamovAkrom/Marketplace-FastAPI',
+    github: 'https://github.com/RustamovAkrom/E-Commerce',
+    isPublic: true,
   },
   {
     id: 2,
-    title: 'DeepSeek Bot',
-    subtitle: 'AI Telegram Assistant',
-    description: 'AI Telegram bot with async architecture.',
-    pills: ['Aiogram 3', 'DeepSeek API'],
+    title: 'Assets CRM System',
+    subtitle: 'Backend Management System',
+    description: 'Davlat tashkiloti uchun ishlab chiqilgan aktivlarni boshqarish tizimi. Tizim aktivlarni ro\'yxatga olish, kuzatish va foydalanuvchi rollarini boshqarish imkoniyatlarini beradi. RBAC permission system, audit logging, background task processing va production deployment amalga oshirilgan.',
+    pills: ['FastAPI', 'PostgreSQL', 'Redis', 'Celery', 'Docker', 'NGINX', 'Pytest'],
     hue: 160,
-    github: 'https://github.com/RustamovAkrom/DeepSeek_TelegramBot',
+    github: null,
+    isPublic: false,
   },
   {
     id: 3,
-    title: 'Viberfy',
-    subtitle: 'Music Web App',
-    description: 'Full-stack platform with Django + Next.js.',
-    pills: ['Django', 'Next.js'],
+    title: 'Viberfy Music Platform',
+    subtitle: 'Full Stack Music Platform',
+    description: 'Django REST Framework va Next.js asosida yaratilgan musiqa platformasi. Backend JWT authentication, music management, background processing va API documentation bilan ishlab chiqilgan. Celery orqali background vazifalar, Prometheus va Sentry orqali monitoring jarayonlari sozlangan.',
+    pills: ['Django', 'DRF', 'PostgreSQL', 'Celery', 'Redis', 'Next.js', 'TypeScript', 'Docker', 'Prometheus', 'Sentry'],
     hue: 340,
     github: 'https://github.com/RustamovAkrom/Viberfy',
+    isPublic: true,
+  },
+  {
+    id: 4,
+    title: 'FastAPI Default',
+    subtitle: 'Production Ready Backend Template',
+    description: 'FastAPI asosida yaratilgan backend starter template. Production loyihalarni tez boshlash uchun authentication, database migration, admin panel, monitoring va Docker konfiguratsiyalari oldindan tayyorlangan. Clean project structure va scalable architecture asosida ishlab chiqilgan.',
+    pills: ['FastAPI', 'SQLAlchemy', 'Alembic', 'PostgreSQL', 'Redis', 'SQLAdmin', 'Docker', 'Prometheus'],
+    hue: 280,
+    github: 'https://github.com/RustamovAkrom/FastAPIDefault',
+    isPublic: true,
+  },
+  {
+    id: 5,
+    title: 'WebRTC Video Chat',
+    subtitle: 'Real-Time Communication',
+    description: 'Real vaqt rejimidagi video aloqa tizimi. WebRTC peer-to-peer connection va WebSocket signaling mexanizmlari ishlab chiqilgan. Backend va frontend servislar alohida ajratilib Docker orqali containerization qilingan.',
+    pills: ['Python', 'WebRTC', 'WebSocket', 'JavaScript', 'Docker'],
+    hue: 190,
+    github: 'https://github.com/RustamovAkrom/WebRTC-VideoChat',
+    isPublic: true,
+  },
+  {
+    id: 6,
+    title: 'DeepSeek AI Telegram Bot',
+    subtitle: 'AI Telegram Assistant',
+    description: 'DeepSeek AI modellari bilan integratsiya qilingan Telegram chatbot. Aiogram3 async architecture asosida qurilgan. User settings, conversation history management va AI model konfiguratsiyasi qo\'shilgan.',
+    pills: ['Python', 'Aiogram3', 'SQLAlchemy', 'PostgreSQL', 'OpenRouter API', 'Docker'],
+    hue: 130,
+    github: 'https://github.com/RustamovAkrom/DeepSeek_TelegramBot',
+    isPublic: true,
+  },
+  {
+    id: 7,
+    title: 'JARVIS',
+    subtitle: 'AI Assistant System',
+    description: 'AI imkoniyatlari asosida ishlab chiqilgan yordamchi tizim. Loyiha sun\'iy intellekt integratsiyasi, avtomatlashtirish va foydalanuvchi buyruqlarini qayta ishlash imkoniyatlariga yo\'naltirilgan.',
+    pills: ['Python', 'FastAPI', 'LangChain', 'PostgreSQL', 'Redis', 'Docker'],
+    hue: 320,
+    github: 'https://github.com/RustamovAkrom/JARVIS',
+    isPublic: true,
+  },
+  {
+    id: 8,
+    title: 'Nebula OS',
+    subtitle: 'Operating System Experiment',
+    description: 'Operatsion tizim ishlash prinsiplarini chuqurroq o\'rganish uchun yaratilgan low-level loyiha. Kernel, system architecture va computer science konseptlarini amaliy o\'rganishga qaratilgan.',
+    pills: ['C', 'Assembly', 'Rust', 'Makefile', 'QEMU'],
+    hue: 40,
+    github: 'https://github.com/RustamovAkrom/nebula-os',
+    isPublic: true,
   },
 ];
 
@@ -129,20 +182,50 @@ export const servicesData: Service[] = [
   {
     id: 1,
     title: 'Backend Development',
-    description: 'Production APIs with FastAPI & Django. Auth, caching, queues — built for real scale.',
+    description: 'FastAPI va Django yordamida biznes talablariga mos backend tizimlar ishlab chiqish. REST API, authentication, database integration va scalable architecture asosida production-ready yechimlar yaratish.',
     icon: 'code',
   },
   {
     id: 2,
-    title: 'API Design',
-    description: 'Clean RESTful APIs, OpenAPI docs, versioning, validation. Developers will love them.',
+    title: 'REST API Development',
+    description: 'Toza, xavfsiz va hujjatlashtirilgan API xizmatlar yaratish. JWT/OAuth2 authentication, validation, permissions va OpenAPI documentation bilan ishlash.',
     icon: 'file',
   },
   {
     id: 3,
-    title: 'System Architecture',
-    description: 'Message queues, caching layers, microservices patterns, Docker deployment pipelines.',
+    title: 'Database Design',
+    description: 'PostgreSQL asosida database structure loyihalash. SQLAlchemy ORM, migration, query optimization va ma\'lumotlar bilan samarali ishlash.',
     icon: 'database',
+  },
+  {
+    id: 4,
+    title: 'Telegram Bot Development',
+    description: 'Aiogram3 yordamida biznes jarayonlarini avtomatlashtiruvchi Telegram botlar ishlab chiqish. Backend API, database va tashqi servislar bilan integratsiya qilish.',
+    icon: 'bot',
+  },
+  {
+    id: 5,
+    title: 'Backend Optimization',
+    description: 'Mavjud backend tizimlarni tahlil qilish va yaxshilash. Caching, background tasks, async processing va performance optimization yechimlarini qo\'llash.',
+    icon: 'zap',
+  },
+  {
+    id: 6,
+    title: 'Deployment & DevOps',
+    description: 'Backend loyihalarni serverga joylash va production muhitga tayyorlash. Docker, Docker Compose, NGINX, CI/CD pipeline va monitoring sozlash.',
+    icon: 'server',
+  },
+  {
+    id: 7,
+    title: 'Real-Time Applications',
+    description: 'WebSocket va WebRTC yordamida real vaqt rejimida ishlaydigan ilovalar yaratish. Chat, notification va video communication tizimlari bilan ishlash.',
+    icon: 'radio',
+  },
+  {
+    id: 8,
+    title: 'Third Party Integrations',
+    description: 'Tashqi API va servislarni backend tizimlarga ulash. Payment, AI API, storage va boshqa integratsiyalar bilan ishlash.',
+    icon: 'link',
   },
 ];
 
@@ -187,7 +270,7 @@ export const certificatesData: Certificate[] = [
 ];
 
 export const contactData: ContactData = {
-  description: 'Open to freelance, full-time roles, and interesting collaborations.',
+  description: 'Backend tizimlar, API xizmatlar yoki yangi imkoniyatlar bo‘yicha hamkorlik uchun bog‘lanishingiz mumkin.',
   social: {
     github: {
       url: 'https://github.com/RustamovAkrom',
@@ -206,10 +289,10 @@ export const contactData: ContactData = {
 };
 
 export const funFactsData: FunFact[] = [
-  { label: 'Cups of Coffee', value: 999, suffix: '+', icon: 'coffee' },
-  { label: 'Lines of Code', value: 50, suffix: 'k+', icon: 'code' },
-  { label: 'Git Commits', value: 500, suffix: '+', icon: 'git' },
-  { label: 'Bugs Squashed', value: 0, suffix: '', icon: 'bug' },
+  { label: 'Yakunlangan Loyihalar', value: 8, suffix: '+', icon: 'projects' },
+  { label: 'Texnologiyalar', value: 25, suffix: '+', icon: 'tech' },
+  { label: 'Git Commits', value: 1200, suffix: '+', icon: 'git' },
+  { label: 'Backend Tajriba', value: 2, suffix: ' yil', icon: 'exp' },
 ];
 
 export const quoteData = {
