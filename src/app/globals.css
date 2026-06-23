@@ -740,7 +740,11 @@ HERO
     margin: 0 auto;
     position: relative;
     z-index: 2;
-    overflow: hidden;
+    /* No clip here: the orb halos/glow extend beyond the right grid column and
+       were being cut on the right. The .spores layer self-clips (overflow:hidden,
+       inset:0), and body has overflow-x:hidden, so the page still can't scroll
+       horizontally. */
+    overflow: visible;
 }
 
 /* ── 3D Orb ── */

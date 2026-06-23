@@ -4,21 +4,80 @@
 import { useState, useEffect } from 'react';
 
 const quotes = [
-    { text: 'First, solve the problem. Then, write the code.', author: 'John Johnson' },
-    { text: 'Code is like humor. When you have to explain it, its bad.', author: 'Cory House' },
-    { text: 'Simplicity is the soul of efficiency.', author: 'Austin Freeman' },
-    { text: 'Make it work, make it right, make it fast.', author: 'Kent Beck' },
-    { text: 'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.', author: 'Martin Fowler' },
-    { text: 'The best error message is the one that doesnt show up.', author: 'Thomas Fuchs' },
-    { text: 'Talk is cheap. Show me the code.', author: 'Linus Torvalds' },
-    { text: 'Programs must be written for people to read, and only incidentally for machines to execute.', author: 'Harold Abelson' },
-    { text: 'The most damaging phrase in the language is: We have always done it this way.', author: 'Grace Hopper' },
-    { text: 'It is not a bug - it is an undocumented feature.', author: 'Anonymous' },
-    { text: 'Cleaning up your code is like cleaning up your room. You have to do it regularly.', author: 'Unknown' },
-    { text: 'Before software can be reusable it first has to be usable.', author: 'Ralph Johnson' },
-    { text: 'The function of good software is to make the complex appear to be simple.', author: 'Grady Booch' },
-    { text: 'Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away.', author: 'Antoine de Saint-Exupery' },
-    { text: 'It is harder to read code than to write it.', author: 'Joel Spolsky' },
+    {
+        text: 'Avval muammoni tushun, keyin yechim yoz.',
+        author: 'John Johnson'
+    },
+
+    {
+        text: 'Har qanday odam kompyuter tushunadigan kod yoza oladi. Yaxshi dasturchilar odamlar tushunadigan kod yozadi.',
+        author: 'Martin Fowler'
+    },
+
+    {
+        text: 'Soddalik — yaxshi arxitekturaning asosidir.',
+        author: 'Unknown'
+    },
+
+    {
+        text: 'Avval ishlaydigan qil, keyin to‘g‘ri qil, keyin tezlashtir.',
+        author: 'Kent Beck'
+    },
+
+    {
+        text: 'Yaxshi kod yozishdan ko‘ra, kodni tushunarli qilish muhimroq.',
+        author: 'Unknown'
+    },
+
+    {
+        text: 'Gapirish oson. Menga kodni ko‘rsat.',
+        author: 'Linus Torvalds'
+    },
+
+    {
+        text: 'Dasturlar avvalo insonlar o‘qishi uchun yoziladi, mashinalar bajarishi esa keyingi vazifa.',
+        author: 'Harold Abelson'
+    },
+
+    {
+        text: 'Murakkablik qo‘shish oson. Oddiylikni saqlash — haqiqiy mahorat.',
+        author: 'Unknown'
+    },
+
+    {
+        text: 'Yaxshi dastur murakkab jarayonlarni oddiy qilib ko‘rsatadi.',
+        author: 'Grady Booch'
+    },
+
+    {
+        text: 'Mukammallik qo‘shadigan narsa qolmaganda emas, olib tashlaydigan narsa qolmaganda keladi.',
+        author: 'Antoine de Saint-Exupery'
+    },
+
+    {
+        text: 'Kodni yozish bir marta, o‘qish esa yuzlab marta sodir bo‘ladi.',
+        author: 'Unknown'
+    },
+
+    {
+        text: 'Yaxshi arxitektura bugungi talabni emas, ertangi o‘zgarishni ham hisobga oladi.',
+        author: 'Unknown'
+    },
+
+    {
+        text: 'Eng yaxshi optimizatsiya — avval keraksiz murakkablikni olib tashlash.',
+        author: 'Unknown'
+    },
+
+    {
+        text: 'Kod faqat ishlashi emas, uni qo‘llab-quvvatlash ham oson bo‘lishi kerak.',
+        author: 'Unknown'
+    },
+
+    {
+        text: 'Professional dasturchi kod yozmaydi, u muammolarga yechim yaratadi.',
+        author: 'Unknown'
+    },
 ];
 
 function getRandomIndex(length: number): number {

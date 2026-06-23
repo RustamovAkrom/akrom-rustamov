@@ -3,33 +3,24 @@
 import { useRef, useEffect } from "react";
 
 interface Star {
-    x: number;
-    y: number;
-    z: number;
-    pz: number;
-    r: number;
-    a: number;
-    speed: number;
+    nx: number;     // base position, normalized 0..1 of viewport (resolution-independent)
+    ny: number;
+    depth: number;  // 0 far → 1 near; drives parallax speed, size and brightness
+    size: number;   // radius in CSS px (tiny: ~0.15 – 0.75 → 0.3px – 1.5px diameter)
+    a: number;      // base alpha
+    tw: number;     // twinkle speed (rad/ms); 0 = steady
+    ph: number;     // twinkle phase
+    color: string;  // "r,g,b"
 }
 
-interface ShootingStar {
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    life: number;
-    maxLife: number;
-    len: number;
-}
-
-/** Star density tier by viewport width — phone → TV. */
+/** Star density tier by viewport width — phone → TV. Lower than before; tiny stars read as "many" already. */
 function densityFor(width: number, lowPower: boolean): number {
-    if (lowPower) return 320;
-    if (width < 640) return 480;       // phone
-    if (width < 1024) return 800;      // tablet
-    if (width < 1600) return 1300;     // desktop
-    if (width < 2400) return 1900;     // large
-    return 2600;                        // TV / 4K
+    if (lowPower) return 240;
+    if (width < 640) return 360;       // phone
+    if (width < 1024) return 620;      // tablet
+    if (width < 1600) return 1000;     // desktop
+    if (width < 2400) return 1500;     // large
+    return 2100;                        // TV / 4K
 }
 
 export default function Galaxy() {
@@ -45,58 +36,46 @@ export default function Galaxy() {
         const reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
         const touchMQ = window.matchMedia("(hover: none)");
 
-        // State that the animation loop reads.
         let prefersReduced = reduceMQ.matches;
         let lowPower = touchMQ.matches;
         let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-        let W = 0, H = 0;          // CSS pixels
+        let W = 0, H = 0;                       // CSS pixels
         let stars: Star[] = [];
-        const shootingStars: ShootingStar[] = [];
-        const mouse = { x: 0, y: 0 };
-        let scrollY = 0;
+        const mouse = { x: 0, y: 0 };           // -0.5..0.5
+        const par = { x: 0, y: 0 };             // smoothed parallax offset
 
         let raf = 0;
         let running = false;
         let last = 0;
-        const FRAME = 1000 / 60;   // 60fps cap
+        let drift = 0;                          // accumulated drift distance (px), advanced by dt
+        const FRAME = 1000 / 60;                // 60fps cap
 
-        const cfg = {
-            depth: 900,
-            fov: 320,
-            get speed() { return prefersReduced ? 0 : 0.2; },
-            get shootingChance() { return lowPower ? 0.0003 : 0.0009; },
-        };
+        // Subtle, realistic star tints — mostly white, a few cool/warm.
+        const palette = ["255,255,255", "214,226,255", "255,246,232", "230,236,255"];
 
-        function createStar(seed = false): Star {
+        function rand(min: number, max: number) { return min + Math.random() * (max - min); }
+
+        function createStar(): Star {
+            // Bias toward far/small stars; few large ones → natural depth.
+            const depth = Math.pow(Math.random(), 1.7);          // skew to small depth (far)
+            const size = 0.15 + depth * 0.6 + Math.random() * 0.12;   // ~0.3px..1.5px diameter
+            const twinkles = Math.random() < 0.5;
             return {
-                x: (Math.random() - 0.5) * cfg.depth * 2,
-                y: (Math.random() - 0.5) * cfg.depth * 2,
-                z: seed ? Math.random() * cfg.depth : cfg.depth,
-                pz: 0,
-                r: Math.random() * 1.5 + 0.4,
-                a: Math.random() * 0.7 + 0.3,
-                speed: Math.random() * 0.6 + 0.4,
-            };
-        }
-
-        function createShootingStar(): ShootingStar {
-            const angle = Math.PI * 0.25 + Math.random() * 0.3;
-            const speed = 8 + Math.random() * 6;
-            return {
-                x: Math.random() * W,
-                y: Math.random() * H * 0.4,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed,
-                life: 0,
-                maxLife: 40 + Math.random() * 30,
-                len: 20 + Math.random() * 30,
+                nx: Math.random(),
+                ny: Math.random(),
+                depth,
+                size: Math.min(size, 0.75),
+                a: 0.18 + depth * 0.42 + Math.random() * 0.1,    // dim → reduced brightness
+                tw: twinkles ? rand(0.0008, 0.0022) : 0,
+                ph: Math.random() * Math.PI * 2,
+                color: palette[Math.floor(Math.random() * palette.length)],
             };
         }
 
         function buildStars() {
             const count = densityFor(W, lowPower);
-            stars = Array.from({ length: count }, () => createStar(true));
+            stars = Array.from({ length: count }, createStar);
         }
 
         function resize() {
@@ -115,113 +94,53 @@ export default function Galaxy() {
             return document.documentElement.dataset.theme !== "light";
         }
 
-        function drawNebula(cx: number, cy: number, isDark: boolean) {
-            if (prefersReduced) return;
-            const tone = isDark ? "255,255,255" : "20,20,28";
-            const mx = mouse.x * 28;
-            const my = mouse.y * 18 + scrollY * 0.02;
-
-            const spots: [number, number, number, number][] = [
-                [cx * 0.7 + mx, cy * 0.6 + my, W * 0.42, isDark ? 0.05 : 0.035],
-                [cx * 1.3 + mx, cy * 1.2 + my, W * 0.36, isDark ? 0.035 : 0.025],
-            ];
-            for (const [x, y, rad, alpha] of spots) {
-                const g = ctx!.createRadialGradient(x, y, 0, x, y, rad);
-                g.addColorStop(0, `rgba(${tone},${alpha})`);
-                g.addColorStop(1, "transparent");
-                ctx!.fillStyle = g;
-                ctx!.fillRect(0, 0, W, H);
-            }
-        }
-
         function frame(now: number) {
             if (!running) return;
             raf = requestAnimationFrame(frame);
 
-            // 60fps cap
-            if (now - last < FRAME) return;
+            if (last === 0) last = now;
+            const dt = now - last;
+            if (dt < FRAME) return;
             last = now;
 
             const isDark = isDarkTheme();
-            const tone = isDark ? "255,255,255" : "30,30,36";
 
-            // Background fill (opaque — alpha:false context)
-            ctx!.fillStyle = isDark ? "#08080a" : "#ececef";
+            // Opaque background fill (alpha:false context).
+            ctx!.fillStyle = isDark ? "#08080a" : "#eef0f3";
             ctx!.fillRect(0, 0, W, H);
 
-            const cx = W / 2 + mouse.x * 40;
-            const cy = H / 2 + mouse.y * 30;
+            // Advance very slow drift; ease parallax toward the mouse target.
+            if (!prefersReduced) drift += dt * 0.004;            // ~4px / second at depth 1
+            par.x += (mouse.x * 26 - par.x) * 0.04;
+            par.y += (mouse.y * 18 - par.y) * 0.04;
 
-            drawNebula(cx, cy, isDark);
+            const brightness = isDark ? 1 : 0.7;
 
-            // Shooting stars
-            if (!prefersReduced && Math.random() < cfg.shootingChance) {
-                shootingStars.push(createShootingStar());
-            }
-            for (let i = shootingStars.length - 1; i >= 0; i--) {
-                const ss = shootingStars[i];
-                ss.x += ss.vx;
-                ss.y += ss.vy;
-                ss.life++;
-                if (ss.life > ss.maxLife || ss.x > W + 100 || ss.y > H + 100) {
-                    shootingStars.splice(i, 1);
-                    continue;
-                }
-                const progress = ss.life / ss.maxLife;
-                const alpha = progress < 0.2 ? progress / 0.2 : 1 - (progress - 0.2) / 0.8;
-                const tailX = ss.x - ss.vx * (ss.len / 8);
-                const tailY = ss.y - ss.vy * (ss.len / 8);
-                const grad = ctx!.createLinearGradient(ss.x, ss.y, tailX, tailY);
-                grad.addColorStop(0, `rgba(${tone},${alpha})`);
-                grad.addColorStop(1, `rgba(${tone},0)`);
-                ctx!.beginPath();
-                ctx!.moveTo(tailX, tailY);
-                ctx!.lineTo(ss.x, ss.y);
-                ctx!.strokeStyle = grad;
-                ctx!.lineWidth = 1.5;
-                ctx!.stroke();
-                ctx!.beginPath();
-                ctx!.arc(ss.x, ss.y, 1.2, 0, Math.PI * 2);
-                ctx!.fillStyle = `rgba(${tone},${alpha})`;
-                ctx!.fill();
-            }
-
-            // Warp starfield
-            const moving = cfg.speed > 0;
             for (let i = 0; i < stars.length; i++) {
                 const s = stars[i];
-                if (moving) {
-                    s.pz = s.z;
-                    s.z -= cfg.speed * s.speed;
-                    if (s.z <= 0) Object.assign(s, createStar(), { z: cfg.depth });
+
+                // Parallax drift: nearer stars move a touch faster (depth factor).
+                const dx = drift * (0.25 + s.depth) * 0.6 + par.x * s.depth;
+                const dy = drift * (0.25 + s.depth) + par.y * s.depth;
+
+                // Wrap seamlessly across the viewport.
+                let px = (s.nx * W + dx) % W; if (px < 0) px += W;
+                let py = (s.ny * H + dy) % H; if (py < 0) py += H;
+
+                // Subtle twinkle.
+                let alpha = s.a;
+                if (s.tw && !prefersReduced) {
+                    alpha *= 0.7 + 0.3 * Math.sin(now * s.tw + s.ph);
                 }
+                alpha *= brightness;
 
-                const k = cfg.fov / s.z;
-                const px = s.x * k + cx;
-                const py = s.y * k + cy;
-                if (px < 0 || px > W || py < 0 || py > H) continue;
-
-                const alpha = s.a * (1 - s.z / cfg.depth);
-                const size = s.r * k * 0.5;
-                const baseAlpha = isDark ? alpha : alpha * 0.55;
-
-                if (moving && s.z < 120) {
-                    const pk = cfg.fov / s.pz;
-                    ctx!.beginPath();
-                    ctx!.moveTo(s.x * pk + cx, s.y * pk + cy);
-                    ctx!.lineTo(px, py);
-                    ctx!.strokeStyle = `rgba(${tone},${baseAlpha * 0.5})`;
-                    ctx!.lineWidth = size * 0.5;
-                    ctx!.stroke();
-                }
-
-                ctx!.beginPath();
-                ctx!.arc(px, py, Math.max(size, 0.4), 0, Math.PI * 2);
-                ctx!.fillStyle = `rgba(${tone},${baseAlpha})`;
-                ctx!.fill();
+                ctx!.fillStyle = `rgba(${s.color},${alpha})`;
+                const d = s.size * 2;
+                // Tiny dots — fillRect is cheaper than arc and crisp at this scale.
+                ctx!.fillRect(px - s.size, py - s.size, d, d);
             }
 
-            // Reduced motion → draw one static frame then idle.
+            // Reduced motion → one static frame, then idle.
             if (prefersReduced) running = false;
         }
 
@@ -236,14 +155,12 @@ export default function Galaxy() {
             cancelAnimationFrame(raf);
         }
 
-        // Pause when tab hidden to save battery/CPU.
         function onVisibility() {
             if (document.hidden) stop();
             else if (!prefersReduced) start();
-            else { running = true; last = 0; raf = requestAnimationFrame(frame); } // single static repaint
+            else { running = true; last = 0; raf = requestAnimationFrame(frame); }
         }
 
-        // Debounced resize.
         let resizeTimer = 0;
         function onResize() {
             window.clearTimeout(resizeTimer);
@@ -257,7 +174,6 @@ export default function Galaxy() {
             mouse.x = e.clientX / window.innerWidth - 0.5;
             mouse.y = e.clientY / window.innerHeight - 0.5;
         }
-        function onScroll() { scrollY = window.scrollY; }
 
         function onReducedChange() {
             prefersReduced = reduceMQ.matches;
@@ -270,7 +186,6 @@ export default function Galaxy() {
 
         resize();
         if (!lowPower) window.addEventListener("mousemove", onMouseMove, { passive: true });
-        window.addEventListener("scroll", onScroll, { passive: true });
         window.addEventListener("resize", onResize);
         document.addEventListener("visibilitychange", onVisibility);
         reduceMQ.addEventListener("change", onReducedChange);
@@ -281,7 +196,6 @@ export default function Galaxy() {
             stop();
             window.clearTimeout(resizeTimer);
             window.removeEventListener("mousemove", onMouseMove);
-            window.removeEventListener("scroll", onScroll);
             window.removeEventListener("resize", onResize);
             document.removeEventListener("visibilitychange", onVisibility);
             reduceMQ.removeEventListener("change", onReducedChange);
