@@ -50,10 +50,11 @@ export default function QuoteSection({ className = "" }: { className?: string })
 
     return (
         <section className={`section quote-section ${className}`.trim()} id="quote">
+            <span className="quote-mark" aria-hidden="true">&ldquo;</span>
             <div className="container">
                 <div className="quote-wrap reveal">
                     <blockquote className={`quote-text ${isAnimating ? 'fade-out' : 'fade-in'}`}>
-                        &ldquo;{quote.text}&rdquo;
+                        {quote.text}
                     </blockquote>
                     <cite className="quote-author mono">— {quote.author}</cite>
                     <button
@@ -71,8 +72,6 @@ export default function QuoteSection({ className = "" }: { className?: string })
                     </button>
                 </div>
             </div>
-            <div className="organic-blob" style={{ width: '400px', height: '400px', background: 'var(--glow-purple)', top: '10%', left: '-10%', opacity: 0.4 }} />
-            <div className="organic-blob" style={{ width: '300px', height: '300px', background: 'var(--glow-cyan)', bottom: '10%', right: '-5%', opacity: 0.3, animationDelay: '-6s' }} />
         </section>
     );
 }

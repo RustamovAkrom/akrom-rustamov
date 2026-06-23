@@ -12,7 +12,7 @@
 posts_examples/
 # testing
 /coverage
-
+.data/
 # next.js
 /.next/
 /out/
