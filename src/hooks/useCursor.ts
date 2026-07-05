@@ -17,26 +17,6 @@ export function useCursor(
         const rp = { x: 0, y: 0 };
         const trailPos = trailRefs?.map(() => ({ x: 0, y: 0 })) || [];
 
-        const applyTheme = () => {
-            const theme = document.documentElement.dataset.theme;
-
-            if (theme === "light") {
-                dot.style.background = "#111";
-                ring.style.borderColor = "rgba(0,0,0,0.4)";
-            } else {
-                dot.style.background = "#fff";
-                ring.style.borderColor = "rgba(255,255,255,0.4)";
-            }
-        };
-
-        applyTheme();
-
-        const observer = new MutationObserver(applyTheme);
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["data-theme"],
-        });
-
         const onMove = (e: MouseEvent) => {
             pos.x = e.clientX;
             pos.y = e.clientY;
@@ -90,7 +70,6 @@ export function useCursor(
         return () => {
             document.removeEventListener("mousemove", onMove);
             cancelAnimationFrame(raf);
-            observer.disconnect();
 
             targets.forEach(el => {
                 el.removeEventListener("mouseenter", enter);

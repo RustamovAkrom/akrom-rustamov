@@ -8,6 +8,18 @@ export default function BlogPreview({ className = "" }: { className?: string }) 
 
     return (
         <section className={`section blog ${className}`.trim()} id="blog">
+            <video
+                className="blog__video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/images/avatar.png"
+                aria-hidden="true"
+            >
+                <source src="/world_video.mp4" type="video/mp4" />
+            </video>
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">04.5 — writing</span>
