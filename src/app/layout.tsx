@@ -5,7 +5,6 @@ import Providers from "./providers";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Galaxy from "@/components/galaxy/Galaxy";
-import Cursor from "@/components/cursor/Cursor";
 import LoadingBar from "@/components/LoadingBar";
 
 const syne = Syne({
@@ -55,7 +54,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${syne.variable} ${jetbrainsMono.variable}`} data-theme="dark" data-scroll-behavior="smooth">
+        <html lang="uz" className={`${syne.variable} ${jetbrainsMono.variable}`} data-theme="dark" data-scroll-behavior="smooth">
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -72,7 +71,6 @@ export default function RootLayout({
                     <Navbar />
                     {children}
                     <Footer />
-                    <Cursor />
                 </Providers>
             </body>
         </html>

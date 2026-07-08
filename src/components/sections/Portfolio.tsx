@@ -51,13 +51,24 @@ export default function Portfolio({ className = "" }: { className?: string }) {
             <div className="slide" key={project.id}>
               <div className="slide__inner container">
                 <div className="slide__vis" style={{ "--hue": project.hue } as React.CSSProperties}>
-                  <div className="slide__vis-blob" />
-                  <span className="slide__vis-n mono">{String(idx + 1).padStart(2, '0')}</span>
+                  {project.github ? (
+                    <img
+                      className="slide__vis-img"
+                      src={`https://opengraph.githubassets.com/1/${project.github.replace('https://github.com/', '')}`}
+                      alt={`${project.title} — GitHub repository preview`}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <>
+                      <div className="slide__vis-blob" />
+                      <span className="slide__vis-n mono">{String(idx + 1).padStart(2, '0')}</span>
+                    </>
+                  )}
                 </div>
                 <div className="slide__body">
                   <div className="slide__header">
                     <span className={`slide__badge ${project.isPublic ? 'slide__badge--public' : 'slide__badge--private'}`}>
-                      {project.isPublic ? 'Public' : 'Private'}
+                      {project.isPublic ? 'Ochiq kod' : 'Maxfiy'}
                     </span>
                     <div className="slide__pills">
                       {project.pills.map((pill, i) => (

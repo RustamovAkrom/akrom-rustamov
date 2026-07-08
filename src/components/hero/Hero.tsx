@@ -36,7 +36,7 @@ export default function Hero() {
                     </div>
                     <div className="orb__badge">
                         <span className="orb__badge-dot" />
-                        <span className="mono">available · Tashkent</span>
+                        <span className="mono">ishga tayyor · Toshkent</span>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@ export default function Hero() {
                     <div className="hero__btns reveal in" style={{ '--d': '.24s' } as React.CSSProperties}>
                         <a href="#portfolio" className="btn solid">Loyihalarni ko‘rish</a>
                         <a href="#contact" className="btn ghost">Bog‘lanish</a>
-                        <a href="/cv.pdf" target="_blank" rel="noopener" className="btn ghost">CV yuklash</a>
+                        <a href="/CV.pdf" target="_blank" rel="noopener" className="btn ghost">CV yuklash</a>
                     </div>
                     <div className="hero__socs reveal in" style={{ '--d': '.30s' } as React.CSSProperties}>
                         <a href="https://github.com/RustamovAkrom" target="_blank" rel="noopener" className="hero__soc">
@@ -82,7 +82,7 @@ export default function Hero() {
                     <div className="scroll-track">
                         <div className="scroll-thumb"></div>
                     </div>
-                    <span className="mono">scroll</span>
+                    <span className="mono">pastga</span>
                 </div>
 
             </section>

@@ -8,22 +8,10 @@ export default function BlogPreview({ className = "" }: { className?: string }) 
 
     return (
         <section className={`section blog ${className}`.trim()} id="blog">
-            <video
-                className="blog__video"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/images/avatar.png"
-                aria-hidden="true"
-            >
-                <source src="/world_video.mp4" type="video/mp4" />
-            </video>
             <div className="container">
                 <div className="s-head reveal">
-                    <span className="s-label mono">04.5 — writing</span>
-                    <h2 className="s-title">Latest <em>thoughts.</em></h2>
+                    <span className="s-label mono">05 — blog</span>
+                    <h2 className="s-title">So&apos;nggi <em>maqolalar.</em></h2>
                 </div>
                 <div className="blog-grid">
                     {previewPosts.map((post, idx) => (
@@ -43,13 +31,13 @@ export default function BlogPreview({ className = "" }: { className?: string }) 
                             </div>
                             <h3 className="blog-card__title">{post.title}</h3>
                             <p className="blog-card__excerpt">{post.description}</p>
-                            <span className="blog-card__link mono">Read more →</span>
+                            <span className="blog-card__link mono">Batafsil o&apos;qish →</span>
                         </Link>
                     ))}
                 </div>
                 <div className="blog-preview__foot reveal">
                     <Link href="/blog" className="btn ghost">
-                        View all articles <span className="btn-arr">→</span>
+                        Barcha maqolalar <span className="btn-arr">→</span>
                     </Link>
                 </div>
             </div>
