@@ -6,7 +6,11 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Galaxy from "@/components/galaxy/Galaxy";
 import Cursor from "@/components/cursor/Cursor";
-import LoadingBar from "@/components/LoadingBar";
+
+const siteUrl = "https://akrom-omega.vercel.app";
+const siteName = "Akrom Rustamov | Python Backend Developer";
+const siteDescription =
+    "Akrom Rustamov is a Python backend developer building scalable APIs and backend systems with FastAPI, Django, PostgreSQL, and Docker.";
 
 const syne = Syne({
     variable: "--font-syne",
@@ -21,14 +25,56 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Akrom Rustamov - Python Backend Developer",
-    description: "Python Backend Developer specializing in FastAPI and Django. Building scalable, high-performance backend systems.",
-    keywords: ["Backend Developer", "Python", "FastAPI", "Django", "REST API", "Akrom Rustamov"],
+    metadataBase: new URL(siteUrl),
+    title: {
+        default: siteName,
+        template: "%s | Akrom Rustamov",
+    },
+    description: siteDescription,
+    applicationName: "Akrom Rustamov Portfolio",
+    keywords: ["Backend Developer", "Python", "FastAPI", "Django", "PostgreSQL", "REST API", "Akrom Rustamov"],
     authors: [{ name: "Akrom Rustamov" }],
+    creator: "Akrom Rustamov",
+    publisher: "Akrom Rustamov",
+    alternates: {
+        canonical: "/",
+    },
+    icons: {
+        icon: [{ url: "/icons/icons8-code-50.png", type: "image/png", sizes: "50x50" }],
+        apple: [{ url: "/icons/icons8-code-50.png", type: "image/png", sizes: "50x50" }],
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+        },
+    },
     openGraph: {
-        title: "Akrom Rustamov - Python Backend Developer",
-        description: "Python Backend Developer specializing in FastAPI and Django",
+        title: siteName,
+        description: siteDescription,
+        url: siteUrl,
+        siteName,
         type: "website",
+        locale: "en_US",
+        images: [
+            {
+                url: "/about_me.jpg",
+                width: 736,
+                height: 1308,
+                alt: "Akrom Rustamov, Python Backend Developer",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: siteName,
+        description: siteDescription,
+        images: ["/about_me.jpg"],
     },
 };
 
@@ -59,7 +105,6 @@ export default function RootLayout({
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-                <link rel="icon" href="/favicon.ico" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

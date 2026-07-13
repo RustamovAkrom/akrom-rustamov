@@ -1,11 +1,47 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { allPosts } from "contentlayer/generated";
 import MDXContent from "@/components/mdx/MDXContent";
 import ViewCounter from "@/components/ViewCounter";
 
 export function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = allPosts.find((item) => item.slug === slug);
+
+  if (!post) {
+    return {};
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: {
+      canonical: post.url,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: post.url,
+      type: "article",
+      publishedTime: post.date,
+      authors: ["Akrom Rustamov"],
+      tags: post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+    },
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

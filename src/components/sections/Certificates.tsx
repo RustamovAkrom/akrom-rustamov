@@ -3,50 +3,44 @@
 import { useData } from '@/hooks/useData';
 import { certificatesData } from '@/lib/data';
 import type { Certificate } from '@/types';
+import CertificateCard from '@/components/ui/CertificateCard';
+import CertificateModal from '@/components/ui/CertificateModal';
+import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Certificates({ className = "" }: { className?: string }) {
   const { data } = useData<Certificate[]>('/api/certificates', certificatesData);
+  const featured = data.filter((c) => c.featured);
+  const [active, setActive] = useState<Certificate | null>(null);
 
   return (
     <section className={`section certs ${className}`.trim()} id="certificates">
       <div className="container">
         <div className="s-head reveal">
-          <span className="s-label mono">05 — credentials</span>
+          <span className="s-label mono">05 — sertifikatlar</span>
           <h2 className="s-title">Sertifikatlar</h2>
         </div>
         <div className="certs-grid">
-          {data.map((cert, idx) => (
-            <a
-              key={cert.id}
-              href={cert.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cert reveal"
-              style={{ '--d': `${idx * 0.09}s` } as React.CSSProperties}
-            >
-              <div className="cert__head">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="24">
-                  <circle cx="12" cy="8" r="6" />
-                  <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
-                </svg>
-                <span className={`cert__badge ${cert.badgeType === 'prog' ? 'cert__badge--prog' : ''}`}>
-                  {cert.badge}
-                </span>
-              </div>
-              <h3 className="cert__title">{cert.title}</h3>
-              <p className="cert__org">{cert.organization}</p>
-              <p className="cert__yr mono">{cert.year}</p>
-              <span className="cert__link mono">{cert.inProgress ? 'Barchasini ko‘rish →' : 'Ko‘rish →'}</span>
-              <div className="cert__shine" />
-            </a>
+          {featured.map((cert, idx) => (
+            <div key={cert.id} style={{ ['--d' as any]: `${idx * 0.09}s` } as React.CSSProperties}>
+              <button
+                className="cert-btn"
+                onClick={() => setActive(cert)}
+                aria-label={`Open certificate ${cert.title}`}
+                style={{ background: 'transparent', border: 'none', padding: 0, width: '100%' }}
+              >
+                <CertificateCard cert={cert} />
+              </button>
+            </div>
           ))}
         </div>
         <div className="certs-foot reveal">
-          <a href="https://akrom-omega.vercel.app/certificates" target="_blank" rel="noopener noreferrer" className="btn ghost">
+          <Link href="/certificates" className="btn ghost">
             Barcha Sertifikatlar →
-          </a>
+          </Link>
         </div>
       </div>
+      {active && <CertificateModal cert={active} onClose={() => setActive(null)} />}
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { useData } from '@/hooks/useData';
 import { skillsData } from '@/lib/data';
 import type { SkillCategory } from '@/types';
 
+
 export default function Skills({ className = "" }: { className?: string }) {
     const { data } = useData<SkillCategory[]>('/api/skills', skillsData);
 

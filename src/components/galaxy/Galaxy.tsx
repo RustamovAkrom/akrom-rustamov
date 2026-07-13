@@ -2,6 +2,27 @@
 
 import { useRef, useEffect } from "react";
 
+interface Nebula {
+    cx: number;
+    cy: number;
+    radius: number;
+    color: string;
+    alpha: number;
+    driftX: number;
+    driftY: number;
+}
+
+interface Comet {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    len: number;
+    alpha: number;
+    fade: number;
+    color: string;
+}
+
 interface Star {
     nx: number;     // base position, normalized 0..1 of viewport (resolution-independent)
     ny: number;
@@ -42,6 +63,8 @@ export default function Galaxy() {
 
         let W = 0, H = 0;                       // CSS pixels
         let stars: Star[] = [];
+        let nebulae: Nebula[] = [];
+        let comets: Comet[] = [];
         const mouse = { x: 0, y: 0 };           // -0.5..0.5
         const par = { x: 0, y: 0 };             // smoothed parallax offset
 
@@ -50,11 +73,45 @@ export default function Galaxy() {
         let last = 0;
         let drift = 0;                          // accumulated drift distance (px), advanced by dt
         const FRAME = 1000 / 60;                // 60fps cap
+        let cometSeed = 0;
 
         // Subtle, realistic star tints — mostly white, a few cool/warm.
         const palette = ["255,255,255", "214,226,255", "255,246,232", "230,236,255"];
+        const nebulaPalette = ["96,118,255", "145,96,255", "255,208,255", "89,212,255", "198,168,255"];
 
         function rand(min: number, max: number) { return min + Math.random() * (max - min); }
+
+        function createNebula(): Nebula {
+            const radius = rand(260, 520);
+            return {
+                cx: rand(0.05, 0.95) * W,
+                cy: rand(0.05, 0.95) * H,
+                radius,
+                color: nebulaPalette[Math.floor(Math.random() * nebulaPalette.length)],
+                alpha: rand(0.08, 0.18),
+                driftX: rand(-0.02, 0.02),
+                driftY: rand(-0.015, 0.015),
+            };
+        }
+
+        function createComet(): Comet {
+            const edge = Math.random();
+            const fromLeft = Math.random() < 0.5;
+            const startY = rand(0.1, 0.85) * H;
+            const startX = fromLeft ? -40 : W + 40;
+            const vx = fromLeft ? rand(0.08, 0.18) : rand(-0.18, -0.08);
+            const vy = rand(-0.04, 0.04);
+            return {
+                x: startX,
+                y: startY,
+                vx,
+                vy,
+                len: rand(90, 170),
+                alpha: rand(0.28, 0.45),
+                fade: rand(0.00018, 0.00028),
+                color: "255,255,255",
+            };
+        }
 
         function createStar(): Star {
             // Bias toward far/small stars; few large ones → natural depth.
@@ -78,6 +135,10 @@ export default function Galaxy() {
             stars = Array.from({ length: count }, createStar);
         }
 
+        function buildNebula() {
+            nebulae = Array.from({ length: 5 }, createNebula);
+        }
+
         function resize() {
             W = window.innerWidth;
             H = window.innerHeight;
@@ -88,6 +149,7 @@ export default function Galaxy() {
             canvas.style.height = H + "px";
             ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
             buildStars();
+            buildNebula();
         }
 
         function isDarkTheme() {
@@ -106,38 +168,105 @@ export default function Galaxy() {
             const isDark = isDarkTheme();
 
             // Opaque background fill (alpha:false context).
-            ctx!.fillStyle = isDark ? "#08080a" : "#eef0f3";
+            ctx!.fillStyle = isDark ? "#04040d" : "#eef0f3";
             ctx!.fillRect(0, 0, W, H);
 
-            // Advance very slow drift; ease parallax toward the mouse target.
-            if (!prefersReduced) drift += dt * 0.004;            // ~4px / second at depth 1
-            par.x += (mouse.x * 26 - par.x) * 0.04;
-            par.y += (mouse.y * 18 - par.y) * 0.04;
+            // Faint cosmic glow overlay for depth.
+            const glow = ctx!.createRadialGradient(W * 0.22, H * 0.18, 0, W * 0.22, H * 0.18, Math.max(W, H) * 0.92);
+            glow.addColorStop(0, isDark ? "rgba(97, 79, 255, 0.09)" : "rgba(170, 191, 255, 0.06)");
+            glow.addColorStop(0.55, "rgba(0,0,0,0)");
+            ctx!.fillStyle = glow;
+            ctx!.fillRect(0, 0, W, H);
 
-            const brightness = isDark ? 1 : 0.7;
+            // Advance drift; ease parallax toward the mouse target.
+            if (!prefersReduced) drift += dt * 0.018;            // stronger motion
+            par.x += (mouse.x * 32 - par.x) * 0.06;
+            par.y += (mouse.y * 22 - par.y) * 0.06;
+
+            const brightness = isDark ? 1.15 : 0.78;
+
+            // Nebula glow layers.
+            ctx!.globalCompositeOperation = "lighter";
+            ctx!.filter = "blur(1px)";
+            nebulae.forEach((neb) => {
+                neb.cx += neb.driftX * dt;
+                neb.cy += neb.driftY * dt;
+                neb.cx = (neb.cx + W) % W;
+                neb.cy = (neb.cy + H) % H;
+
+                const nebAlpha = neb.alpha * (isDark ? 1.1 : 0.8);
+                const grad = ctx!.createRadialGradient(neb.cx, neb.cy, 0, neb.cx, neb.cy, neb.radius);
+                grad.addColorStop(0, `rgba(${neb.color}, ${nebAlpha * 0.55})`);
+                grad.addColorStop(0.34, `rgba(${neb.color}, ${nebAlpha * 0.24})`);
+                grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+                ctx!.fillStyle = grad;
+                ctx!.beginPath();
+                ctx!.arc(neb.cx, neb.cy, neb.radius, 0, Math.PI * 2);
+                ctx!.fill();
+            });
+            ctx!.filter = "none";
+            ctx!.globalCompositeOperation = "source-over";
+
+            // Comet trails.
+            cometSeed += dt;
+            if (!prefersReduced && cometSeed > 900 && comets.length < 4) {
+                comets.push(createComet());
+                cometSeed = 0;
+            }
+            comets = comets.filter((c) => c.alpha > 0 && c.x > -120 && c.x < W + 120 && c.y > -120 && c.y < H + 120);
+            comets.forEach((c) => {
+                c.x += c.vx * dt;
+                c.y += c.vy * dt;
+                c.alpha -= c.fade * dt;
+                const tx = c.x - c.vx * c.len * 0.75;
+                const ty = c.y - c.vy * c.len * 0.75;
+
+                const trail = ctx!.createLinearGradient(c.x, c.y, tx, ty);
+                trail.addColorStop(0, `rgba(${c.color}, ${Math.max(c.alpha, 0)})`);
+                trail.addColorStop(1, "rgba(255,255,255,0)");
+
+                ctx!.strokeStyle = trail;
+                ctx!.lineWidth = 1.8;
+                ctx!.lineCap = "round";
+                ctx!.beginPath();
+                ctx!.moveTo(c.x, c.y);
+                ctx!.lineTo(tx, ty);
+                ctx!.stroke();
+
+                ctx!.fillStyle = `rgba(${c.color}, ${Math.max(c.alpha * 0.9, 0)})`;
+                ctx!.beginPath();
+                ctx!.arc(c.x, c.y, 2.2, 0, Math.PI * 2);
+                ctx!.fill();
+            });
 
             for (let i = 0; i < stars.length; i++) {
                 const s = stars[i];
 
                 // Parallax drift: nearer stars move a touch faster (depth factor).
-                const dx = drift * (0.25 + s.depth) * 0.6 + par.x * s.depth;
-                const dy = drift * (0.25 + s.depth) + par.y * s.depth;
+                const dx = drift * (0.36 + s.depth * 0.92) + par.x * s.depth * 1.1;
+                const dy = drift * (0.18 + s.depth * 0.88) + par.y * s.depth * 0.9;
+                const sway = Math.sin(now * 0.00062 + s.nx * Math.PI * 2) * (1.2 - s.depth * 0.8);
 
                 // Wrap seamlessly across the viewport.
-                let px = (s.nx * W + dx) % W; if (px < 0) px += W;
-                let py = (s.ny * H + dy) % H; if (py < 0) py += H;
+                let px = (s.nx * W + dx + sway) % W; if (px < 0) px += W;
+                let py = (s.ny * H + dy + sway * 0.33) % H; if (py < 0) py += H;
 
                 // Subtle twinkle.
                 let alpha = s.a;
                 if (s.tw && !prefersReduced) {
-                    alpha *= 0.7 + 0.3 * Math.sin(now * s.tw + s.ph);
+                    alpha *= 0.68 + 0.34 * Math.sin(now * s.tw + s.ph);
                 }
                 alpha *= brightness;
 
                 ctx!.fillStyle = `rgba(${s.color},${alpha})`;
                 const d = s.size * 2;
-                // Tiny dots — fillRect is cheaper than arc and crisp at this scale.
                 ctx!.fillRect(px - s.size, py - s.size, d, d);
+
+                if (s.depth > 0.82 && alpha > 0.25) {
+                    ctx!.fillStyle = `rgba(${s.color}, ${Math.min(alpha * 0.4, 0.36)})`;
+                    ctx!.fillRect(px - s.size * 1.75, py - s.size * 1.75, d * 1.5, d * 1.5);
+                }
             }
 
             // Reduced motion → one static frame, then idle.

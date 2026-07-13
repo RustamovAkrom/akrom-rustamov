@@ -26,9 +26,11 @@ export default function Hero() {
                 {/* <!-- 3D Orb avatar --> */}
                 <div className="orb-wrap" id="heroOrb">
                     <div className="orb">
-                        <div className="orb__core">
-                            <Image className="orb__img" src="/images/avatar.png" alt="Akrom Rustamov avatar" width={200} height={200} priority quality={85} />
+                        <div className="orb__core orb__core--with-image">
+                            <Image className="orb__img" src="/images/avatar.png" alt="Akrom Rustamov avatar" width={220} height={220} priority quality={95} />
                         </div>
+                        <div className="orb__energy" />
+                        <div className="orb__energy orb__energy--soft" />
                         <div className="orb__halo h1" />
                         <div className="orb__halo h2" />
                         <div className="orb__halo h3" />
@@ -51,11 +53,11 @@ export default function Hero() {
                         <span className="hn-line hn-stroke reveal in" style={{ '--d': '.12s' } as React.CSSProperties}>Rustamov</span>
                     </h1>
                     <p className="hero__tag reveal in" style={{ '--d': '.18s' } as React.CSSProperties}>
-                        FastAPI va Django yordamida kengaytiriladigan, xavfsiz va production muhitga tayyor backend tizimlar yarataman.
+                        Sizning backend tizimingiz ishonchli va kengaytiriladigan bo‘lishini ta'minlayman.
                         <br />
-                        REST API, database architecture, asynchronous processing va deployment jarayonlari bilan ishlayman.
+                        Ilovani ishonchli tarzda yetkazib berish va xizmatni mustahkam saqlashga e'tibor beraman.
                     </p>
-                    <div className="hero__btns reveal in" style={{ '--d': '.24s' } as React.CSSProperties}>
+                    <div className="hero__btns reveal in" style={{ '--d': '.30s' } as React.CSSProperties}>
                         <a href="#portfolio" className="btn solid">Loyihalarni ko‘rish</a>
                         <a href="#contact" className="btn ghost">Bog‘lanish</a>
                         <a href="/cv.pdf" target="_blank" rel="noopener" className="btn ghost">CV yuklash</a>

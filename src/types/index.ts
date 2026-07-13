@@ -50,12 +50,12 @@ export interface Service {
 export interface Certificate {
   id: number;
   title: string;
-  organization: string;
-  year: string;
-  link: string;
-  badge: string;
-  badgeType?: 'verified' | 'prog';
-  inProgress?: boolean;
+  issuer: string;
+  description: string;
+  issueDate: string; // ISO or short human-readable date
+  image: string; // path under /public
+  category?: string;
+  featured?: boolean;
 }
 
 export interface SocialLink {
