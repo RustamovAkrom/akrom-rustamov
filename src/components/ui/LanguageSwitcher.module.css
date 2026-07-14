@@ -1,0 +1,81 @@
+.switcher {
+  position: relative;
+  display: inline-flex;
+}
+
+.trigger {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: 0.35rem;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0 0.55rem;
+}
+
+.trigger:hover,
+.trigger:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.menu {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.8rem 2rem var(--shadow);
+  display: grid;
+  gap: 0.15rem;
+  min-width: 8.5rem;
+  padding: 0.35rem;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  z-index: 60;
+}
+
+.option {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0.45rem;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 0.78rem;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+}
+
+.option:hover,
+.option:focus-visible,
+.active {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.code {
+  color: var(--accent);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  min-width: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .trigger { min-height: 2.15rem; }
+}

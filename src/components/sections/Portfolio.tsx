@@ -4,8 +4,10 @@ import { useData } from "@/hooks/useData";
 import { useSlider } from "@/hooks/useSlider";
 import { projectsData } from "@/lib/data";
 import type { Project } from "@/types";
+import { useTranslations } from "next-intl";
 
 export default function Portfolio({ className = "" }: { className?: string }) {
+  const t = useTranslations();
   const { data } = useData<Project[]>('/api/projects', projectsData);
   const total = data.length;
   const { index, next, prev, goTo } = useSlider(total);
@@ -16,14 +18,14 @@ export default function Portfolio({ className = "" }: { className?: string }) {
         <div className="pf-head">
           <div className="s-head reveal">
             <span className="s-label mono">03 — work</span>
-            <h2 className="s-title">Loyihalar</h2>
+            <h2 className="s-title">{t("Sections.portfolio")}</h2>
           </div>
 
           <div
             className="sl-nav reveal"
             style={{ "--d": ".08s" } as React.CSSProperties}
           >
-            <button className="sl-btn" onClick={prev} aria-label="Previous project">
+            <button className="sl-btn" onClick={prev} aria-label={t("Common.previousProject")}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
@@ -33,7 +35,7 @@ export default function Portfolio({ className = "" }: { className?: string }) {
               {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
             </span>
 
-            <button className="sl-btn" onClick={next} aria-label="Next project">
+            <button className="sl-btn" onClick={next} aria-label={t("Common.nextProject")}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
@@ -57,7 +59,7 @@ export default function Portfolio({ className = "" }: { className?: string }) {
                 <div className="slide__body">
                   <div className="slide__header">
                     <span className={`slide__badge ${project.isPublic ? 'slide__badge--public' : 'slide__badge--private'}`}>
-                      {project.isPublic ? 'Public' : 'Private'}
+                      {project.isPublic ? t('Common.public') : t('Common.private')}
                     </span>
                     <div className="slide__pills">
                       {project.pills.map((pill, i) => (
@@ -86,7 +88,7 @@ export default function Portfolio({ className = "" }: { className?: string }) {
             key={i}
             className={`sl-dot ${i === index ? "active" : ""}`}
             onClick={() => goTo(i)}
-            aria-label={`Go to project ${i + 1}`}
+            aria-label={t('Common.goToProject', { number: i + 1 })}
           />
         ))}
       </div>

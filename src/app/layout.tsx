@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import Galaxy from "@/components/galaxy/Galaxy";
 import Cursor from "@/components/cursor/Cursor";
 
@@ -114,9 +112,7 @@ export default function RootLayout({
                 <Providers>
                     <Galaxy />
                     <div className="grain" />
-                    <Navbar />
                     {children}
-                    <Footer />
                     <Cursor />
                 </Providers>
             </body>

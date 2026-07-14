@@ -4,6 +4,7 @@ import React from 'react';
 import { useData } from '@/hooks/useData';
 import { servicesData } from '@/lib/data';
 import type { Service } from '@/types';
+import { useTranslations } from 'next-intl';
 
 const iconMap: Record<string, React.ReactNode> = {
     code: (
@@ -65,6 +66,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Services({ className = "" }: { className?: string }) {
+    const t = useTranslations('Sections');
     const { data } = useData<Service[]>('/api/services', servicesData);
 
     return (
@@ -72,7 +74,7 @@ export default function Services({ className = "" }: { className?: string }) {
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">04 — services</span>
-                    <h2 className="s-title">Xizmatlar</h2>
+                    <h2 className="s-title">{t('services')}</h2>
                 </div>
                 <div className="svc-list">
                     {data.map((service, idx) => (

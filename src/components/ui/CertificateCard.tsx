@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Certificate } from '@/types';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   cert: Certificate;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function CertificateCard({ cert, detailed = false, href }: Props) {
+  const t = useTranslations('Common');
   const content = (
     <article className={`cert reveal ${detailed ? 'cert--detailed' : ''}`}>
       <div className="cert__thumb">
@@ -28,7 +30,7 @@ export default function CertificateCard({ cert, detailed = false, href }: Props)
         <h3 className="cert__title">{cert.title}</h3>
         <p className="cert__org">{cert.issuer}</p>
         <p className="cert__desc">{cert.description}</p>
-        {detailed && <p className="cert__date mono">Issued: {cert.issueDate}</p>}
+        {detailed && <p className="cert__date mono">{t('issued')}: {cert.issueDate}</p>}
       </div>
     </article>
   );

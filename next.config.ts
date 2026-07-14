@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { withContentlayer } from "next-contentlayer2";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -9,4 +10,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withContentlayer(nextConfig);
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+
+export default withContentlayer(withNextIntl(nextConfig));

@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
 const quotes = [
     {
@@ -85,6 +86,7 @@ function getRandomIndex(length: number): number {
 }
 
 export default function QuoteSection({ className = "" }: { className?: string }) {
+    const t = useTranslations();
     const [quoteIndex, setQuoteIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
 
@@ -119,8 +121,8 @@ export default function QuoteSection({ className = "" }: { className?: string })
                     <button
                         className="quote-refresh"
                         onClick={changeQuote}
-                        aria-label="New quote"
-                        title="New quote"
+                        aria-label={t('Common.newQuote')}
+                        title={t('Common.newQuote')}
                     >
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
                             <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />

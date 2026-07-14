@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { githubUsername } from '@/lib/data';
+import { useTranslations } from 'next-intl';
 
 interface GitHubUser {
   public_repos: number;
@@ -10,6 +11,7 @@ interface GitHubUser {
 }
 
 export default function GitHubActivity({ className = "" }: { className?: string }) {
+  const t = useTranslations('GitHub');
   const [stats, setStats] = useState<GitHubUser | null>(null);
 
   useEffect(() => {
@@ -30,9 +32,9 @@ export default function GitHubActivity({ className = "" }: { className?: string 
   }, []);
 
   const items = [
-    { label: 'Repositories', value: stats?.public_repos ?? 12, fallback: '12+' },
-    { label: 'Followers', value: stats?.followers ?? 8, fallback: '8+' },
-    { label: 'Following', value: stats?.following ?? 15, fallback: '15+' },
+    { label: t('repositories'), value: stats?.public_repos ?? 12, fallback: '12+' },
+    { label: t('followers'), value: stats?.followers ?? 8, fallback: '8+' },
+    { label: t('following'), value: stats?.following ?? 15, fallback: '15+' },
   ];
 
     return (

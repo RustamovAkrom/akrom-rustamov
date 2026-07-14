@@ -4,8 +4,10 @@ import { useData } from '@/hooks/useData';
 import { contactData } from '@/lib/data';
 import { fireflyPositions, sporePositions } from '@/lib/fireflies';
 import type { ContactData } from '@/types';
+import { useTranslations } from 'next-intl';
 
 export default function Contact({ className = "" }: { className?: string }) {
+    const t = useTranslations();
     const { data } = useData<ContactData>('/api/contact', contactData);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,13 +27,13 @@ export default function Contact({ className = "" }: { className?: string }) {
       });
 
       if (response.ok) {
-        alert('Message sent successfully!');
+        alert(t('Common.messageSent'));
         form.reset();
       } else {
-        alert('Error sending message');
+        alert(t('Common.messageError'));
       }
     } catch {
-      alert('Error sending message');
+      alert(t('Common.messageError'));
     }
   };
 
@@ -107,21 +109,21 @@ export default function Contact({ className = "" }: { className?: string }) {
             <form className="cform" onSubmit={handleSubmit} noValidate>
               <div className="cform-row">
                 <div className="cform-g">
-                  <label className="cform-l mono" htmlFor="name">Ismingiz</label>
-                  <input className="cform-i" type="text" id="name" name="name" placeholder="Ismingiz" required />
+                  <label className="cform-l mono" htmlFor="name">{t('Common.name')}</label>
+                  <input className="cform-i" type="text" id="name" name="name" placeholder={t('Common.name')} required />
                 </div>
                 <div className="cform-g">
-                  <label className="cform-l mono" htmlFor="email">Email</label>
-                  <input className="cform-i" type="email" id="email" name="email" placeholder="sizning@email.com" required />
+                  <label className="cform-l mono" htmlFor="email">{t('Common.email')}</label>
+                  <input className="cform-i" type="email" id="email" name="email" placeholder={t('Common.emailPlaceholder')} required />
                 </div>
               </div>
               <div className="cform-g">
-                <label className="cform-l mono" htmlFor="message">Xabar</label>
+                  <label className="cform-l mono" htmlFor="message">{t('Common.message')}</label>
                 <textarea className="cform-i cform-ta" id="message" name="message" rows={5}
                   placeholder="Loyihangiz haqida gapirib bering..." required />
               </div>
               <button type="submit" className="btn solid full">
-                <span className="btn-lbl">Yuborish</span>
+                <span className="btn-lbl">{t('Common.send')}</span>
                 <span className="btn-arr">→</span>
               </button>
             </form>

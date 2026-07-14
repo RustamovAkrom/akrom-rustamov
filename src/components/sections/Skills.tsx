@@ -3,9 +3,11 @@
 import { useData } from '@/hooks/useData';
 import { skillsData } from '@/lib/data';
 import type { SkillCategory } from '@/types';
+import { useTranslations } from 'next-intl';
 
 
 export default function Skills({ className = "" }: { className?: string }) {
+    const t = useTranslations('Sections');
     const { data } = useData<SkillCategory[]>('/api/skills', skillsData);
 
     return (
@@ -13,7 +15,7 @@ export default function Skills({ className = "" }: { className?: string }) {
             <div className="container">
                 <div className="s-head reveal">
                     <span className="s-label mono">02 — skills</span>
-                    <h2 className="s-title">Texnologiyalar</h2>
+                    <h2 className="s-title">{t('skills')}</h2>
                 </div>
                 <div className="sk-grid">
                     {data.map((category, idx) => (
