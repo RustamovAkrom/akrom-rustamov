@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import { allPosts } from "contentlayer/generated";
 import MDXContent from "@/components/mdx/MDXContent";
 import ViewCounter from "@/components/ViewCounter";
+import type { AppLocale } from "@/i18n/routing";
 
 export function generateStaticParams() {
   return allPosts.map((post) => ({ slug: post.slug }));
@@ -12,9 +12,10 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
+  params: Promise<{ slug: string; locale: AppLocale }>;
+}) {
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
   const post = allPosts.find((item) => item.slug === slug);
 
   if (!post) {
@@ -44,8 +45,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: AppLocale }>;
+}) {
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
   const post = allPosts.find((p) => p.slug === slug);
 
   if (!post) notFound();
@@ -58,7 +64,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     <main className="blog-article-page">
       <article className="blog-article">
         <div className="container">
-          {/* Header */}
           <header className="blog-article__header reveal">
             <div className="blog-article__meta">
               <span className="blog-article__date mono">{post.formattedDate}</span>
@@ -75,35 +80,33 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
           </header>
 
-          {/* Content */}
           <div className="blog-article__body reveal">
             <MDXContent code={post.body.code} />
           </div>
 
-          {/* Footer nav */}
           <footer className="blog-article__footer reveal">
             <div className="blog-article__nav">
               {prev ? (
-                <Link href={prev.url} className="blog-article__nav-link blog-article__nav-link--prev">
-                  <span className="mono">← Previous</span>
+                <a href={prev.url} className="blog-article__nav-link blog-article__nav-link--prev">
+                  <span className="mono">← {post.title}</span>
                   <strong>{prev.title}</strong>
-                </Link>
+                </a>
               ) : (
                 <div />
               )}
               {next ? (
-                <Link href={next.url} className="blog-article__nav-link blog-article__nav-link--next">
-                  <span className="mono">Next →</span>
+                <a href={next.url} className="blog-article__nav-link blog-article__nav-link--next">
+                  <span className="mono">{next.title} →</span>
                   <strong>{next.title}</strong>
-                </Link>
+                </a>
               ) : (
                 <div />
               )}
             </div>
             <div className="blog-article__back">
-              <Link href="/blog" className="btn ghost sm">
+              <a href="/blog" className="btn ghost sm">
                 ← All articles
-              </Link>
+              </a>
             </div>
           </footer>
         </div>
@@ -111,4 +114,3 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     </main>
   );
 }
-

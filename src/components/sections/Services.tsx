@@ -3,8 +3,10 @@
 import React from 'react';
 import { useData } from '@/hooks/useData';
 import { servicesData } from '@/lib/data';
-import type { Service } from '@/types';
-import { useTranslations } from 'next-intl';
+import type { LocalizedData, Service } from '@/types';
+import { useLocale, useTranslations } from 'next-intl';
+import type { AppLocale } from '@/i18n/routing';
+import { localizeClientData } from '@/lib/localize-client';
 
 const iconMap: Record<string, React.ReactNode> = {
     code: (
@@ -67,13 +69,15 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export default function Services({ className = "" }: { className?: string }) {
     const t = useTranslations('Sections');
-    const { data } = useData<Service[]>('/api/services', servicesData);
+    const locale = useLocale() as AppLocale;
+    const fallback = localizeClientData(servicesData, locale);
+    const { data } = useData<LocalizedData<Service>[]>('/api/services', fallback);
 
     return (
         <section className={`section services ${className}`.trim()} id="services">
             <div className="container">
                 <div className="s-head reveal">
-                    <span className="s-label mono">04 — services</span>
+                    <span className="s-label mono">{t('servicesLabel')}</span>
                     <h2 className="s-title">{t('services')}</h2>
                 </div>
                 <div className="svc-list">

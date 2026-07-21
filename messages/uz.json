@@ -1,10 +1,128 @@
 {
-  "Navigation": {"about":"Men haqimda","skills":"Texnologiyalar","portfolio":"Loyihalar","services":"Xizmatlar","certificates":"Sertifikatlar","blog":"Blog","contact":"Bog‘lanish","menu":"Menyu","theme":"Mavzuni almashtirish","language":"Tilni tanlash"},
-  "Hero": {"availability":"mavjud · Toshkent","role":"Python Backend Developer","tagline":"Sizning backend tizimingiz ishonchli va kengaytiriladigan bo‘lishini ta'minlayman.\nIlovani ishonchli tarzda yetkazib berish va xizmatni mustahkam saqlashga e'tibor beraman.","projects":"Loyihalarni ko‘rish","contact":"Bog‘lanish","downloadCv":"CV yuklash","scroll":"pastga"},
-  "Sections": {"about":"Men haqimda","skills":"Texnologiyalar","portfolio":"Loyihalar","services":"Xizmatlar","certificates":"Sertifikatlar","stats":"Raqamlarda <em>sonlar.</em>","contact":"Keling bog‘lanamiz","latestThoughts":"So‘nggi <em>fikrlar.</em>","aboutLabel":"01 — about","skillsLabel":"02 — skills","portfolioLabel":"03 — work","servicesLabel":"04 — services","blogLabel":"04.5 — writing","certificatesLabel":"05 — sertifikatlar","statsLabel":"05.5 — stats","contactLabel":"06 — contact"},
-  "Common": {"previousProject":"Oldingi loyiha","nextProject":"Keyingi loyiha","goToProject":"{number}-loyihaga o‘tish","public":"Ochiq","private":"Yopiq","viewGithub":"GitHub’da ko‘rish →","readMore":"Batafsil o‘qish →","viewAllArticles":"Barcha maqolalarni ko‘rish →","allCertificates":"Barcha sertifikatlar →","issued":"Berilgan","openCertificate":"{title} sertifikatini ochish","closeCertificate":"Sertifikatni yopish","newQuote":"Yangi iqtibos","messageSent":"Xabar muvaffaqiyatli yuborildi!","messageError":"Xabarni yuborishda xatolik yuz berdi","name":"Ismingiz","email":"Email","message":"Xabar","emailPlaceholder":"sizning@email.com","messagePlaceholder":"Loyihangiz haqida gapirib bering...","send":"Yuborish","footerTop":"↑ tepaga"},
-  "Contact": {"description":"Backend tizimlar, API xizmatlar yoki yangi imkoniyatlar bo‘yicha hamkorlik uchun bog‘lanishingiz mumkin."},
-  "Quote": {"items":[{"text":"Avval muammoni tushun, keyin yechim yoz.","author":"John Johnson"},{"text":"Har qanday odam kompyuter tushunadigan kod yoza oladi. Yaxshi dasturchilar odamlar tushunadigan kod yozadi.","author":"Martin Fowler"},{"text":"Soddalik — yaxshi arxitekturaning asosidir.","author":"Unknown"},{"text":"Avval ishlaydigan qil, keyin to‘g‘ri qil, keyin tezlashtir.","author":"Kent Beck"},{"text":"Yaxshi kod yozishdan ko‘ra, kodni tushunarli qilish muhimroq.","author":"Unknown"}]},
-  "GitHub": {"repositories":"Repozitoriyalar","followers":"Kuzatuvchilar","following":"Kuzatilganlar"},
-  "CertificatesPage": {"description":"Dastur muhandisligi yo‘lidagi professional sertifikatlarim va erishgan yutuqlarim."}
+  "Navigation": {
+    "about": "Men haqimda",
+    "skills": "Texnologiyalar",
+    "portfolio": "Loyihalar",
+    "services": "Xizmatlar",
+    "certificates": "Sertifikatlar",
+    "blog": "Blog",
+    "contact": "Bog‘lanish",
+    "menu": "Menyu",
+    "theme": "Mavzuni almashtirish",
+    "language": "Tilni tanlash"
+  },
+  "Hero": {
+    "availability": "mavjud · Toshkent",
+    "role": "Python Backend Developer",
+    "tagline": "Sizning backend tizimingiz ishonchli va kengaytiriladigan bo‘lishini ta'minlayman.\nIlovani ishonchli tarzda yetkazib berish va xizmatni mustahkam saqlashga e'tibor beraman.",
+    "projects": "Loyihalarni ko‘rish",
+    "contact": "Bog‘lanish",
+    "downloadCv": "CV yuklash",
+    "scroll": "pastga"
+  },
+  "Sections": {
+    "about": "Men haqimda",
+    "skills": "Texnologiyalar",
+    "portfolio": "Loyihalar",
+    "services": "Xizmatlar",
+    "certificates": "Sertifikatlar",
+    "stats": "Raqamlarda <em>sonlar.</em>",
+    "contact": "Keling bog‘lanamiz",
+    "latestThoughts": "So‘nggi <em>fikrlar.</em>",
+    "aboutLabel": "01 — about",
+    "skillsLabel": "02 — skills",
+    "portfolioLabel": "03 — work",
+    "servicesLabel": "04 — services",
+    "blogLabel": "04.5 — writing",
+    "certificatesLabel": "05 — sertifikatlar",
+    "statsLabel": "05.5 — stats",
+    "contactLabel": "06 — contact"
+  },
+  "Common": {
+    "previousProject": "Oldingi loyiha",
+    "nextProject": "Keyingi loyiha",
+    "goToProject": "{number}-loyihaga o‘tish",
+    "public": "Ochiq",
+    "private": "Yopiq",
+    "viewGithub": "GitHub’da ko‘rish →",
+    "readMore": "Batafsil o‘qish →",
+    "viewAllArticles": "Barcha maqolalarni ko‘rish →",
+    "allCertificates": "Barcha sertifikatlar →",
+    "issued": "Berilgan",
+    "openCertificate": "{title} sertifikatini ochish",
+    "shareCertificate": "Sertifikatni ulashish",
+    "downloadCertificate": "Sertifikatni yuklash",
+    "closeCertificate": "Sertifikatni yopish",
+    "newQuote": "Yangi iqtibos",
+    "messageSent": "Xabar muvaffaqiyatli yuborildi!",
+    "messageError": "Xabarni yuborishda xatolik yuz berdi",
+    "name": "Ismingiz",
+    "email": "Email",
+    "message": "Xabar",
+    "emailPlaceholder": "sizning@email.com",
+    "messagePlaceholder": "Loyihangiz haqida gapirib bering...",
+    "send": "Yuborish",
+    "footerTop": "↑ tepaga"
+  },
+  "Contact": {
+    "description": "Backend tizimlar, API xizmatlar yoki yangi imkoniyatlar bo‘yicha hamkorlik uchun bog‘lanishingiz mumkin."
+  },
+  "Quote": {
+    "items": [
+      { "text": "Avval muammoni tushun, keyin yechim yoz.", "author": "John Johnson" },
+      { "text": "Har qanday odam kompyuter tushunadigan kod yoza oladi. Yaxshi dasturchilar odamlar tushunadigan kod yozadi.", "author": "Martin Fowler" },
+      { "text": "Soddalik — yaxshi arxitekturaning asosidir.", "author": "Unknown" },
+      { "text": "Avval ishlaydigan qil, keyin to‘g‘ri qil, keyin tezlashtir.", "author": "Kent Beck" },
+      { "text": "Yaxshi kod yozishdan ko‘ra, kodni tushunarli qilish muhimroq.", "author": "Unknown" },
+      { "text": "Gapirish oson. Menga kodni ko‘rsat.", "author": "Linus Torvalds" },
+      { "text": "Dasturlar avvalo insonlar o‘qishi uchun yoziladi, mashinalar bajarishi esa keyingi vazifa.", "author": "Harold Abelson" },
+      { "text": "Murakkablik qo‘shish oson. Oddiylikni saqlash — haqiqiy mahorat.", "author": "Unknown" },
+      { "text": "Yaxshi dastur murakkab jarayonlarni oddiy qilib ko‘rsatadi.", "author": "Grady Booch" },
+      { "text": "Mukammallik qo‘shadigan narsa qolmaganda emas, olib tashlaydigan narsa qolmaganda keladi.", "author": "Antoine de Saint-Exupery" },
+      { "text": "Kodni yozish bir marta, o‘qish esa yuzlab marta sodir bo‘ladi.", "author": "Unknown" },
+      { "text": "Yaxshi arxitektura bugungi talabni emak, ertangi o‘zgarishni ham hisobga oladi.", "author": "Unknown" },
+      { "text": "Eng yaxshi optimizatsiya — avval keraksiz murakkablikni olib tashlash.", "author": "Unknown" },
+      { "text": "Kod faqat ishlashi emas, uni qo‘llab-quvvatlash ham oson bo‘lishi kerak.", "author": "Unknown" },
+      { "text": "Professional dasturchi kod yozmaydi, u muammolarga yechim yaratadi.", "author": "Unknown" }
+    ]
+  },
+  "GitHub": {
+    "repositories": "Repozitoriyalar",
+    "followers": "Kuzatuvchilar",
+    "following": "Kuzatilganlar"
+  },
+  "CertificatesPage": {
+    "eyebrow": "Sertifikatlar",
+    "title": "Sertifikatlar",
+    "description": "Dastur muhandisligi yo‘lidagi professional sertifikatlarim va erishgan yutuqlarim."
+  },
+  "Blog": {
+    "heroEyebrow": "Blog",
+    "heroTitle": "Kod, <em>arxitektura</em> va muhandislik haqida fikrlar.",
+    "heroSub": "Backend development, system design va har kuni ishlatadigan vositalar bo‘yicha chuqur o‘rganishlar.",
+    "searchPlaceholder": "Maqolalarni qidirish...",
+    "filtersToggle": "Filtrlar",
+    "tagAll": "Barchasi",
+    "empty": "Tanlovingizga mos maqolalar topilmadi.",
+    "readMore": "Batafsil →",
+    "readArticle": "Maqolani o‘qish →",
+    "viewAll": "Barcha maqolalarni ko‘rish →",
+    "copied": "Nusxalandi",
+    "share": "Maqolani ulashish",
+    "prevNav": "← Oldingi",
+    "nextNav": "Keyingi →",
+    "allArticles": "← Barcha maqolalar",
+    "views": "{views} marta o‘qildi"
+  },
+  "Errors": {
+    "title": "Bir narsa noto‘g‘ri ketdi",
+    "retry": "Qayta urinib ko‘ring"
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Sahifa topilmadi",
+    "description": "Siz qidirayotgan sahifa mavjud emas yoki ko‘chirilgan.",
+    "goHome": "← Bosh sahifa",
+    "viewBlog": "Blogni ko‘rish"
+  }
 }

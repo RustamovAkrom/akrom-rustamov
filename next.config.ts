@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   turbopack: {},
   images: {
-    qualities: [75, 85],
+    qualities: [75, 85, 95],
   },
 };
 

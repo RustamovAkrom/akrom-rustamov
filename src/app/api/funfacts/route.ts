@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
-import { aboutData } from '@/lib/data';
+import { funFactsData } from '@/lib/data';
 import { localize, resolveLocaleFromRequest } from '@/lib/i18n-data';
 
 export async function GET() {
     const locale = await resolveLocaleFromRequest();
-    return NextResponse.json(localize(aboutData, locale), {
+    return NextResponse.json(localize(funFactsData, locale), {
         headers: {
-            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
         },
     });
 }
-
-export const revalidate = 60;

@@ -1,15 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useLocale } from 'next-intl';
 
 export function useData<T>(url: string, fallback: T) {
+  const locale = useLocale();
   const [data, setData] = useState<T>(fallback);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
 
-    fetch(url)
+    fetch(url, { headers: { 'x-locale': locale } })
       .then((res) => res.json())
       .then((json) => {
         if (!cancelled) {
@@ -26,7 +28,7 @@ export function useData<T>(url: string, fallback: T) {
     return () => {
       cancelled = true;
     };
-  }, [url]);
+  }, [url, locale]);
 
   return { data, loading };
 }

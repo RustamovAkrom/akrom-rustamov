@@ -2,15 +2,16 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { allPosts } from "contentlayer/generated";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function BlogPage() {
+  const t = useTranslations("Blog");
   const [activeTag, setActiveTag] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [showFilters, setShowFilters] = useState(false);
-  const [hoveredPost, setHoveredPost] = useState<string | null>(null);
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLElement>(null);
 
   const allTags = useMemo(() => {
     const tags = new Set<string>();
@@ -29,17 +30,16 @@ export default function BlogPage() {
     });
   }, [activeTag, search]);
 
-  const handleShare = async (e: React.MouseEvent, post: typeof allPosts[0]) => {
+  const handleShare = async (e: React.MouseEvent, post: (typeof allPosts)[number]) => {
     e.preventDefault();
     e.stopPropagation();
-    const articleUrl = window.location.origin + post.url;
+    const articleUrl = post.url;
     const shareData = {
       title: post.title,
       text: `${post.description} - ${articleUrl}`,
       url: articleUrl,
     };
 
-    // Native share API (mobile)
     if (navigator.share && navigator.canShare?.(shareData)) {
       try {
         await navigator.share(shareData);
@@ -49,7 +49,6 @@ export default function BlogPage() {
       return;
     }
 
-    // Fallback: copy to clipboard
     try {
       await navigator.clipboard.writeText(articleUrl);
       setCopiedSlug(post.slug);
@@ -59,10 +58,9 @@ export default function BlogPage() {
     }
   };
 
-  // Reveal animation for dynamically filtered posts
   useEffect(() => {
-    const container = listRef.current;
-    if (!container) return;
+    const page = pageRef.current;
+    if (!page) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -76,38 +74,33 @@ export default function BlogPage() {
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
     );
 
-    container.querySelectorAll(".reveal:not(.in)").forEach((el) => {
+    page.querySelectorAll(".reveal:not(.in)").forEach((el) => {
       observer.observe(el);
     });
 
     return () => observer.disconnect();
   }, [filtered]);
 
-  const activeFilterLabel = activeTag === "all" ? "Filters" : activeTag;
+  const activeFilterLabel = activeTag === "all" ? t("filtersToggle") : activeTag;
 
   return (
-    <main className="blog-page">
-      {/* Reading Progress */}
+    <main ref={pageRef} className="blog-page">
       <div className="blog-progress">
         <div className="blog-progress__bar" style={{ width: "0%" }} />
       </div>
 
-      {/* Blog Hero */}
       <section className="blog-hero">
         <div className="container">
           <div className="blog-hero__inner reveal">
-            <span className="s-label mono">Blog</span>
+            <span className="s-label mono">{t("heroEyebrow")}</span>
             <h1 className="blog-hero__title">
-              Thoughts on <em>code,</em> architecture, and engineering.
+              {t.rich("heroTitle", { em: (chunks) => <em>{chunks}</em> })}
             </h1>
-            <p className="blog-hero__sub">
-              Deep dives into backend development, system design, and the tools I use every day.
-            </p>
+            <p className="blog-hero__sub">{t("heroSub")}</p>
           </div>
         </div>
       </section>
 
-      {/* Filters */}
       <section className="blog-filters">
         <div className="container">
           <div className="blog-filters__inner reveal">
@@ -115,7 +108,7 @@ export default function BlogPage() {
               <input
                 type="text"
                 className="blog-search"
-                placeholder="Search articles..."
+                placeholder={t("searchPlaceholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -123,7 +116,7 @@ export default function BlogPage() {
                 className={`blog-filters__toggle ${showFilters ? "open" : ""} ${activeTag !== "all" ? "has-active" : ""}`}
                 onClick={() => setShowFilters((s) => !s)}
                 aria-expanded={showFilters}
-                aria-label="Toggle filters"
+                aria-label={t("filtersToggle")}
               >
                 <span className="blog-filters__toggle-text">{activeFilterLabel}</span>
                 <svg className="blog-filters__toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
@@ -139,7 +132,7 @@ export default function BlogPage() {
                     className={`blog-tag ${activeTag === tag ? "active" : ""}`}
                     onClick={() => setActiveTag(tag)}
                   >
-                    {tag === "all" ? "All" : tag}
+                    {tag === "all" ? t("tagAll") : tag}
                   </button>
                 ))}
               </div>
@@ -148,22 +141,19 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Posts Grid */}
       <section className="blog-list-section">
         <div className="container">
           {filtered.length === 0 ? (
             <div className="blog-empty reveal">
-              <p>No articles found matching your criteria.</p>
+              <p>{t("empty")}</p>
             </div>
           ) : (
-            <div ref={listRef} className="blog-list">
+            <div className="blog-list">
               {filtered.map((post, idx) => (
                 <article
                   key={post.slug}
                   className="blog-post-card reveal"
                   style={{ "--d": `${idx * 0.08}s` } as React.CSSProperties}
-                  onMouseEnter={() => setHoveredPost(post.slug)}
-                  onMouseLeave={() => setHoveredPost(null)}
                 >
                   <div className="blog-post-card__meta">
                     <span className="blog-post-card__date mono">{post.formattedDate}</span>
@@ -176,21 +166,21 @@ export default function BlogPage() {
                       ))}
                     </div>
                     <h2 className="blog-post-card__title">
-                      <Link href={post.url}>{post.title}</Link>
+                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                     </h2>
                     <p className="blog-post-card__excerpt">{post.description}</p>
                     <div className="blog-post-card__actions">
-                      <Link href={post.url} className="blog-post-card__link mono">
-                        Read article →
+                      <Link href={`/blog/${post.slug}`} className="blog-post-card__link mono">
+                        {t("readArticle")}
                       </Link>
                       <button
                         className={`blog-post-card__action-btn ${copiedSlug === post.slug ? "copied" : ""}`}
                         onClick={(e) => handleShare(e, post)}
-                        title="Share article"
+                        title={t("share")}
                       >
                         {copiedSlug === post.slug ? (
                           <span className="mono" style={{ fontSize: "10px", fontWeight: 600 }}>
-                            Copied
+                            {t("copied")}
                           </span>
                         ) : (
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">

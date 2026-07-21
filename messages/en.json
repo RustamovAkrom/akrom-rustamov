@@ -1,10 +1,128 @@
 {
-  "Navigation": {"about":"About me","skills":"Technologies","portfolio":"Projects","services":"Services","certificates":"Certificates","blog":"Blog","contact":"Contact","menu":"Menu","theme":"Toggle theme","language":"Choose language"},
-  "Hero": {"availability":"available · Tashkent","role":"Python Backend Developer","tagline":"I make sure your backend system is reliable and scalable.\nI focus on delivering the application reliably and keeping the service robust.","projects":"View projects","contact":"Get in touch","downloadCv":"Download CV","scroll":"scroll"},
-  "Sections": {"about":"About me","skills":"Technologies","portfolio":"Projects","services":"Services","certificates":"Certificates","stats":"By the <em>numbers.</em>","contact":"Let’s connect","latestThoughts":"Latest <em>thoughts.</em>","aboutLabel":"01 — about","skillsLabel":"02 — skills","portfolioLabel":"03 — work","servicesLabel":"04 — services","blogLabel":"04.5 — writing","certificatesLabel":"05 — certificates","statsLabel":"05.5 — stats","contactLabel":"06 — contact"},
-  "Common": {"previousProject":"Previous project","nextProject":"Next project","goToProject":"Go to project {number}","public":"Public","private":"Private","viewGithub":"View on GitHub →","readMore":"Read more →","viewAllArticles":"View all articles →","allCertificates":"All certificates →","issued":"Issued","openCertificate":"Open certificate {title}","closeCertificate":"Close certificate","newQuote":"New quote","messageSent":"Message sent successfully!","messageError":"Error sending message","name":"Your name","email":"Email","message":"Message","emailPlaceholder":"your@email.com","messagePlaceholder":"Tell me about your project...","send":"Send","footerTop":"↑ top"},
-  "Contact": {"description":"You can get in touch to collaborate on backend systems, API services, or new opportunities."},
-  "Quote": {"items":[{"text":"First understand the problem, then write the solution.","author":"John Johnson"},{"text":"Any fool can write code that a computer can understand. Good programmers write code that humans can understand.","author":"Martin Fowler"},{"text":"Simplicity is the foundation of good architecture.","author":"Unknown"},{"text":"Make it work, make it right, then make it fast.","author":"Kent Beck"},{"text":"Making code understandable is more important than simply writing good code.","author":"Unknown"}]},
-  "GitHub": {"repositories":"Repositories","followers":"Followers","following":"Following"},
-  "CertificatesPage": {"description":"My professional certificates and achievements along the path of software engineering."}
+  "Navigation": {
+    "about": "About me",
+    "skills": "Technologies",
+    "portfolio": "Projects",
+    "services": "Services",
+    "certificates": "Certificates",
+    "blog": "Blog",
+    "contact": "Contact",
+    "menu": "Menu",
+    "theme": "Toggle theme",
+    "language": "Choose language"
+  },
+  "Hero": {
+    "availability": "available · Tashkent",
+    "role": "Python Backend Developer",
+    "tagline": "I make sure your backend system is reliable and scalable.\nI focus on delivering the application reliably and keeping the service robust.",
+    "projects": "View projects",
+    "contact": "Get in touch",
+    "downloadCv": "Download CV",
+    "scroll": "scroll"
+  },
+  "Sections": {
+    "about": "About me",
+    "skills": "Technologies",
+    "portfolio": "Projects",
+    "services": "Services",
+    "certificates": "Certificates",
+    "stats": "By the <em>numbers.</em>",
+    "contact": "Let’s connect",
+    "latestThoughts": "Latest <em>thoughts.</em>",
+    "aboutLabel": "01 — about",
+    "skillsLabel": "02 — skills",
+    "portfolioLabel": "03 — work",
+    "servicesLabel": "04 — services",
+    "blogLabel": "04.5 — writing",
+    "certificatesLabel": "05 — certificates",
+    "statsLabel": "05.5 — stats",
+    "contactLabel": "06 — contact"
+  },
+  "Common": {
+    "previousProject": "Previous project",
+    "nextProject": "Next project",
+    "goToProject": "Go to project {number}",
+    "public": "Public",
+    "private": "Private",
+    "viewGithub": "View on GitHub →",
+    "readMore": "Read more →",
+    "viewAllArticles": "View all articles →",
+    "allCertificates": "All certificates →",
+    "issued": "Issued",
+    "openCertificate": "Open certificate {title}",
+    "shareCertificate": "Share certificate",
+    "downloadCertificate": "Download certificate",
+    "closeCertificate": "Close certificate",
+    "newQuote": "New quote",
+    "messageSent": "Message sent successfully!",
+    "messageError": "Error sending message",
+    "name": "Your name",
+    "email": "Email",
+    "message": "Message",
+    "emailPlaceholder": "your@email.com",
+    "messagePlaceholder": "Tell me about your project...",
+    "send": "Send",
+    "footerTop": "↑ top"
+  },
+  "Contact": {
+    "description": "You can get in touch to collaborate on backend systems, API services, or new opportunities."
+  },
+  "Quote": {
+    "items": [
+      { "text": "First understand the problem, then write the solution.", "author": "John Johnson" },
+      { "text": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", "author": "Martin Fowler" },
+      { "text": "Simplicity is the foundation of good architecture.", "author": "Unknown" },
+      { "text": "Make it work, make it right, then make it fast.", "author": "Kent Beck" },
+      { "text": "Making code understandable is more important than simply writing good code.", "author": "Unknown" },
+      { "text": "Talk is cheap. Show me the code.", "author": "Linus Torvalds" },
+      { "text": "Programs must be written for people to read, and only incidentally for machines to execute.", "author": "Harold Abelson" },
+      { "text": "Adding complexity is easy. Keeping it simple is the real skill.", "author": "Unknown" },
+      { "text": "A good program makes complex things simple.", "author": "Grady Booch" },
+      { "text": "Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away.", "author": "Antoine de Saint-Exupery" },
+      { "text": "Code is written once but read hundreds of times.", "author": "Unknown" },
+      { "text": "Good architecture accounts not only for today’s requirements, but for tomorrow’s changes.", "author": "Unknown" },
+      { "text": "The best optimization is to remove unnecessary complexity first.", "author": "Unknown" },
+      { "text": "Code shouldn’t just work — it should be easy to maintain.", "author": "Unknown" },
+      { "text": "A professional developer doesn’t write code, they create solutions to problems.", "author": "Unknown" }
+    ]
+  },
+  "GitHub": {
+    "repositories": "Repositories",
+    "followers": "Followers",
+    "following": "Following"
+  },
+  "CertificatesPage": {
+    "eyebrow": "Certificates",
+    "title": "Certificates",
+    "description": "My professional certificates and achievements along the path of software engineering."
+  },
+  "Blog": {
+    "heroEyebrow": "Blog",
+    "heroTitle": "Thoughts on <em>code,</em> architecture, and engineering.",
+    "heroSub": "Deep dives into backend development, system design, and the tools I use every day.",
+    "searchPlaceholder": "Search articles...",
+    "filtersToggle": "Filters",
+    "tagAll": "All",
+    "empty": "No articles found matching your criteria.",
+    "readMore": "Read more →",
+    "readArticle": "Read article →",
+    "viewAll": "View all articles →",
+    "copied": "Copied",
+    "share": "Share article",
+    "prevNav": "← Previous",
+    "nextNav": "Next →",
+    "allArticles": "← All articles",
+    "views": "{views} views"
+  },
+  "Errors": {
+    "title": "Something went wrong",
+    "retry": "Try again"
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Page Not Found",
+    "description": "The page you’re looking for doesn’t exist or has been moved.",
+    "goHome": "← Go Home",
+    "viewBlog": "View Blog"
+  }
 }

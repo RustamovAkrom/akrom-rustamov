@@ -26,6 +26,8 @@ interface Comet {
 interface Star {
     nx: number;     // base position, normalized 0..1 of viewport (resolution-independent)
     ny: number;
+    vx: number;     // individual normalized velocity per millisecond
+    vy: number;
     depth: number;  // 0 far → 1 near; drives parallax speed, size and brightness
     size: number;   // radius in CSS px (tiny: ~0.15 – 0.75 → 0.3px – 1.5px diameter)
     a: number;      // base alpha
@@ -71,7 +73,6 @@ export default function Galaxy() {
         let raf = 0;
         let running = false;
         let last = 0;
-        let drift = 0;                          // accumulated drift distance (px), advanced by dt
         const FRAME = 1000 / 60;                // 60fps cap
         let cometSeed = 0;
 
@@ -116,18 +117,31 @@ export default function Galaxy() {
         function createStar(): Star {
             // Bias toward far/small stars; few large ones → natural depth.
             const depth = Math.pow(Math.random(), 1.7);          // skew to small depth (far)
-            const size = 0.15 + depth * 0.6 + Math.random() * 0.12;   // ~0.3px..1.5px diameter
+            const size = 0.2 + depth * 0.68 + Math.random() * 0.12;
             const twinkles = Math.random() < 0.5;
-            return {
-                nx: Math.random(),
-                ny: Math.random(),
+            const star: Star = {
+                nx: 0,
+                ny: 0,
+                vx: 0,
+                vy: 0,
                 depth,
-                size: Math.min(size, 0.75),
+                size: Math.min(size, 0.88),
                 a: 0.18 + depth * 0.42 + Math.random() * 0.1,    // dim → reduced brightness
                 tw: twinkles ? rand(0.0008, 0.0022) : 0,
                 ph: Math.random() * Math.PI * 2,
                 color: palette[Math.floor(Math.random() * palette.length)],
             };
+            launchStar(star, Math.sqrt(Math.random()) * 0.72);
+            return star;
+        }
+
+        function launchStar(star: Star, distance: number) {
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = rand(0.000035, 0.000065);
+            star.nx = 0.5 + Math.cos(angle) * distance;
+            star.ny = 0.5 + Math.sin(angle) * distance;
+            star.vx = Math.cos(angle) * velocity;
+            star.vy = Math.sin(angle) * velocity;
         }
 
         function buildStars() {
@@ -178,8 +192,6 @@ export default function Galaxy() {
             ctx!.fillStyle = glow;
             ctx!.fillRect(0, 0, W, H);
 
-            // Advance drift; ease parallax toward the mouse target.
-            if (!prefersReduced) drift += dt * 0.018;            // stronger motion
             par.x += (mouse.x * 32 - par.x) * 0.06;
             par.y += (mouse.y * 22 - par.y) * 0.06;
 
@@ -243,29 +255,39 @@ export default function Galaxy() {
             for (let i = 0; i < stars.length; i++) {
                 const s = stars[i];
 
-                // Parallax drift: nearer stars move a touch faster (depth factor).
-                const dx = drift * (0.36 + s.depth * 0.92) + par.x * s.depth * 1.1;
-                const dy = drift * (0.18 + s.depth * 0.88) + par.y * s.depth * 0.9;
-                const sway = Math.sin(now * 0.00062 + s.nx * Math.PI * 2) * (1.2 - s.depth * 0.8);
+                // Give each star its own gentle drift. Nearer stars move a little
+                // faster, but remain small so the field stays refined.
+                if (!prefersReduced) {
+                    const speed = lowPower ? 0.45 : 1;
+                    s.nx += s.vx * dt * (0.45 + s.depth * 0.9) * speed;
+                    s.ny += s.vy * dt * (0.45 + s.depth * 0.9) * speed;
+                    if (s.nx < -0.05 || s.nx > 1.05 || s.ny < -0.05 || s.ny > 1.05) {
+                        launchStar(s, 0.01);
+                    }
+                }
 
-                // Wrap seamlessly across the viewport.
-                let px = (s.nx * W + dx + sway) % W; if (px < 0) px += W;
-                let py = (s.ny * H + dy + sway * 0.33) % H; if (py < 0) py += H;
+                const px = s.nx * W + par.x * s.depth * 1.1;
+                const py = s.ny * H + par.y * s.depth * 0.9;
+                const distanceFromCentre = Math.min(Math.hypot(s.nx - 0.5, s.ny - 0.5), 0.8);
 
                 // Subtle twinkle.
                 let alpha = s.a;
                 if (s.tw && !prefersReduced) {
                     alpha *= 0.68 + 0.34 * Math.sin(now * s.tw + s.ph);
                 }
-                alpha *= brightness;
+                alpha *= (0.55 + distanceFromCentre * 0.55) * brightness;
+                const radius = s.size * (0.75 + distanceFromCentre * 0.45);
 
                 ctx!.fillStyle = `rgba(${s.color},${alpha})`;
-                const d = s.size * 2;
-                ctx!.fillRect(px - s.size, py - s.size, d, d);
+                ctx!.beginPath();
+                ctx!.arc(px, py, radius, 0, Math.PI * 2);
+                ctx!.fill();
 
                 if (s.depth > 0.82 && alpha > 0.25) {
                     ctx!.fillStyle = `rgba(${s.color}, ${Math.min(alpha * 0.4, 0.36)})`;
-                    ctx!.fillRect(px - s.size * 1.75, py - s.size * 1.75, d * 1.5, d * 1.5);
+                    ctx!.beginPath();
+                    ctx!.arc(px, py, radius * 1.75, 0, Math.PI * 2);
+                    ctx!.fill();
                 }
             }
 

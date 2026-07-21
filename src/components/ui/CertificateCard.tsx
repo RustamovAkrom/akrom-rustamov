@@ -2,11 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Certificate } from '@/types';
+import type { LocalizedCertificate } from '@/types';
 import { useTranslations } from 'next-intl';
 
 type Props = {
-  cert: Certificate;
+  cert: LocalizedCertificate;
   detailed?: boolean;
   href?: string;
 };

@@ -2,14 +2,17 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
-import type { Certificate } from '@/types';
+import type { LocalizedCertificate } from '@/types';
+import { useTranslations } from 'next-intl';
 
 type Props = {
-  cert: Certificate;
+  cert: LocalizedCertificate;
   onClose: () => void;
 };
 
 export default function CertificateModal({ cert, onClose }: Props) {
+  const t = useTranslations('Common');
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -30,10 +33,10 @@ export default function CertificateModal({ cert, onClose }: Props) {
   }, [onClose]);
 
   return (
-    <div className="cert-modal" role="dialog" aria-modal="true" aria-label={`Sertifikat ${cert.title}`}>
+    <div className="cert-modal" role="dialog" aria-modal="true" aria-label={t('openCertificate', { title: cert.title })}>
       <div className="cert-modal__backdrop" onClick={onClose} />
       <div className="cert-modal__card">
-        <button className="cert-modal__close" onClick={onClose} aria-label="Sertifikatni yoping">✕</button>
+        <button className="cert-modal__close" onClick={onClose} aria-label={t('closeCertificate')}>✕</button>
         <div className="cert-modal__inner">
           <div className="cert-modal__img">
             <Image

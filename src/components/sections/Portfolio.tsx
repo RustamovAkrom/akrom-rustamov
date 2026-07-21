@@ -3,12 +3,16 @@
 import { useData } from "@/hooks/useData";
 import { useSlider } from "@/hooks/useSlider";
 import { projectsData } from "@/lib/data";
-import type { Project } from "@/types";
-import { useTranslations } from "next-intl";
+import type { LocalizedData, Project } from "@/types";
+import { useLocale, useTranslations } from "next-intl";
+import type { AppLocale } from '@/i18n/routing';
+import { localizeClientData } from '@/lib/localize-client';
 
 export default function Portfolio({ className = "" }: { className?: string }) {
   const t = useTranslations();
-  const { data } = useData<Project[]>('/api/projects', projectsData);
+  const locale = useLocale() as AppLocale;
+  const fallback = localizeClientData(projectsData, locale);
+  const { data } = useData<LocalizedData<Project>[]>('/api/projects', fallback);
   const total = data.length;
   const { index, next, prev, goTo } = useSlider(total);
 
@@ -17,7 +21,7 @@ export default function Portfolio({ className = "" }: { className?: string }) {
       <div className="container">
         <div className="pf-head">
           <div className="s-head reveal">
-            <span className="s-label mono">03 — work</span>
+            <span className="s-label mono">{t("Sections.portfolioLabel")}</span>
             <h2 className="s-title">{t("Sections.portfolio")}</h2>
           </div>
 
@@ -72,7 +76,7 @@ export default function Portfolio({ className = "" }: { className?: string }) {
                   <p className="slide__desc">{project.description}</p>
                   {project.github ? (
                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn ghost sm">
-                      GitHub'da ko'rish →
+                      {t('Common.viewGithub')}
                     </a>
                   ) : null}
                 </div>

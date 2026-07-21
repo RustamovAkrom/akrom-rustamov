@@ -1,3 +1,21 @@
+import type { AppLocale } from "@/i18n/routing";
+
+/**
+ * A string available in every supported locale.
+ * Source data (data.ts) keeps the full translation; API routes flatten it
+ * to a plain string based on the requested locale before sending to clients.
+ */
+export type Localized = Record<AppLocale, string>;
+
+/** Recursively resolves localized values to strings for a single locale. */
+export type LocalizedData<T> = T extends Localized
+  ? string
+  : T extends (infer Item)[]
+    ? LocalizedData<Item>[]
+    : T extends object
+      ? { [Key in keyof T]: LocalizedData<T[Key]> }
+      : T;
+
 export interface Pill {
   name: string;
   highlight?: boolean;
@@ -5,21 +23,21 @@ export interface Pill {
 
 export interface StatItem {
   value: string | number;
-  label: string;
+  label: Localized;
   isNumber?: boolean;
-  suffix?: string;
+  suffix?: Localized;
 }
 
 export interface TimelineItem {
-  role: string;
+  role: Localized;
   year: string;
-  description: string;
+  description: Localized;
   isLive?: boolean;
 }
 
 export interface AboutData {
-  lead: string;
-  body: string;
+  lead: Localized;
+  body: Localized;
   stats: StatItem[];
   timeline: TimelineItem[];
 }
@@ -32,8 +50,8 @@ export interface SkillCategory {
 export interface Project {
   id: number;
   title: string;
-  subtitle: string;
-  description: string;
+  subtitle: Localized;
+  description: Localized;
   pills: string[];
   hue: number;
   github: string | null;
@@ -42,21 +60,24 @@ export interface Project {
 
 export interface Service {
   id: number;
-  title: string;
-  description: string;
+  title: Localized;
+  description: Localized;
   icon: 'code' | 'file' | 'database' | string;
 }
 
 export interface Certificate {
   id: number;
-  title: string;
+  title: Localized;
   issuer: string;
-  description: string;
+  description: Localized;
   issueDate: string; // ISO or short human-readable date
   image: string; // path under /public
   category?: string;
   featured?: boolean;
 }
+
+/** A certificate after its localized fields have been resolved for one locale. */
+export type LocalizedCertificate = LocalizedData<Certificate>;
 
 export interface SocialLink {
   url: string;
@@ -64,7 +85,7 @@ export interface SocialLink {
 }
 
 export interface ContactData {
-  description: string;
+  description: Localized;
   social: {
     github: SocialLink;
     linkedin: SocialLink;
@@ -74,9 +95,9 @@ export interface ContactData {
 }
 
 export interface FunFact {
-  label: string;
+  label: Localized;
   value: number;
-  suffix: string;
+  suffix: Localized;
   icon: string;
 }
 

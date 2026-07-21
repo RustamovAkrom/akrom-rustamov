@@ -1,9 +1,14 @@
 ﻿'use client';
 
 import { useEffect, useRef } from 'react';
+import { useData } from '@/hooks/useData';
 import { funFactsData } from '@/lib/data';
+import type { FunFact, LocalizedData } from '@/types';
+import { useLocale, useTranslations } from 'next-intl';
+import type { AppLocale } from '@/i18n/routing';
+import { localizeClientData } from '@/lib/localize-client';
 
-function FactCard({ fact, idx }: { fact: typeof funFactsData[0]; idx: number }) {
+function FactCard({ fact, idx }: { fact: LocalizedData<FunFact>; idx: number }) {
     const countRef = useRef<HTMLSpanElement>(null);
 
     useEffect(() => {
@@ -61,15 +66,20 @@ function FactCard({ fact, idx }: { fact: typeof funFactsData[0]; idx: number }) 
 }
 
 export default function FunFacts({ className = "" }: { className?: string }) {
+    const t = useTranslations('Sections');
+    const locale = useLocale() as AppLocale;
+    const fallback = localizeClientData(funFactsData, locale);
+    const { data } = useData<LocalizedData<FunFact>[]>('/api/funfacts', fallback);
+
     return (
         <section className={`section funfacts ${className}`.trim()} id="funfacts">
             <div className="container">
                 <div className="s-head reveal">
-                    <span className="s-label mono">05.5 — stats</span>
-                    <h2 className="s-title">Raqamlarda <em>sonlar.</em></h2>
+                    <span className="s-label mono">{t('statsLabel')}</span>
+                    <h2 className="s-title">{t.rich('stats', { em: (chunks) => <em>{chunks}</em> })}</h2>
                 </div>
                 <div className="funfacts-grid">
-                    {funFactsData.map((fact, idx) => (
+                    {data.map((fact, idx) => (
                         <FactCard key={idx} fact={fact} idx={idx} />
                     ))}
                 </div>

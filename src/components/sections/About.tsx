@@ -2,12 +2,16 @@
 
 import { useData } from '@/hooks/useData';
 import { aboutData } from '@/lib/data';
-import type { AboutData } from '@/types';
-import { useTranslations } from 'next-intl';
+import type { AboutData, LocalizedData } from '@/types';
+import { useLocale, useTranslations } from 'next-intl';
+import type { AppLocale } from '@/i18n/routing';
+import { localizeClientData } from '@/lib/localize-client';
 
 export default function About({ className = "" }: { className?: string }) {
     const t = useTranslations('Sections');
-    const { data } = useData<AboutData>('/api/about', aboutData);
+    const locale = useLocale() as AppLocale;
+    const fallback = localizeClientData(aboutData, locale);
+    const { data } = useData<LocalizedData<AboutData>>('/api/about', fallback);
 
     return (
         <section className={`section about ${className}`.trim()} id="about">
