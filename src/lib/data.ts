@@ -462,6 +462,24 @@ export const certificatesData: Certificate[] = [
     category: 'AI & ML',
     featured: false,
   },
+  {
+    id: 5,
+    title: {
+      uz: 'Foundation sertifikati',
+      ru: 'Сертификат Foundation',
+      en: 'Foundation Certificate',
+    },
+    issuer: 'International Digital University',
+    description: {
+      uz: 'International Digital University tasdiqlangan Foundation dasturini muvaffaqiyatli tamomladim.',
+      ru: 'Я успешно завершил утверждённую программу Foundation в International Digital University.',
+      en: 'I successfully completed the approved Foundation Programme at International Digital University.',
+    },
+    issueDate: '20.07.2026',
+    image: '/certificates/FOUNDATION_CERTIFICATE.jpg',
+    category: 'Education',
+    featured: true,
+  },
 ];
 
 export const contactData: ContactData = {

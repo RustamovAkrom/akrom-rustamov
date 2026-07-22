@@ -4,6 +4,7 @@ import CertificatesPageClient from "@/components/certificates/CertificatesPageCl
 import type { AppLocale } from "@/i18n/routing";
 
 type CertificatesPageProps = { params: Promise<unknown> };
+type CertificatesPageSearchParams = Promise<{ certificate?: string | string[] }>;
 
 export async function generateMetadata({ params }: CertificatesPageProps): Promise<Metadata> {
   const { locale } = await params as { locale: AppLocale };
@@ -11,8 +12,17 @@ export async function generateMetadata({ params }: CertificatesPageProps): Promi
   return { title: "Certificates | Akrom Rustamov", description: t("description") };
 }
 
-export default async function CertificatesPage({ params }: CertificatesPageProps) {
+export default async function CertificatesPage({
+  params,
+  searchParams,
+}: CertificatesPageProps & { searchParams: CertificatesPageSearchParams }) {
   const { locale } = await params as { locale: AppLocale };
+  const { certificate } = await searchParams;
+  const certificateId = typeof certificate === 'string' ? Number(certificate) : Number.NaN;
   setRequestLocale(locale);
-  return <main className="certificates-page"><CertificatesPageClient /></main>;
+  return (
+    <main className="certificates-page">
+      <CertificatesPageClient sharedCertificateId={Number.isSafeInteger(certificateId) ? certificateId : undefined} />
+    </main>
+  );
 }

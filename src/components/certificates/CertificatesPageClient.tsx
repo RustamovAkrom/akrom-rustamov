@@ -12,14 +12,20 @@ import type { LocalizedCertificate } from '@/types';
 import { localizeClientData } from '@/lib/localize-client';
 import { useReveal } from '@/hooks/useReveal';
 
-export default function CertificatesPageClient() {
+type Props = {
+  sharedCertificateId?: number;
+};
+
+export default function CertificatesPageClient({ sharedCertificateId }: Props) {
   useReveal();
   const t = useTranslations('CertificatesPage');
   const tc = useTranslations('Common');
   const locale = useLocale() as AppLocale;
   const fallback = localizeClientData(certificatesData, locale);
   const { data } = useData<LocalizedCertificate[]>('/api/certificates', fallback);
-  const [active, setActive] = useState<LocalizedCertificate | null>(null);
+  const [active, setActive] = useState<LocalizedCertificate | null>(() =>
+    fallback.find((certificate) => certificate.id === sharedCertificateId) ?? null,
+  );
 
   return (
     <>

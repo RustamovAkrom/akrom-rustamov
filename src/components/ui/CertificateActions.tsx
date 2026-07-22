@@ -14,7 +14,7 @@ export default function CertificateActions({ cert }: Props) {
   const [copied, setCopied] = useState(false);
 
   const shareCertificate = async () => {
-    const url = `${window.location.origin}/${locale}/certificates#certificate-${cert.id}`;
+    const url = `${window.location.origin}/${locale}/certificates?certificate=${cert.id}`;
     const shareData = { title: cert.title, text: cert.description, url };
 
     if (navigator.share) {

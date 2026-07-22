@@ -17,7 +17,7 @@ export default function Certificates({ className = "" }: { className?: string })
   const locale = useLocale() as AppLocale;
   const fallback = localizeClientData(certificatesData, locale);
   const { data } = useData<LocalizedCertificate[]>('/api/certificates', fallback);
-  const featured = data.filter((c) => c.featured);
+  const featured = data.filter((c) => c.featured).slice(0, 3);
   const [active, setActive] = useState<LocalizedCertificate | null>(null);
 
   return (
