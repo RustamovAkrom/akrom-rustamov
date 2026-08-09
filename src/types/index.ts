@@ -42,9 +42,16 @@ export interface AboutData {
   timeline: TimelineItem[];
 }
 
+export interface SkillItem {
+  name: string;
+  href: string;
+  icon: string;
+  accent?: string;
+}
+
 export interface SkillCategory {
   title: string;
-  pills: Pill[];
+  items: SkillItem[];
 }
 
 export interface Project {
