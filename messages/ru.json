@@ -22,6 +22,10 @@
   },
   "Sections": {
     "about": "Обо мне",
+    "aboutApproach": "Подход",
+    "technicalProfile": "Технический профиль",
+    "experience": "Опыт",
+    "backendFocus": "Основные backend-технологии",
     "skills": "Технологии",
     "portfolio": "Проекты",
     "services": "Услуги",

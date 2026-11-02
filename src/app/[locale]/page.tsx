@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import Hero from "@/components/hero/Hero";
 import About from "@/components/sections/About";
-import QuoteSection from "@/components/sections/QuoteSection";
 import Skills from "@/components/sections/Skills";
 import Portfolio from "@/components/sections/Portfolio";
 import Services from "@/components/sections/Services";
@@ -13,6 +12,7 @@ import Certificates from "@/components/sections/Certificates";
 import FunFacts from "@/components/sections/FunFacts";
 import Contact from "@/components/sections/Contact";
 import AppInit from "@/components/AppInit";
+import styles from "./page.module.css";
 
 export default function HomePage() {
   useEffect(() => {
@@ -32,11 +32,10 @@ export default function HomePage() {
   return (
     <>
       <AppInit />
-      <main className="flex flex-col justify-center items-center">
+      <main className={`${styles.home} flex flex-col justify-center items-center`}>
         <Hero />
         <GitHubActivity className="section-anim" />
         <About className="section-anim" />
-        <QuoteSection className="section-anim" />
         <Skills className="section-anim" />
         <Portfolio className="section-anim" />
         <Services className="section-anim" />

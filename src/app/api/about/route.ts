@@ -6,9 +6,7 @@ export async function GET() {
     const locale = await resolveLocaleFromRequest();
     return NextResponse.json(localize(aboutData, locale), {
         headers: {
-            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+            'Cache-Control': 'private, no-store',
         },
     });
 }
-
-export const revalidate = 60;

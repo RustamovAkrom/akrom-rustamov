@@ -30,15 +30,26 @@ export interface StatItem {
 
 export interface TimelineItem {
   role: Localized;
-  year: string;
+  year: Localized;
   description: Localized;
   isLive?: boolean;
+}
+
+export interface AboutHighlight {
+  title: Localized;
+  description: Localized;
+}
+
+export interface AboutTechnicalCategory {
+  title: Localized;
+  technologies: string[];
 }
 
 export interface AboutData {
   lead: Localized;
   body: Localized;
-  stats: StatItem[];
+  highlights: AboutHighlight[];
+  technicalProfile: AboutTechnicalCategory[];
   timeline: TimelineItem[];
 }
 

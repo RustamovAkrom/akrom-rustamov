@@ -3,18 +3,25 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { sporePositions } from "@/lib/fireflies";
+import avatarImage from "../../../public/images/avatar.png";
+import MatrixRain from "./MatrixRain";
+import styles from "./Hero.module.css";
 
 export default function Hero() {
   const t = useTranslations("Hero");
 
   return (
     <section className="hero" id="home">
+      <div className={styles.animationBackground} aria-hidden="true">
+        <MatrixRain />
+        <div className={styles.edgeBlur} />
+      </div>
       <div className="spores" aria-hidden="true">
         {sporePositions.map((spore, index) => <div key={index} className="spore" style={{ left: spore.left, top: spore.top, animationDelay: spore.delay, animationDuration: spore.duration }} />)}
       </div>
       <div className="orb-wrap" id="heroOrb">
         <div className="orb">
-          <div className="orb__core orb__core--with-image"><Image className="orb__img" src="/images/avatar.png" alt="Akrom Rustamov avatar" width={220} height={220} priority quality={95} /></div>
+          <div className="orb__core orb__core--with-image"><Image className="orb__img" src={avatarImage} alt="Akrom Rustamov avatar" width={220} height={220} sizes="(max-width: 760px) 58vw, 29vw" priority quality={95} /></div>
           <div className="orb__energy" /><div className="orb__energy orb__energy--soft" />
           <div className="orb__halo h1" /><div className="orb__halo h2" /><div className="orb__halo h3" /><div className="orb__shine" />
         </div>

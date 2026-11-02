@@ -22,6 +22,10 @@
   },
   "Sections": {
     "about": "Men haqimda",
+    "aboutApproach": "Yondashuv",
+    "technicalProfile": "Texnik profil",
+    "experience": "Tajriba",
+    "backendFocus": "Asosiy backend texnologiyalari",
     "skills": "Texnologiyalar",
     "portfolio": "Loyihalar",
     "services": "Xizmatlar",

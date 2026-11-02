@@ -1,8 +1,9 @@
 'use client';
 
-import { useData } from '@/hooks/useData';
+import Image from 'next/image';
+import TechnicalProfile from '@/components/sections/TechnicalProfile';
+import aboutImage from '../../../public/about_me.png';
 import { aboutData } from '@/lib/data';
-import type { AboutData, LocalizedData } from '@/types';
 import { useLocale, useTranslations } from 'next-intl';
 import type { AppLocale } from '@/i18n/routing';
 import { localizeClientData } from '@/lib/localize-client';
@@ -10,8 +11,7 @@ import { localizeClientData } from '@/lib/localize-client';
 export default function About({ className = "" }: { className?: string }) {
     const t = useTranslations('Sections');
     const locale = useLocale() as AppLocale;
-    const fallback = localizeClientData(aboutData, locale);
-    const { data } = useData<LocalizedData<AboutData>>('/api/about', fallback);
+    const data = localizeClientData(aboutData, locale);
 
     return (
         <section className={`section about ${className}`.trim()} id="about">
@@ -23,96 +23,76 @@ export default function About({ className = "" }: { className?: string }) {
 
                 <div className="about__grid">
                     <div className="about__left">
-                        <p
-                            className="about__lead reveal"
-                            dangerouslySetInnerHTML={{ __html: data.lead }}
-                        />
-
-                        <p className="about__body reveal" style={{ '--d': '.08s' } as React.CSSProperties}>
+                        <p className="about__lead reveal" style={{ '--d': '.04s' } as React.CSSProperties}>{data.lead}</p>
+                        <p className="about__body reveal" style={{ '--d': '.14s' } as React.CSSProperties}>
                             {data.body}
                         </p>
-
-                        <div className="about__highlights reveal" style={{ '--d': '.12s' } as React.CSSProperties}>
-                            <div className="about__highlight">
-                                <span className="mono">01</span>
-                                <div>
-                                    <strong>Backend-first thinking</strong>
-                                    <p>Clean APIs, strong data modeling, and systems designed for stability.</p>
-                                </div>
-                            </div>
-                            <div className="about__highlight">
-                                <span className="mono">02</span>
-                                <div>
-                                    <strong>Product-minded execution</strong>
-                                    <p>Technical decisions aligned with the real business need and user experience.</p>
-                                </div>
-                            </div>
-                            <div className="about__highlight">
-                                <span className="mono">03</span>
-                                <div>
-                                    <strong>Reliable delivery</strong>
-                                    <p>From architecture to deployment, I build systems that teams can trust.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="about__stats reveal" style={{ '--d': '.14s' } as React.CSSProperties}>
-                            {data.stats.map((stat, idx) => (
-                                <div className="about__stat" key={idx}>
-                                    {stat.isNumber ? (
-                                        <>
-                                            <span className="about__stat-n" data-count={stat.value}>0</span>
-                                            <span className="about__stat-n">{stat.suffix || ''}</span>
-                                        </>
-                                    ) : (
-                                        <span className="about__stat-n mono">{stat.value}</span>
-                                    )}
-                                    <span className="about__stat-l">{stat.label}</span>
-                                </div>
-                            ))}
-                        </div>
                     </div>
 
                     <div className="about__right reveal" style={{ '--d': '.1s' } as React.CSSProperties}>
-                        <div className="about__visual" aria-label="Animated backend network visual">
+                        <div className="about__visual">
                             <div className="about__visual-frame">
-                                <div className="about__matrix" aria-hidden="true">
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                    <span />
-                                </div>
-                                <div className="about__visual-content">
-                                    <span className="mono">System</span>
-                                    <strong>Backend • Data • Delivery</strong>
-                                </div>
+                                <Image
+                                    className="about__portrait"
+                                    src={aboutImage}
+                                    alt="Akrom Rustamov"
+                                    fill
+                                    sizes="(max-width: 880px) 100vw, 50vw"
+                                />
                             </div>
-                        </div>
-
-                        <div className="tl">
-                            {data.timeline.map((item, idx) => (
-                                <div className="tl__item" key={idx}>
-                                    <div className={`tl__dot ${item.isLive ? 'tl__dot--live' : ''}`} />
-                                    <div className="tl__body">
-                                        <p className="tl__role">{item.role}</p>
-                                        <p className="tl__yr mono">{item.year}</p>
-                                        <p className="tl__desc">{item.description}</p>
-                                    </div>
-                                </div>
-                            ))}
                         </div>
                     </div>
                 </div>
+
+                <section className="about__block reveal" aria-labelledby="about-approach-title">
+                    <div className="about__block-head">
+                        <span className="about__experience-index mono">01</span>
+                        <h3 id="about-approach-title">{t('aboutApproach')}</h3>
+                    </div>
+                    <div className="about__highlights">
+                        {data.highlights.map((highlight, index) => (
+                            <article
+                                className="about__highlight reveal"
+                                key={highlight.title}
+                                style={{ '--d': `${index * 0.12}s` } as React.CSSProperties}
+                            >
+                                <span className="mono">{String(index + 1).padStart(2, '0')}</span>
+                                <div>
+                                    <h4>{highlight.title}</h4>
+                                    <p>{highlight.description}</p>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </section>
+
+                <TechnicalProfile
+                    categories={data.technicalProfile}
+                    title={t('technicalProfile')}
+                />
+
+                <section className="about__block about__experience reveal" aria-labelledby="about-experience-title">
+                    <div className="about__block-head">
+                        <span className="about__experience-index mono">03</span>
+                        <h3 id="about-experience-title">{t('experience')}</h3>
+                    </div>
+                    <div className="tl">
+                        {data.timeline.map((item, index) => (
+                            <article
+                                className="tl__item reveal"
+                                key={item.role}
+                                style={{ '--d': `${index * 0.12}s` } as React.CSSProperties}
+                            >
+                                <div className={`tl__dot ${item.isLive ? 'tl__dot--live' : ''}`} />
+                                <div className="tl__body">
+                                    <h4 className="tl__role">{item.role}</h4>
+                                    <p className="tl__yr mono">{item.year}</p>
+                                    <p className="tl__desc">{item.description}</p>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </section>
             </div>
         </section>
     );

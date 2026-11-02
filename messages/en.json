@@ -22,6 +22,10 @@
   },
   "Sections": {
     "about": "About me",
+    "aboutApproach": "My approach",
+    "technicalProfile": "Technical profile",
+    "experience": "Experience",
+    "backendFocus": "Core backend technologies",
     "skills": "Technologies",
     "portfolio": "Projects",
     "services": "Services",

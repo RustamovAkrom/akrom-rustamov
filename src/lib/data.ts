@@ -10,60 +10,140 @@ import {
 
 export const aboutData: AboutData = {
   lead: {
-    uz: 'Men backend mahsulotlarni loyihalash va rivojlantirishga ixtisoslashgan <strong>Python engineer</strong>man — tizimlar kuchli, xavfsiz va real hayotdagi muammolarni hal qilishga tayyor bo\'lishi kerak.',
-    ru: 'Я <strong>Python engineer</strong>, который проектирует и строит backend-системы так, чтобы они были надёжными, безопасными и готовыми решать реальные задачи бизнеса.',
-    en: 'I’m a <strong>Python engineer</strong> focused on building backend systems that are reliable, secure, and ready to solve real product problems.',
+    uz: 'Men ishonchlilik, xavfsizlik va puxta muhandislik tamoyillariga asoslangan backend tizimlarini yarataman.',
+    ru: 'Я создаю backend-системы, уделяя особое внимание надёжности, безопасности и продуманным инженерным решениям.',
+    en: 'I build backend systems with a focus on reliability, security, and thoughtful engineering.',
   },
   body: {
-    uz: 'Mening ishim — maqsadga yo\'naltirilgan backend arxitekturasi: API, data flow, auth, background jobs, deployment va monitoring. Men ishni faqat “funksional” darajasida emas, balki ishlab chiqarish uchun ishonchli va oson kengaytiriladigan tarzda quraman.\n\nFastAPI va Django bilan ishlash tajribasi bor. Men ishlayotgan tizimlarda oddiy kod emas, balki clean architecture, aniq boundarylar va supportable logic bo\'lishini afzal ko\'raman. Har bir loyiha uchun product maqsadini ko\'zlab, texnik yechimni soddalashtirish va ishlab chiqarishga tayyor qilish muhim.',
-    ru: 'Моя работа — это backend-архитектура, которая служит продукту, а не мешает ему: API, потоки данных, авторизация, фоновые задачи, деплой и мониторинг. Я строю системы не только “рабочие”, но и надёжные в продакшене, легко расширяемые и понятные для команды.\n\nУ меня есть опыт работы с FastAPI и Django. Я ценю чистую архитектуру, ясные границы между слоями и код, который можно поддерживать без хаоса. Для каждого проекта важна не только техника, но и понимание бизнес-цели, чтобы решение было сильным и устойчивым.',
-    en: 'I build backend systems that are designed to support the product, not just run it: APIs, data flow, authentication, background jobs, deployment, and monitoring. I care about systems that are solid in production, easy to extend, and clear for the team to support.\n\nI work with FastAPI and Django and focus on clean architecture, clear boundaries, and maintainable logic. For me, the goal is not only to ship functionality, but to make the solution strong, reliable, and aligned with the actual product need.',
+    uz: 'Men murakkab g‘oyalarni amaliy va puxta tuzilgan dasturiy yechimlarga aylantirishni yoqtiradigan Python backend dasturchisiman. Ishim faqat endpoint yozish bilan cheklanmaydi: tizimlar qanday muloqot qilishi, ma’lumotlar qanday oqishi, ilovalar xatolarga qanday munosabat bildirishi va bularning barchasi haqiqiy mahsulotda qanday ishlashiga e’tibor beraman.\n\nFastAPI, Django, PostgreSQL va zamonaviy infratuzilma bilan API hamda backend xizmatlarini toza arxitektura, qo‘llab-quvvatlash oson bo‘lgan mantiq va kengayish imkoniyatini hisobga olib yarataman. Kiberxavfsizlikka qiziqishim autentifikatsiya, kirish nazorati va xavfsiz tizim dizayniga yondashuvimga ham ta’sir qiladi.\n\nYaxshi muhandislik ishni keragidan ortiq murakkablashtirish emas, deb hisoblayman. Muhimi — to‘g‘ri qaror qabul qilish, haqiqiy muammolarni hal qilish va rivojlanganda ham ishonchli qoladigan dasturiy ta’minot yaratish.',
+    ru: 'Я Python backend-разработчик и люблю превращать сложные идеи в практичное, хорошо структурированное ПО. Моя работа — это не только создание endpoint’ов. Я уделяю внимание взаимодействию систем, потокам данных, обработке сбоев и тому, как всё это работает в реальном продукте.\n\nИспользуя FastAPI, Django, PostgreSQL и современную инфраструктуру, я создаю API и backend-сервисы с чистой архитектурой, поддерживаемой логикой и расчётом на масштабирование. Интерес к кибербезопасности также влияет на мой подход — от аутентификации и контроля доступа до проектирования защищённых систем.\n\nЯ считаю, что хорошая инженерия — это не лишняя сложность, а верные решения, решение реальных задач и создание ПО, которое остаётся надёжным по мере развития.',
+    en: 'I’m a Python Backend Developer who enjoys turning complex ideas into practical, well-structured software. My work goes beyond writing endpoints. I focus on how systems communicate, how data flows, how applications handle failures, and how everything fits together in a real product.\n\nWorking with FastAPI, Django, PostgreSQL, and modern infrastructure, I build APIs and backend services with clean architecture, maintainable logic, and scalability in mind. My interest in cybersecurity also shapes how I approach development, from authentication and access control to secure system design.\n\nI believe good engineering is not about making things unnecessarily complex. It’s about making the right decisions, solving real problems, and building software that remains dependable as it grows.',
   },
-  stats: [
-    { value: 6, label: { uz: 'Muvaffaqiyatli loyihalar', ru: 'Реализованные проекты', en: 'Projects shipped' }, isNumber: true, suffix: { uz: '+', ru: '+', en: '+' } },
-    { value: 'B2', label: { uz: 'Ingliz tili', ru: 'Английский язык', en: 'English' }, isNumber: false },
-    { value: 2, label: { uz: 'Yil tajriba', ru: 'Лет опыта', en: 'Years of experience' }, isNumber: true, suffix: { uz: '+', ru: '+', en: '+' } },
+  highlights: [
+    {
+      title: {
+        uz: 'Muhandislik tafakkuri',
+        ru: 'Инженерный подход',
+        en: 'Engineering mindset',
+      },
+      description: {
+        uz: 'Toza arxitektura, samarali ma’lumotlar bilan ishlash va uzoq muddat xizmat qiladigan backend tizimlariga e’tibor beraman.',
+        ru: 'Я уделяю внимание чистой архитектуре, эффективной работе с данными и backend-системам, рассчитанным на долгую работу.',
+        en: 'I care about clean architecture, efficient data handling, and backend systems built to last.',
+      },
+    },
+    {
+      title: {
+        uz: 'Loyihalashdan boshlab xavfsizlik',
+        ru: 'Безопасность с самого начала',
+        en: 'Security by design',
+      },
+      description: {
+        uz: 'Backend muhandisligini kiberxavfsizlik bo‘yicha bilimlarim bilan uyg‘unlashtirib, xavfsizlikni ishlab chiqish jarayonining boshidanoq hisobga olaman.',
+        ru: 'Я учитываю безопасность с самого начала разработки, сочетая backend-инженерию с углубляющимися знаниями в кибербезопасности.',
+        en: 'I approach development with security in mind, combining backend engineering with a growing understanding of cybersecurity.',
+      },
+    },
+    {
+      title: {
+        uz: 'Maqsadli yechimlar',
+        ru: 'Осмысленная разработка',
+        en: 'Building with purpose',
+      },
+      description: {
+        uz: 'Amaliy yechimlar, muntazam takomillashish va g‘oyalarni ishlaydigan mahsulotlarga aylantirishga e’tibor beraman.',
+        ru: 'Я сосредоточен на практичных решениях, постоянном развитии и превращении идей в работающие продукты.',
+        en: 'I focus on practical solutions, continuous improvement, and turning ideas into functional products.',
+      },
+    },
+  ],
+  technicalProfile: [
+    {
+      title: { uz: 'Backend', ru: 'Backend', en: 'Backend' },
+      technologies: ['Python', 'FastAPI', 'Django', 'DRF', 'SQLAlchemy', 'Celery', 'Aiogram'],
+    },
+    {
+      title: { uz: 'Ma’lumotlar va xabarlar', ru: 'Данные и обмен сообщениями', en: 'Data & Messaging' },
+      technologies: ['PostgreSQL', 'Redis', 'RabbitMQ', 'MinIO'],
+    },
+    {
+      title: { uz: 'Xavfsizlik', ru: 'Безопасность', en: 'Security' },
+      technologies: ['JWT', 'OAuth2', 'RBAC', 'Secure API Design'],
+    },
+    {
+      title: { uz: 'Infratuzilma', ru: 'Инфраструктура', en: 'Infrastructure' },
+      technologies: ['Docker', 'NGINX', 'Prometheus', 'Grafana', 'Sentry'],
+    },
   ],
   timeline: [
     {
       role: {
-        uz: 'Python backend engineer',
-        ru: 'Python backend engineer',
-        en: 'Python backend engineer',
+        uz: 'Mustaqil backend dasturchi',
+        ru: 'Независимый backend-разработчик',
+        en: 'Independent Backend Developer',
       },
-      year: '2024 — Present',
+      year: {
+        uz: '2024 — hozirgacha',
+        ru: '2024 — настоящее время',
+        en: '2024 — Present',
+      },
       description: {
-        uz: 'REST API, JWT/RBAC, DB optimizatsiyasi, Docker va production-ready backend tizimlari.',
-        ru: 'REST API, JWT/RBAC, оптимизация БД, Docker и production-ready backend-системы.',
-        en: 'REST APIs, JWT/RBAC, database optimization, Docker, and production-ready backend systems.',
+        uz: 'Shaxsiy va freelance loyihalar ustida ishlash, REST API yaratish, autentifikatsiya va avtorizatsiyani joriy etish, ma’lumotlar bazalarini optimallashtirish hamda deployment va backend infratuzilmasi bilan ishlash.',
+        ru: 'Работа над личными и freelance-проектами: разработка REST API, внедрение аутентификации и авторизации, оптимизация баз данных, настройка deployment и backend-инфраструктуры.',
+        en: 'Building personal and freelance projects, developing REST APIs, implementing authentication and authorization, optimizing databases, and working with deployment and backend infrastructure.',
       },
     },
     {
       role: {
-        uz: 'Najot Ta’lim — backend kursi',
-        ru: 'Najot Ta’lim — курс backend',
-        en: 'Najot Ta’lim — backend course',
+        uz: 'Najot Ta’lim / Backend dasturlash',
+        ru: 'Najot Ta’lim / Backend-разработка',
+        en: 'Najot Ta’lim / Backend Development',
       },
-      year: '2023 — 2024',
+      year: {
+        uz: '2023 — 2024',
+        ru: '2023 — 2024',
+        en: '2023 — 2024',
+      },
       description: {
-        uz: 'Python, Django, REST API va backend foundations ustida intensiv o\'qish.',
-        ru: 'Интенсивное обучение Python, Django, REST API и основам backend-разработки.',
-        en: 'Intensive learning in Python, Django, REST APIs, and backend fundamentals.',
+        uz: 'Python, Django, REST API, ma’lumotlar bazasi asoslari va backend dasturlash bo‘yicha jadal ta’lim.',
+        ru: 'Интенсивное обучение Python, Django, REST API, основам баз данных и backend-разработки.',
+        en: 'Focused training in Python, Django, REST APIs, database fundamentals, and backend development.',
       },
     },
     {
       role: {
-        uz: 'IDU Tashkent — IT & Cybersecurity',
-        ru: 'IDU Tashkent — IT и кибербезопасность',
-        en: 'IDU Tashkent — IT & Cybersecurity',
+        uz: 'Amity University / Kiberxavfsizlik',
+        ru: 'Amity University / Кибербезопасность',
+        en: 'Amity University / Cybersecurity',
       },
-      year: '2025 — Present',
+      year: {
+        uz: '2-kurs — hozirda',
+        ru: '2-й курс — сейчас',
+        en: '2nd year — Present',
+      },
       description: {
-        uz: 'Informatsion texnologiyalar va cybersecurity yo\'nalishi.',
-        ru: 'Направление информационных технологий и кибербезопасности.',
-        en: 'Information technology and cybersecurity track.',
+        uz: 'Kiberxavfsizlik yo‘nalishida 2-kurs talabasi.',
+        ru: 'Студент 2-го курса по направлению «Кибербезопасность».',
+        en: 'Second-year student in the Cybersecurity program.',
       },
       isLive: true,
+    },
+    {
+      role: {
+        uz: 'International Digital University / Foundation',
+        ru: 'International Digital University / Foundation',
+        en: 'International Digital University / Foundation',
+      },
+      year: {
+        uz: 'Tugallangan',
+        ru: 'Завершено',
+        en: 'Completed',
+      },
+      description: {
+        uz: 'International Digital University’da Foundation dasturini tamomlagan.',
+        ru: 'Завершил программу Foundation в International Digital University.',
+        en: 'Completed the Foundation program at International Digital University.',
+      },
     },
   ],
 };

@@ -1,0 +1,44 @@
+.animationBackground {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(rgba(1, 5, 2, 0.2), rgba(1, 5, 2, 0.34));
+  pointer-events: none;
+}
+
+.animationBackground::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: radial-gradient(ellipse at 68% 44%, transparent 22%, rgba(0, 0, 0, 0.12) 72%, rgba(0, 0, 0, 0.3));
+  content: "";
+  pointer-events: none;
+}
+
+.edgeBlur {
+  position: absolute;
+  z-index: 2;
+  inset: -24px;
+  background:
+    radial-gradient(ellipse at center, transparent 34%, rgba(0, 0, 0, 0.38) 70%, rgba(0, 0, 0, 0.68)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.35));
+  backdrop-filter: blur(16px);
+  mask-image: radial-gradient(ellipse 88% 88% at center, transparent 45%, #000 100%);
+  pointer-events: none;
+}
+
+:global([data-theme="light"]) .animationBackground {
+  background: linear-gradient(rgba(241, 247, 239, 0.12), rgba(241, 247, 239, 0.2));
+}
+
+:global([data-theme="light"]) .animationBackground::after {
+  background: radial-gradient(ellipse at 68% 44%, transparent 28%, rgba(15, 54, 28, 0.025) 76%, rgba(15, 54, 28, 0.07));
+}
+
+:global([data-theme="light"]) .edgeBlur {
+  background:
+    radial-gradient(ellipse at center, transparent 38%, rgba(15, 54, 28, 0.08) 74%, rgba(15, 54, 28, 0.16)),
+    linear-gradient(90deg, rgba(15, 54, 28, 0.08), transparent 24%, transparent 76%, rgba(15, 54, 28, 0.08));
+}
