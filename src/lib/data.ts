@@ -573,7 +573,6 @@ export const contactData: ContactData = {
       username: '@Akrom_Rustamov',
     },
   },
-  phone: '+998 95 878 62 77',
 };
 
 export const funFactsData: FunFact[] = [

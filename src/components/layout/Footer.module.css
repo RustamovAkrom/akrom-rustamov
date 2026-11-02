@@ -1,0 +1,152 @@
+.footer {
+  padding: 34px 0 22px;
+  background:
+    radial-gradient(ellipse at 10% 0%, var(--glow-green), transparent 28rem),
+    var(--bg2);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(24px, 5vw, 72px);
+  padding-bottom: 30px;
+}
+
+.identity {
+  min-width: 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--text);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  transition: color 0.2s ease;
+}
+
+.brand span {
+  color: var(--acc-green);
+}
+
+.brand:hover {
+  color: var(--acc-green);
+}
+
+.tagline {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 2.4vw, 32px);
+}
+
+.navigation a,
+.backToTop {
+  color: var(--muted);
+  font-size: 0.82rem;
+  transition: color 0.2s ease;
+}
+
+.navigation a:hover,
+.backToTop:hover {
+  color: var(--acc-green);
+}
+
+.navigation a:focus-visible,
+.backToTop:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid var(--acc-green);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.backToTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.backToTop svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  transition: transform 0.2s ease;
+}
+
+.backToTop:hover svg {
+  transform: translateY(-2px);
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--bd);
+  color: var(--dim);
+  font-family: var(--font-jetbrains), "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.025em;
+}
+
+@media (max-width: 760px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 22px;
+    padding-bottom: 24px;
+  }
+
+  .navigation {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+  }
+
+  .backToTop {
+    grid-row: 1;
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 420px) {
+  .footer {
+    padding-top: 28px;
+  }
+
+  .main {
+    gap: 18px;
+  }
+
+  .navigation {
+    gap: 10px 18px;
+  }
+
+  .bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand,
+  .navigation a,
+  .backToTop,
+  .backToTop svg {
+    transition: none;
+  }
+}

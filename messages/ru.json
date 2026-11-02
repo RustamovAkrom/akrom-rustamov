@@ -66,9 +66,17 @@
     "emailPlaceholder": "ваш@email.com",
     "messagePlaceholder": "Расскажите о вашем проекте...",
     "send": "Отправить",
-    "footerTop": "↑ наверх"
+    "sending": "Отправка...",
+    "footerTop": "Наверх",
+    "footerTagline": "Надёжные backend-системы с вниманием к деталям.",
+    "footerNavigation": "Навигация в подвале сайта",
+    "footerAbout": "Обо мне",
+    "footerProjects": "Проекты",
+    "footerContact": "Контакты",
+    "footerLocation": "Ташкент, Узбекистан"
   },
   "Contact": {
+    "title": "Создаём надёжные решения вместе.",
     "description": "Вы можете связаться со мной для сотрудничества по backend-системам, API-сервисам или новым возможностям."
   },
   "Quote": {

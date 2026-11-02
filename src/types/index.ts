@@ -109,7 +109,6 @@ export interface ContactData {
     linkedin: SocialLink;
     telegram: SocialLink;
   };
-  phone: string;
 }
 
 export interface FunFact {

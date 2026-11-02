@@ -66,9 +66,17 @@
     "emailPlaceholder": "your@email.com",
     "messagePlaceholder": "Tell me about your project...",
     "send": "Send",
-    "footerTop": "↑ top"
+    "sending": "Sending...",
+    "footerTop": "Back to top",
+    "footerTagline": "Backend systems, built with care.",
+    "footerNavigation": "Footer navigation",
+    "footerAbout": "About",
+    "footerProjects": "Projects",
+    "footerContact": "Contact",
+    "footerLocation": "Tashkent, Uzbekistan"
   },
   "Contact": {
+    "title": "Let’s build something reliable.",
     "description": "You can get in touch to collaborate on backend systems, API services, or new opportunities."
   },
   "Quote": {

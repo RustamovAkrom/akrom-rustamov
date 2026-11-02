@@ -66,9 +66,17 @@
     "emailPlaceholder": "sizning@email.com",
     "messagePlaceholder": "Loyihangiz haqida gapirib bering...",
     "send": "Yuborish",
-    "footerTop": "↑ tepaga"
+    "sending": "Yuborilmoqda...",
+    "footerTop": "Tepaga qaytish",
+    "footerTagline": "E’tibor bilan yaratilgan backend tizimlari.",
+    "footerNavigation": "Footer navigatsiyasi",
+    "footerAbout": "Men haqimda",
+    "footerProjects": "Loyihalar",
+    "footerContact": "Bog‘lanish",
+    "footerLocation": "Toshkent, O‘zbekiston"
   },
   "Contact": {
+    "title": "Ishonchli yechimlarni birga yaratamiz.",
     "description": "Backend tizimlar, API xizmatlar yoki yangi imkoniyatlar bo‘yicha hamkorlik uchun bog‘lanishingiz mumkin."
   },
   "Quote": {
