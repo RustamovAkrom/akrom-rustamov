@@ -394,6 +394,114 @@
   box-shadow: 0 0 0 3px var(--glow);
 }
 
+/* Cyber interface finish: crisp scan lines, terminal framing, and deliberate contrast. */
+.home {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glow-cyan), transparent 42rem),
+    radial-gradient(ellipse at 96% 58%, var(--glow-purple), transparent 36rem),
+    var(--bg);
+}
+
+.home::before {
+  background-size: 48px 48px;
+  opacity: 0.72;
+  mask-image: linear-gradient(to bottom, black, transparent 96%);
+}
+
+.home :global(.hero) {
+  max-width: none;
+  background:
+    linear-gradient(90deg, var(--bg) 0%, transparent 22%, transparent 78%, var(--bg) 100%),
+    radial-gradient(ellipse at 72% 50%, var(--glow-cyan), transparent 34%),
+    radial-gradient(ellipse at 82% 72%, var(--glow-purple), transparent 30%);
+}
+
+.home :global(.hero__copy) {
+  position: relative;
+  padding: clamp(24px, 4vw, 54px) 0 clamp(24px, 4vw, 54px) clamp(18px, 3vw, 40px);
+  border-left: 1px solid var(--bd-hi);
+}
+
+.home :global(.hero__copy)::before,
+.home :global(.hero__copy)::after {
+  position: absolute;
+  left: -1px;
+  width: 24px;
+  height: 2px;
+  background: var(--acc-green);
+  box-shadow: 0 0 14px var(--glow-green);
+  content: "";
+}
+
+.home :global(.hero__copy)::before { top: 0; }
+.home :global(.hero__copy)::after { bottom: 0; }
+
+.home :global(.hero__eyebrow) {
+  padding: 8px 12px;
+  border: 1px solid var(--bd);
+  background: var(--glass-surface);
+  font-size: var(--fs-mono);
+  text-transform: uppercase;
+}
+
+.home :global(.hero__name) {
+  text-shadow: 0 0 48px var(--glow-cyan);
+}
+
+.home :global(.hn-stroke) {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--acc-cyan);
+  text-shadow: 0 0 24px var(--glow-cyan);
+}
+
+.home :global(.hero__tag) {
+  padding-left: 14px;
+  border-left: 2px solid var(--acc-green);
+}
+
+.home :global(.hero .btn.solid) {
+  border-radius: 3px;
+  background: var(--acc-green);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.home :global(.hero .btn.ghost) {
+  border-radius: 3px;
+}
+
+.home :global(.orb__core) {
+  background-color: var(--bg2);
+}
+
+.home :global(.orb__badge) {
+  border-radius: 3px;
+  font-family: var(--font-jetbrains), monospace;
+  text-transform: uppercase;
+}
+
+.home :global(.section .s-label) {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: var(--fs-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home :global(.sk),
+.home :global(.svc),
+.home :global(.blog-card),
+.home :global(.cert),
+.home :global(.funfact),
+.home :global(.about__highlight),
+.home :global(.cform) {
+  border-radius: 4px;
+}
+
+.home :global(.section .s-title em) {
+  color: var(--acc-cyan);
+  text-shadow: 0 0 24px var(--glow-cyan);
+}
+
 @media (max-width: 760px) {
   .home :global(.section > .container) {
     padding-right: 24px;
@@ -414,6 +522,10 @@
     gap: clamp(30px, 8vw, 52px);
     min-height: auto;
     padding: 112px 24px 96px;
+  }
+
+  .home :global(.hero__copy) {
+    padding: 18px 0 18px 16px;
   }
 
   .home :global(.hero)::before {

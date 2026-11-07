@@ -1,10 +1,12 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
+import { useLocale } from 'next-intl';
 import { allPosts } from 'contentlayer/generated';
 
 export default function BlogPreview({ className = "" }: { className?: string }) {
-    const previewPosts = allPosts.slice(0, 3);
+    const locale = useLocale();
+    const previewPosts = allPosts.filter((post) => post.locale === locale).slice(0, 3);
 
     return (
         <section className={`section blog ${className}`.trim()} id="blog">

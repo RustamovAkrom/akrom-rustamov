@@ -1,12 +1,12 @@
-import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { allPosts } from "contentlayer/generated";
 import MDXContent from "@/components/mdx/MDXContent";
 import ViewCounter from "@/components/ViewCounter";
 import type { AppLocale } from "@/i18n/routing";
 
 export function generateStaticParams() {
-  return allPosts.map((post) => ({ slug: post.slug }));
+  return Array.from(new Set(allPosts.map((post) => post.slug))).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -16,22 +16,28 @@ export async function generateMetadata({
 }) {
   const { slug, locale } = await params;
   setRequestLocale(locale);
-  const post = allPosts.find((item) => item.slug === slug);
+  const t = await getTranslations({ locale, namespace: "Blog" });
+  const post = allPosts.find((item) => item.slug === slug && item.locale === locale);
 
   if (!post) {
-    return {};
+    return { title: t("translationMissingTitle"), robots: { index: false, follow: true } };
   }
 
   return {
     title: post.title,
     description: post.description,
     alternates: {
-      canonical: post.url,
+      canonical: `/${locale}${post.url}`,
+      languages: Object.fromEntries(
+        allPosts
+          .filter((item) => item.slug === slug)
+          .map((item) => [item.locale, `/${item.locale}${item.url}`]),
+      ),
     },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: post.url,
+      url: `/${locale}${post.url}`,
       type: "article",
       publishedTime: post.date,
       authors: ["Akrom Rustamov"],
@@ -52,19 +58,34 @@ export default async function BlogPostPage({
 }) {
   const { slug, locale } = await params;
   setRequestLocale(locale);
-  const post = allPosts.find((p) => p.slug === slug);
+  const t = await getTranslations({ locale, namespace: "Blog" });
+  const localePosts = allPosts
+    .filter((item) => item.locale === locale)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const postIndex = localePosts.findIndex((item) => item.slug === slug);
+  const post = postIndex >= 0 ? localePosts[postIndex] : null;
 
-  if (!post) notFound();
+  if (!post) {
+    return (
+      <main className="blog-article-page">
+        <section className="blog-translation-missing container">
+          <span className="s-label mono">{locale.toUpperCase()}</span>
+          <h1>{t("translationMissingTitle")}</h1>
+          <p>{t("translationMissingText")}</p>
+          <Link href="/blog" className="btn ghost sm">{t("allArticles")}</Link>
+        </section>
+      </main>
+    );
+  }
 
-  const currentIdx = allPosts.findIndex((p) => p.slug === slug);
-  const prev = currentIdx > 0 ? allPosts[currentIdx - 1] : null;
-  const next = currentIdx < allPosts.length - 1 ? allPosts[currentIdx + 1] : null;
+  const prev = postIndex > 0 ? localePosts[postIndex - 1] : null;
+  const next = postIndex < localePosts.length - 1 ? localePosts[postIndex + 1] : null;
 
   return (
     <main className="blog-article-page">
       <article className="blog-article">
         <div className="container">
-          <header className="blog-article__header reveal">
+          <header className="blog-article__header">
             <div className="blog-article__meta">
               <span className="blog-article__date mono">{post.formattedDate}</span>
               <span className="blog-article__dot">·</span>
@@ -80,33 +101,31 @@ export default async function BlogPostPage({
             </div>
           </header>
 
-          <div className="blog-article__body reveal">
+          <div className="blog-article__body">
             <MDXContent code={post.body.code} />
           </div>
 
-          <footer className="blog-article__footer reveal">
+          <footer className="blog-article__footer">
             <div className="blog-article__nav">
               {prev ? (
-                <a href={prev.url} className="blog-article__nav-link blog-article__nav-link--prev">
-                  <span className="mono">← {post.title}</span>
+                <Link href={`/blog/${prev.slug}`} className="blog-article__nav-link blog-article__nav-link--prev">
+                  <span className="mono">← Previous</span>
                   <strong>{prev.title}</strong>
-                </a>
+                </Link>
               ) : (
                 <div />
               )}
               {next ? (
-                <a href={next.url} className="blog-article__nav-link blog-article__nav-link--next">
-                  <span className="mono">{next.title} →</span>
+                <Link href={`/blog/${next.slug}`} className="blog-article__nav-link blog-article__nav-link--next">
+                  <span className="mono">Next →</span>
                   <strong>{next.title}</strong>
-                </a>
+                </Link>
               ) : (
                 <div />
               )}
             </div>
             <div className="blog-article__back">
-              <a href="/blog" className="btn ghost sm">
-                ← All articles
-              </a>
+              <Link href="/blog" className="btn ghost sm">← All articles</Link>
             </div>
           </footer>
         </div>

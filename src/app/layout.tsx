@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
-import Galaxy from "@/components/galaxy/Galaxy";
 import Cursor from "@/components/cursor/Cursor";
 
 const siteUrl = "https://akrom-omega.vercel.app";
@@ -110,7 +109,7 @@ export default function RootLayout({
             </head>
             <body>
                 <Providers>
-                    <Galaxy />
+                    <div className="digital-background" aria-hidden="true" />
                     <div className="grain" />
                     {children}
                     <Cursor />

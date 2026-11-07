@@ -1,0 +1,45 @@
+﻿---
+title: "Scaling PostgreSQL connections with PgBouncer"
+date: "2026-06-10"
+description: "How PgBouncer pools database connections to reduce overhead and keep PostgreSQL services stable under load."
+tags: ["PostgreSQL", "PgBouncer", "Database", "Backend", "Performance"]
+readingTime: "3 min read"
+slug: "scaling-postgresql-with-pgbouncer"
+locale: "en"
+---
+
+# Scaling PostgreSQL connections with PgBouncer
+
+How an application manages database connections can become a hidden bottleneck. PostgreSQL uses a process per connection, which is reliable but consumes resources. Frequently opening connections or running many workers can increase memory use and context switching.
+
+**PgBouncer** is a lightweight connection pooler between your application and PostgreSQL.
+
+## What connection pooling solves
+
+### Connection overhead
+
+Each PostgreSQL connection needs server resources. PgBouncer keeps a smaller pool of database connections and lets client requests reuse them instead of creating a new server process for every client.
+
+### Connection exhaustion
+
+When traffic spikes, PostgreSQL can reach its connection limit. PgBouncer accepts more client connections and queues or reuses a controlled number of server connections.
+
+### Connection setup latency
+
+Keeping server connections ready avoids repeating some connection setup work, which can reduce overhead for services that open connections frequently.
+
+## Choose a pooling mode
+
+| Mode | How it works | Typical use |
+| --- | --- | --- |
+| **Session** | A server connection stays assigned for the whole client session. | Applications that rely on session state. |
+| **Transaction** | A connection is returned to the pool after each transaction. | Short transactions and higher concurrency. |
+| **Statement** | A connection is returned after each statement. | Specialized workloads; verify application compatibility. |
+
+Transaction pooling can improve concurrency, but features that rely on session state may not work as expected. Check the PgBouncer and database driver documentation before choosing a mode.
+
+## Operate it safely
+
+Monitor active and waiting clients, server connections, and pool saturation. Tune pool sizes against the database's capacity, and use TLS where traffic crosses an untrusted network.
+
+PgBouncer helps PostgreSQL handle many clients with fewer server connections. Measure the workload and validate application behavior before changing pooling modes.

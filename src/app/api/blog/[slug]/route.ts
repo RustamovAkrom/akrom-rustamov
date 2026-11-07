@@ -6,7 +6,8 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const post = allPosts.find((p) => p.slug === slug);
+  const locale = new URL(request.url).searchParams.get('locale') ?? 'uz';
+  const post = allPosts.find((item) => item.slug === slug && item.locale === locale);
 
   if (!post) {
     return NextResponse.json({ error: 'Post not found' }, { status: 404 });

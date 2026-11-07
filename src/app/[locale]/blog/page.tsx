@@ -3,24 +3,29 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { allPosts } from "contentlayer/generated";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function BlogPage() {
   const t = useTranslations("Blog");
+  const locale = useLocale();
   const [activeTag, setActiveTag] = useState<string>("all");
   const [search, setSearch] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const pageRef = useRef<HTMLElement>(null);
 
+  const localizedPosts = useMemo(
+    () => allPosts.filter((post) => post.locale === locale),
+    [locale],
+  );
+
   const allTags = useMemo(() => {
     const tags = new Set<string>();
-    allPosts.forEach((p) => p.tags.forEach((t) => tags.add(t)));
+    localizedPosts.forEach((p) => p.tags.forEach((t) => tags.add(t)));
     return ["all", ...Array.from(tags).sort()];
-  }, []);
+  }, [localizedPosts]);
 
   const filtered = useMemo(() => {
-    return allPosts.filter((post) => {
+    return localizedPosts.filter((post) => {
       const matchesTag = activeTag === "all" || post.tags.includes(activeTag);
       const matchesSearch =
         search === "" ||
@@ -28,12 +33,12 @@ export default function BlogPage() {
         post.description.toLowerCase().includes(search.toLowerCase());
       return matchesTag && matchesSearch;
     });
-  }, [activeTag, search]);
+  }, [activeTag, localizedPosts, search]);
 
   const handleShare = async (e: React.MouseEvent, post: (typeof allPosts)[number]) => {
     e.preventDefault();
     e.stopPropagation();
-    const articleUrl = post.url;
+    const articleUrl = new URL(`/${locale}${post.url}`, window.location.origin).toString();
     const shareData = {
       title: post.title,
       text: `${post.description} - ${articleUrl}`,
@@ -43,7 +48,7 @@ export default function BlogPage() {
     if (navigator.share && navigator.canShare?.(shareData)) {
       try {
         await navigator.share(shareData);
-      } catch (err) {
+      } catch {
         console.log("Share cancelled");
       }
       return;
@@ -81,8 +86,6 @@ export default function BlogPage() {
     return () => observer.disconnect();
   }, [filtered]);
 
-  const activeFilterLabel = activeTag === "all" ? t("filtersToggle") : activeTag;
-
   return (
     <main ref={pageRef} className="blog-page">
       <div className="blog-progress">
@@ -96,7 +99,6 @@ export default function BlogPage() {
             <h1 className="blog-hero__title">
               {t.rich("heroTitle", { em: (chunks) => <em>{chunks}</em> })}
             </h1>
-            <p className="blog-hero__sub">{t("heroSub")}</p>
           </div>
         </div>
       </section>
@@ -112,29 +114,10 @@ export default function BlogPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button
-                className={`blog-filters__toggle ${showFilters ? "open" : ""} ${activeTag !== "all" ? "has-active" : ""}`}
-                onClick={() => setShowFilters((s) => !s)}
-                aria-expanded={showFilters}
-                aria-label={t("filtersToggle")}
-              >
-                <span className="blog-filters__toggle-text">{activeFilterLabel}</span>
-                <svg className="blog-filters__toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
-            </div>
-            <div className={`blog-filters__panel ${showFilters ? "open" : ""}`}>
-              <div className="blog-tags">
-                {allTags.map((tag) => (
-                  <button
-                    key={tag}
-                    className={`blog-tag ${activeTag === tag ? "active" : ""}`}
-                    onClick={() => setActiveTag(tag)}
-                  >
-                    {tag === "all" ? t("tagAll") : tag}
-                  </button>
-                ))}
+              <div className="blog-category-control">
+                <select className="blog-category" aria-label={t("filtersToggle")} value={activeTag} onChange={(event) => setActiveTag(event.target.value)}>
+                  {allTags.map((tag) => <option key={tag} value={tag}>{tag === "all" ? t("tagAll") : tag}</option>)}
+                </select>
               </div>
             </div>
           </div>
@@ -152,22 +135,23 @@ export default function BlogPage() {
               {filtered.map((post, idx) => (
                 <article
                   key={post.slug}
-                  className="blog-post-card reveal"
+                  className="blog-post-card"
                   style={{ "--d": `${idx * 0.08}s` } as React.CSSProperties}
                 >
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="blog-post-card__cover"
+                    aria-label={`${post.title} — ${t("readArticle")}`}
+                  />
                   <div className="blog-post-card__meta">
                     <span className="blog-post-card__date mono">{post.formattedDate}</span>
                     <span className="blog-post-card__rt mono">{post.readingTime}</span>
                   </div>
                   <div className="blog-post-card__content">
                     <div className="blog-post-card__tags">
-                      {post.tags.map((tag) => (
-                        <span key={tag} className="pill sm">{tag}</span>
-                      ))}
+                      {post.tags.slice(0, 1).map((tag) => <span key={tag} className="pill sm">{tag}</span>)}
                     </div>
-                    <h2 className="blog-post-card__title">
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h2>
+                    <h2 className="blog-post-card__title">{post.title}</h2>
                     <p className="blog-post-card__excerpt">{post.description}</p>
                     <div className="blog-post-card__actions">
                       <Link href={`/blog/${post.slug}`} className="blog-post-card__link mono">

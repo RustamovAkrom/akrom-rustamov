@@ -1,0 +1,66 @@
+﻿---
+title: "Claude AI dan bepul foydalanish вЂ” ToвЂliq oвЂrnatish boвЂyicha qoвЂllanma"
+date: "2026-06-10"
+description: "Claude AI ni freemodel.dev yordamida kompyuteringizga bepul oвЂrnatish va ishga tushirish boвЂyicha bosqichma-bosqich qoвЂllanma."
+tags: ["Claude", "AI", "Bepul vositalar", "Dasturchi uchun sozlamalar"]
+readingTime: "3 daqiqa"
+slug: "get-free-claude" #
+locale: "uz"
+---
+
+Claude AI dan pul toвЂlamasdan foydalanmoqchimisiz? Quyida uni kompyuteringizda (Windows, macOS yoki Linux) bepul ishga tushirish boвЂyicha toвЂliq va ishchi qoвЂllanma keltirilgan.
+
+## 1. Claude konsolini oвЂrnatish
+
+Terminalni oching:
+
+* **Windows**: `Win + R` tugmalarini bosing, `powershell` deb yozing va Enter tugmasini bosing.
+* **macOS / Linux / WSL**: standart terminalingizni oching.
+
+Keyin oвЂzingizning operatsion tizimingizga mos buyruqni ishga tushiring:
+
+**macOS, Linux, WSL uchun:**
+
+```sh
+curl -fsSL https://claude.ai/install.sh | bash
+claude --version
+
+```
+
+**Windows (PowerShell) uchun:**
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+
+```
+
+## 2. Akkaunt yaratish va API kalitini olish
+
+[https://freemodel.dev/dashboard](https://freemodel.dev/dashboard) saytiga oвЂting va roвЂyxatdan oвЂting.
+
+Tizimga kirganingizdan soвЂng, **API Keys** boвЂlimiga oвЂting va yangi API kalitini yarating. **Uni darhol saqlab qoвЂying** вЂ” u keyingi qadamda sizga kerak boвЂladi.
+
+## 3. Claude ni bepul API kalitingiz bilan ishga tushirish
+
+**PowerShell** ni qayta oching (`Win + R` в†’ `powershell`) va quyidagi buyruqlardan foydalaning.
+
+вљ пёЏ **Muhim:** Enter tugmasini bosishdan oldin, `freemodel_api_key` yozuvini freemodel.dev dan olgan haqiqiy API kalitingiz bilan almashtiring.
+
+**macOS, Linux yoki WSL uchun:**
+
+```sh
+ANTHROPIC_API_KEY="freemodel_api_key" ANTHROPIC_BASE_URL="https://cc.freemodel.dev" claude
+
+```
+
+**Windows (PowerShell) uchun:**
+
+```powershell
+$env:ANTHROPIC_API_KEY="freemodel_api_key"
+$env:ANTHROPIC_BASE_URL="https://cc.freemodel.dev"
+claude
+
+```
+
+Shundan soвЂng, Claude kompyuteringizda lokal ravishda bepul ishga tushadi.
+

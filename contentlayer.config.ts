@@ -32,6 +32,10 @@ export const Post = defineDocumentType(() => ({
       type: "string",
       required: true,
     },
+    locale: {
+      type: "string",
+      required: true,
+    },
   },
   computedFields: {
     url: {
@@ -40,12 +44,14 @@ export const Post = defineDocumentType(() => ({
     },
     formattedDate: {
       type: "string",
-      resolve: (post) =>
-        new Date(post.date).toLocaleDateString("en-US", {
+      resolve: (post) => {
+        const dateLocale = post.locale === "ru" ? "ru-RU" : post.locale === "uz" ? "uz-UZ" : "en-US";
+        return new Date(post.date).toLocaleDateString(dateLocale, {
           year: "numeric",
           month: "short",
           day: "numeric",
-        }),
+        });
+      },
     },
   },
 }));

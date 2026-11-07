@@ -1,0 +1,33 @@
+﻿---
+title: "Use Claude Code with a third-party API provider"
+date: "2026-06-10"
+description: "Configure Claude Code to use an external API endpoint, and keep your API credentials secure."
+tags: ["Claude", "AI", "Developer setup"]
+readingTime: "3 min read"
+slug: "get-free-claude"
+locale: "en"
+---
+
+# Use Claude Code with a third-party API provider
+
+This guide shows how to connect Claude Code to an external API provider. Availability, pricing, and terms depend on that provider and can change. This is not an official Anthropic free plan.
+
+## Install Claude Code
+
+Open a terminal and follow the current instructions in the [official Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code/overview).
+
+## Create a provider API key
+
+Create an account with a provider that supports the Claude Code API format, then generate an API key in its dashboard. Check the provider's pricing and privacy terms before sending it data.
+
+## Configure the endpoint
+
+Set the key and API endpoint using the provider's current instructions. For a temporary shell session, environment variables can be used:
+
+```sh
+export ANTHROPIC_API_KEY="your-provider-key"
+export ANTHROPIC_BASE_URL="https://provider.example/api"
+claude
+```
+
+Use the exact endpoint supplied by your provider. Never commit API keys to source control or share them in screenshots. Revoke a key immediately if it is exposed.
