@@ -79,11 +79,13 @@ export default function Services({ className = "" }: { className?: string }) {
                 <div className="s-head reveal">
                     <span className="s-label mono">{t('servicesLabel')}</span>
                     <h2 className="s-title">{t('services')}</h2>
+                    <p className="services-intro">{t('servicesIntro')}</p>
                 </div>
                 <div className="svc-list">
                     {data.map((service, idx) => (
-                        <div
+                        <a
                             key={service.id}
+                            href="#contact"
                             className="svc reveal"
                             style={{ '--d': `${idx * 0.08}s` } as React.CSSProperties}
                         >
@@ -96,9 +98,12 @@ export default function Services({ className = "" }: { className?: string }) {
                                 <p className="svc__desc">{service.description}</p>
                             </div>
                             <span className="svc__arr">↗</span>
-                        </div>
+                        </a>
                     ))}
                 </div>
+                <a className="btn ghost services-cta" href="#contact">
+                    {t('servicesCta')} <span aria-hidden="true">→</span>
+                </a>
             </div>
         </section>
     );

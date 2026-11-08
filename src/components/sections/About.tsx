@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import TechnicalProfile from '@/components/sections/TechnicalProfile';
 import aboutImage from '../../../public/about_me.png';
 import { aboutData } from '@/lib/data';
 import { useLocale, useTranslations } from 'next-intl';
@@ -65,11 +64,6 @@ export default function About({ className = "" }: { className?: string }) {
                         ))}
                     </div>
                 </section>
-
-                <TechnicalProfile
-                    categories={data.technicalProfile}
-                    title={t('technicalProfile')}
-                />
 
                 <section className="about__block about__experience reveal" aria-labelledby="about-experience-title">
                     <div className="about__block-head">

@@ -22,8 +22,8 @@ export default function CertificateCard({ cert, detailed = false, href }: Props)
           width={560}
           height={350}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
-          loading={detailed ? 'eager' : 'lazy'}
+          style={{ objectFit: detailed ? 'contain' : 'cover', width: '100%', height: '100%' }}
+          loading="lazy"
         />
       </div>
       <div className="cert__body">
