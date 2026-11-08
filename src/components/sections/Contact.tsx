@@ -9,10 +9,12 @@ import type { ContactData } from "@/types";
 import styles from "./Contact.module.css";
 
 type SubmissionStatus = "idle" | "sending" | "success" | "error";
+type ContactMethod = "telegram" | "email" | "phone";
 
 export default function Contact({ className = "" }: { className?: string }) {
   const t = useTranslations();
   const [status, setStatus] = useState<SubmissionStatus>("idle");
+  const [contactMethod, setContactMethod] = useState<ContactMethod>("telegram");
   const { data } = useData<ContactData>("/api/contact", contactData);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -28,8 +30,10 @@ export default function Contact({ className = "" }: { className?: string }) {
         method: "POST",
         body: JSON.stringify({
           name: formData.get("name"),
-          email: formData.get("email"),
+          contactMethod: formData.get("contactMethod"),
+          contactValue: formData.get("contactValue"),
           message: formData.get("message"),
+          website: formData.get("website"),
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -108,12 +112,23 @@ export default function Contact({ className = "" }: { className?: string }) {
                 <span className="mono">{data.social.telegram.username}</span>
                 <span className={styles.linkArrow} aria-hidden="true">↗</span>
               </a>
+              <a href={data.social.hackthebox.url} target="_blank" rel="noopener noreferrer" className="c-link">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="18" aria-hidden="true">
+                  <path d="M12 1.5 22.5 7.3v9.4L12 22.5 1.5 16.7V7.3L12 1.5Zm0 2.2L4 8.2v7.6l8 4.5 8-4.5V8.2l-8-4.5Zm-4.2 5h2.5v2.1h3.4V8.7h2.5v6.6h-2.5v-2.3h-3.4v2.3H7.8V8.7Z" />
+                </svg>
+                <span className="mono">{data.social.hackthebox.username}</span>
+                <span className={styles.linkArrow} aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
 
           <div className={`contact-right reveal ${styles.formPanel}`} style={{ "--d": ".12s" } as React.CSSProperties}>
             <form className="cform" onSubmit={handleSubmit}>
-              <div className="cform-row">
+              <div className={styles.honeypot} aria-hidden="true">
+                <label htmlFor="contact-website">Website</label>
+                <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
+              <div className={styles.nameRow}>
                 <div className="cform-g">
                   <label className="cform-l mono" htmlFor="contact-name">{t("Common.name")}</label>
                   <input
@@ -127,20 +142,35 @@ export default function Contact({ className = "" }: { className?: string }) {
                     required
                   />
                 </div>
-                <div className="cform-g">
-                  <label className="cform-l mono" htmlFor="contact-email">{t("Common.email")}</label>
-                  <input
-                    className="cform-i"
-                    type="email"
-                    id="contact-email"
-                    name="email"
-                    placeholder={t("Common.emailPlaceholder")}
-                    autoComplete="email"
-                    maxLength={254}
-                    required
-                  />
-                </div>
               </div>
+              <fieldset className={styles.contactMethod}>
+                <legend className="cform-l mono">{t("Common.contactMethod")}</legend>
+                <div className={styles.methodOptions}>
+                  {(["telegram", "email", "phone"] as const).map((method) => (
+                    <label className={styles.methodOption} key={method}>
+                      <input
+                        type="radio"
+                        name="contactMethod"
+                        value={method}
+                        checked={contactMethod === method}
+                        onChange={() => setContactMethod(method)}
+                      />
+                      <span>{t(`Common.${method}`)}</span>
+                    </label>
+                  ))}
+                </div>
+                <label className="cform-l mono" htmlFor="contact-value">{t(`Common.${contactMethod}Contact`)}</label>
+                <input
+                  className="cform-i"
+                  type={contactMethod === "email" ? "email" : "text"}
+                  id="contact-value"
+                  name="contactValue"
+                  placeholder={t(`Common.${contactMethod}Placeholder`)}
+                  autoComplete={contactMethod === "email" ? "email" : contactMethod === "phone" ? "tel" : "off"}
+                  maxLength={contactMethod === "email" ? 254 : 40}
+                  required
+                />
+              </fieldset>
               <div className="cform-g">
                 <label className="cform-l mono" htmlFor="contact-message">{t("Common.message")}</label>
                 <textarea

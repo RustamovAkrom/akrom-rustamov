@@ -572,6 +572,10 @@ export const contactData: ContactData = {
       url: 'https://t.me/Akrom_Rustamov',
       username: '@Akrom_Rustamov',
     },
+    hackthebox: {
+      url: 'https://profile.hackthebox.com/profile/019ff68d-b399-7237-a62e-b85bbafe0582',
+      username: 'Hack The Box',
+    },
   },
 };
 

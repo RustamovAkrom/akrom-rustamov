@@ -1,6 +1,7 @@
 .contact {
   isolation: isolate;
   overflow: hidden;
+  cursor: auto;
   background:
     radial-gradient(ellipse at 2% 16%, var(--glow-green), transparent 34rem),
     radial-gradient(ellipse at 96% 88%, var(--glow-cyan), transparent 30rem),
@@ -113,6 +114,26 @@
     inset 0 1px 0 rgba(var(--star), 0.08);
 }
 
+.contact :global(a),
+.contact :global(button),
+.contact :global(label) {
+  cursor: pointer;
+}
+
+.contact :global(input:not([type="radio"])),
+.contact :global(textarea) {
+  cursor: text;
+}
+
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .formPanel::before {
   position: absolute;
   top: -1px;
@@ -137,6 +158,59 @@
   gap: 8px;
 }
 
+.contactMethod {
+  display: grid;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  gap: 10px;
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.methodOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.methodOption {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border: 1px solid var(--bd);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.methodOption:has(input:checked) {
+  border-color: var(--acc-green);
+  background: color-mix(in srgb, var(--acc-green) 10%, transparent);
+  color: var(--text);
+}
+
+.methodOption input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--acc-green);
+}
+
+.methodOption:focus-within {
+  outline: 2px solid var(--acc-green);
+  outline-offset: 3px;
+}
+
 .formPanel :global(.cform-l) {
   color: var(--muted);
   font-size: 0.65rem;
@@ -145,10 +219,14 @@
 
 .formPanel :global(.cform-i) {
   min-height: 50px;
-  border-color: var(--bd);
+  border-color: color-mix(in srgb, var(--bd) 72%, transparent);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--bg) 56%, transparent);
+  background: transparent;
   font-size: 0.92rem;
+}
+
+.formPanel :global(.cform-i:focus) {
+  background: transparent;
 }
 
 .formPanel :global(.cform-i:hover) {
@@ -162,7 +240,7 @@
 
 .formPanel :global(.cform-ta) {
   min-height: 156px;
-  resize: vertical;
+  resize: none;
 }
 
 .submit {

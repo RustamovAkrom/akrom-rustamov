@@ -108,6 +108,7 @@ export interface ContactData {
     github: SocialLink;
     linkedin: SocialLink;
     telegram: SocialLink;
+    hackthebox: SocialLink;
   };
 }
 

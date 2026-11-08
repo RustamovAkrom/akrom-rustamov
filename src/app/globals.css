@@ -4196,6 +4196,12 @@ RESPONSIVE — TABLET
     background: rgba(7, 9, 13, 0.96);
 }
 
+body:has(.contact:hover) .cur-dot,
+body:has(.contact:hover) .cur-ring,
+body:has(.contact:hover) .cur-trail {
+    visibility: hidden;
+}
+
 /* Compact blog index */
 .blog-hero {
     padding: clamp(38px, 6vh, 60px) 0 30px;

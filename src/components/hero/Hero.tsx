@@ -41,6 +41,7 @@ export default function Hero() {
         <div className="hero__socs reveal in" style={{ "--d": ".30s" } as React.CSSProperties}>
           <a href="https://github.com/RustamovAkrom" target="_blank" rel="noopener noreferrer" className="hero__soc">GitHub</a>
           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hero__soc">LinkedIn</a>
+          <a href="https://profile.hackthebox.com/profile/019ff68d-b399-7237-a62e-b85bbafe0582" target="_blank" rel="noopener noreferrer" className="hero__soc">Hack The Box</a>
         </div>
       </div>
       <div className="hero__scroll-hint"><div className="scroll-track"><div className="scroll-thumb" /></div><span className="mono">{t("scroll")}</span></div>

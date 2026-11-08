@@ -10,6 +10,8 @@ interface RainColumn {
   glyphs: string[];
   lastCell: number;
   system: NumericSystem;
+  scale: number;
+  depth: number;
 }
 
 type NumericSystem = "binary" | "decimal" | "hexadecimal";
@@ -49,10 +51,10 @@ function initializeMatrixRain(canvas: HTMLCanvasElement, context: CanvasRenderin
 
   function resize() {
     const bounds = canvas.getBoundingClientRect();
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, lowPower.matches ? 1 : 1.5);
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, lowPower.matches ? 1.5 : 2);
     width = bounds.width;
     height = bounds.height;
-    fontSize = width < 640 ? 15 : 18;
+    fontSize = width < 640 ? 11 : 13;
 
     canvas.width = Math.round(width * pixelRatio);
     canvas.height = Math.round(height * pixelRatio);
@@ -82,18 +84,28 @@ function initializeMatrixRain(canvas: HTMLCanvasElement, context: CanvasRenderin
     const columnCount = Math.ceil(width / columnGap);
     columns.length = 0;
 
-    for (let index = 0; index < columnCount; index += 1) {
-      const x = index * columnGap + columnGap / 2;
-      const y = Math.random() * height;
-      const system = SYSTEMS[index % SYSTEMS.length];
-      columns.push({
-        x,
-        y,
-        speed: 48 + Math.random() * 104,
-        glyphs: Array.from({ length: 8 + Math.floor(Math.random() * 12) }, () => randomGlyph(system)),
-        lastCell: Math.floor(y / fontSize),
-        system,
-      });
+    const layerCount = lowPower.matches ? 2 : 3;
+    for (let layer = 0; layer < layerCount; layer += 1) {
+      const depth = layer / (layerCount - 1);
+      const scale = 0.72 + depth * 0.48;
+      const layerFontSize = fontSize * scale;
+      const layerColumnGap = layerFontSize * (0.82 + Math.random() * 0.18);
+      const layerColumnCount = Math.ceil(width / layerColumnGap * (1.12 + depth * 0.12));
+      for (let index = 0; index < layerColumnCount; index += 1) {
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        const system = SYSTEMS[Math.floor(Math.random() * SYSTEMS.length)];
+        columns.push({
+          x,
+          y,
+          speed: (36 + Math.random() * 86) * (0.62 + depth * 0.68),
+          glyphs: Array.from({ length: 7 + Math.floor(Math.random() * 14) }, () => randomGlyph(system)),
+          lastCell: Math.floor(y / layerFontSize),
+          system,
+          scale,
+          depth,
+        });
+      }
     }
   }
 
@@ -102,8 +114,9 @@ function initializeMatrixRain(canvas: HTMLCanvasElement, context: CanvasRenderin
     for (const column of columns) {
       context.globalAlpha = document.documentElement.dataset.theme === "light" ? 0.68 : 0.42;
       context.fillStyle = systemColors[column.system];
+      context.font = `${document.documentElement.dataset.theme === "light" ? "700 " : ""}${fontSize * column.scale}px "JetBrains Mono", monospace`;
       for (let index = 0; index < column.glyphs.length; index += 1) {
-        context.fillText(column.glyphs[index], column.x, column.y - index * fontSize);
+        context.fillText(column.glyphs[index], column.x, column.y - index * fontSize * column.scale);
       }
     }
     context.globalAlpha = 1;
@@ -124,16 +137,17 @@ function initializeMatrixRain(canvas: HTMLCanvasElement, context: CanvasRenderin
     context.fillRect(0, 0, width, height);
 
     for (const column of columns) {
+      const cellSize = fontSize * column.scale;
       column.y += column.speed * elapsed;
 
-      if (column.y - column.glyphs.length * fontSize > height) {
+      if (column.y - column.glyphs.length * cellSize > height) {
         column.y = -Math.random() * height * 0.45;
         column.speed = 48 + Math.random() * 104;
         column.glyphs = Array.from({ length: 8 + Math.floor(Math.random() * 12) }, () => randomGlyph(column.system));
-        column.lastCell = Math.floor(column.y / fontSize);
+        column.lastCell = Math.floor(column.y / cellSize);
       }
 
-      const currentCell = Math.floor(column.y / fontSize);
+      const currentCell = Math.floor(column.y / cellSize);
       const steps = Math.min(currentCell - column.lastCell, column.glyphs.length);
       for (let step = 0; step < steps; step += 1) {
         column.glyphs.pop();
@@ -141,16 +155,18 @@ function initializeMatrixRain(canvas: HTMLCanvasElement, context: CanvasRenderin
       }
       column.lastCell = currentCell;
 
-      const sway = Math.sin(time * 0.00055 + column.x) * 2.2;
+      const sway = Math.sin(time * 0.00055 + column.x) * 1.1;
+      context.font = `${isLightTheme ? "700 " : ""}${cellSize}px "JetBrains Mono", monospace`;
       for (let index = column.glyphs.length - 1; index >= 0; index -= 1) {
-        const glyphY = column.y - index * fontSize;
-        if (glyphY < -fontSize || glyphY > height) continue;
+        const glyphY = column.y - index * cellSize;
+        if (glyphY < -cellSize || glyphY > height) continue;
 
         if (isLightTheme) {
-          context.globalAlpha = index === 0 ? 1 : Math.max(0.24, 0.88 - index * 0.055);
+          context.globalAlpha = index === 0 ? 1 : Math.max(0.18, 0.82 - index * 0.05);
         } else {
-          context.globalAlpha = index === 0 ? 0.95 : Math.max(0.07, 0.64 - index * 0.055);
+          context.globalAlpha = index === 0 ? 0.95 : Math.max(0.06, 0.64 - index * 0.05);
         }
+        context.globalAlpha *= 0.38 + column.depth * 0.62;
         context.fillStyle = index === 0 ? headColor : systemColors[column.system];
         context.fillText(column.glyphs[index], column.x + sway, glyphY);
       }
